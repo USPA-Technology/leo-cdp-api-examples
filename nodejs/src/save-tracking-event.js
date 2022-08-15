@@ -3,16 +3,16 @@ const axios = require("axios");
 async function makeRequest(processData) {
   const config = {
     method: "post",
-    url: "https://demo.leocdp.net/api/event/save",
+    url: "https://vnuk.leocdp.net/api/event/save",
     data: {
-      targetUpdateEmail: "ndielhenn123@jugem.jp", // the target update profile's email
+      targetUpdateEmail: "media@gatesfoundation.org", // the target update profile's email
       journeyMapId: "id_default_journey", // the target update journey map
-      tpname: "Vietnam's Home for Real Estate", // TOUCHPOINT_NAME
-      tpurl: "https://www.fazwaz.vn/", // TOUCHPOINT_URL
+      tpname: "Strand Book Store", // TOUCHPOINT_NAME
+      tpurl: "https://www.strandbooks.com/", // TOUCHPOINT_URL
       tprefurl: "https://google.com", // TOUCHPOINT_REFERRER_URL
       eventdata: "{'source':'test api'}", // custom event data
-      imageUrls:"https://cdn.fazwaz.com/wbr/NNL0DlPIBz2QH9Qfx6CPMmGQZI4/263x333/region/120/hcm.jpg",
-      metric: "page-view",
+      imageUrls:"https://www.insidehook.com/wp-content/uploads/2020/11/the_strand_bookstore_nyc_2020.jpg?fit=1200%2C800",
+      metric: "book-store-view",
     },
     headers: {
       tokenkey: "default_access_key",

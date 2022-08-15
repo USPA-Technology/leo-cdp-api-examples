@@ -3,9 +3,9 @@ const axios = require("axios");
 async function makeRequest(processData) {
   const config = {
     method: "get",
-    url: "https://demo.leocdp.net/api/event/list",
+    url: "https://vnuk.leocdp.net/api/event/list",
     params: {
-      profileId: "21KAhqymDWBpDIoD5XeAfQ",
+      primaryEmail: "media@gatesfoundation.org",
       startIndex: 0,
       numberResult: 3,
     },

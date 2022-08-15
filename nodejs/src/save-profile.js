@@ -3,21 +3,23 @@ const axios = require("axios");
 async function makeRequest(processData) {
   const config = {
     method: "post",
-    url: "https://demo.leocdp.net/api/profile/save",
+    url: "https://vnuk.leocdp.net/api/profile/save",
     data: {
-      primaryEmail: "ndielhenn123@jugem.jp",
-      primaryPhone: "090312298",
+      journeyMapId: "id_default_journey",
+      primaryAvatar	: "https://media.vneconomy.vn/w800/images/upload/2022/06/16/im-564446.jpg",
+      primaryEmail: "media@gatesfoundation.org",
+      primaryPhone: "(206) 709-3400",
       crmRefId: "123456",
-      firstName: "Marco",
-      middleName: "van",
-      lastName: "Basten",
+      firstName: "Bill",
+      middleName: "",
+      lastName: "Gates",
       gender: "male",
-      dateOfBirth: "1964-10-31", // yyyy-MM-dd
+      dateOfBirth: "1955-10-28", // yyyy-MM-dd
       dataLabels: "test; demo; fake data; CRM",
-      totalCLV: 101.1,
+      totalCLV: 114.2,
       totalCAC: 10.1,
-      totalTransactionValue: 120.2,
-
+      totalTransactionValue: 20.25,
+      jobTitles: "software developer; investor; author; philanthropist",
     },
     headers: {
       tokenkey: "default_access_key",
