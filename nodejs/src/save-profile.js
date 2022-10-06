@@ -4,8 +4,8 @@ async function makeRequest(processData) {
   const config = {
     method: "post",
     url: "https://vnuk.leocdp.net/api/profile/save",
-    data: {
-      journeyMapId: "id_default_journey",
+    data: {      
+      journeyMapIds: "id_default_journey; journey_map_id_1; journey_map_id_2; ",
       dataLabels: "DATA_FROM_LEO_API; CRM; KOL person",
       crmRefId: "123456",
       primaryAvatar	: "https://cdn.britannica.com/47/188747-050-1D34E743/Bill-Gates-2011.jpg",
