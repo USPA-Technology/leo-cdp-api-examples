@@ -3,19 +3,18 @@ const axios = require("axios");
 async function makeRequest(processData) {
   const config = {
     method: "post",
-    url: "https://vnuk.leocdp.net/api/event/save",
+    url: "https://demo.leocdp.net/api/event/save",
     data: {
       targetUpdateEmail: "media@gatesfoundation.org", // the target update profile's email
-      journeyMapId: "id_default_journey", // the target update journey map
-      tpname: "Strand Book Store", // TOUCHPOINT_NAME
-      tpurl: "https://www.strandbooks.com/", // TOUCHPOINT_URL
+      tpname: "TP bank", // TOUCHPOINT_NAME
+      tpurl: "https://tpb.vn", // TOUCHPOINT_URL
       tprefurl: "https://google.com", // TOUCHPOINT_REFERRER_URL
       eventdata: "{'source':'test api'}", // custom event data
-      imageUrls:"https://www.insidehook.com/wp-content/uploads/2020/11/the_strand_bookstore_nyc_2020.jpg?fit=1200%2C800",
-      metric: "book-store-view",
+      imageUrls:"https://onlinebank.com.vn/wp-content/uploads/2019/10/tpbank.jpg",
+      metric: "apply-loan",
     },
     headers: {
-      tokenkey: "default_access_key",
+      tokenkey: "",
       tokenvalue: "",
     },
   };

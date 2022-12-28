@@ -35,7 +35,7 @@ async function makeRequest(processData) {
       "notes": "test 122333 aaa bbb"      
     },
     headers: {
-      tokenkey: "default_access_key",
+      tokenkey: "",
       tokenvalue: "",
     },
   };
