@@ -1,0 +1,25 @@
+customer_id,name,email,address,phone_number
+1,Le Duc,le.duc@gmail.com,"Him Lam Nam Sài Gòn, 6A Số 14, chung cư, Bình Chánh, Thành phố Hồ Chí Minh, Việt Nam",050156948
+2,Tran Uyen,tran.uyen@example.com,"Saigon Pavillon, 53 Bà Huyện Thanh Quan, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",098342953
+3,Huynh Tuan,huynh.tuan@gmail.com,"Him Lam Nam Sài Gòn, 6A Số 14, chung cư, Bình Chánh, Thành phố Hồ Chí Minh, Việt Nam",082774209
+4,Huynh An,huynh.an@email.com,"62G Đ. Võ Thị Sáu, Phường Tân Định, Quận 1, Thành phố Hồ Chí Minh 700000, Việt Nam",086735463
+5,Nguyen Tuan hw,nguyen.tuan@example.com,"3 Võ Văn Tần, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",088365301
+6,Vo Nam,vo.nam@example.com,"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam",052091443
+7,Dang Duc,dang.duc@example.com,"3 Võ Văn Tần, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",080776476
+8,Vu Viet,vu.viet@gmail.com,"Saigon Pavillon, 53 Bà Huyện Thanh Quan, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",057585211
+9,Nguyen Giang,nguyen.giang@example.com,"Saigon Pavillon, 53 Bà Huyện Thanh Quan, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",056270723
+10,Pham Viet KQ,pham.viet@gmail.com,"Saigon Pavillon, 53 Bà Huyện Thanh Quan, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",089549654
+11,Dang Nam,dang.nam@example.com,"3 Võ Văn Tần, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",099741324
+12,Tran Chi,tran.chi@example.com,"62G Đ. Võ Thị Sáu, Phường Tân Định, Quận 1, Thành phố Hồ Chí Minh 700000, Việt Nam",056228472
+13,Le Giang,le.giang@gmail.com,"62G Đ. Võ Thị Sáu, Phường Tân Định, Quận 1, Thành phố Hồ Chí Minh 700000, Việt Nam",034069097
+14,Phan An,phan.an@email.com,"Saigon Pavillon, 53 Bà Huyện Thanh Quan, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",035931872
+15,Vu Tuan zT,vu.tuan@email.com,"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam",037208762
+16,Vu Tuan,vu.tuan@example.com,"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam",032169198
+17,Le Phong,le.phong@email.com,"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam",035469271
+18,Huynh Xuan,huynh.xuan@example.com,"46/11 Đ. Nguyễn Cửu Vân, Phường 17, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam",096216182
+19,Pham Uyen,pham.uyen@email.com,"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam",059990019
+20,Pham Giang px,pham.giang@email.com,"62G Đ. Võ Thị Sáu, Phường Tân Định, Quận 1, Thành phố Hồ Chí Minh 700000, Việt Nam",071587905
+21,Vo Nam,vo.nam@email.com,"62G Đ. Võ Thị Sáu, Phường Tân Định, Quận 1, Thành phố Hồ Chí Minh 700000, Việt Nam",031034321
+22,Nguyen Xuan,nguyen.xuan@example.com,"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam",033978187
+23,Tran Phong,tran.phong@example.com,"Saigon Pavillon, 53 Bà Huyện Thanh Quan, Phường 6, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",099279455
+24,Vu An,vu.an@gmail.com,"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam",083123672
