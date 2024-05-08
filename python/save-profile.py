@@ -13,7 +13,7 @@ headers = {
 
 profile = {
     "journeyMapIds": "id_default_journey; 1N0iuKVy226Oh8yKLybUaK; ",
-    "dataLabels": "DATA_FROM_LEO_API; CRM; KOL person; investors",
+    "dataLabels": "DATA_FROM_CDP_API; CRM; KOL person; investors",
     "crmRefId": "123456",
     "governmentIssuedIDs": "US_123",
     "primaryAvatar": "https://www.thelist.com/img/gallery/surprising-things-the-male-body-can-actually-do/intro-1547150254.jpg",

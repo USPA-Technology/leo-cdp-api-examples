@@ -20,7 +20,7 @@ test_metric = "purchase"
 
 tracking_event = {
     # the target update profile's email
-    'targetUpdateEmail': "trieu@leocdp.com",
+    'targetUpdateEmail': "media@gatesfoundation.org",
     'tpname': "Bộ chăn bốn mùa Sắc Hạ ESC23002",  # TOUCHPOINT_NAME
     'tpurl': "https://everon.com/bo-chan-bon-mua/bo-chan-bon-mua-sac-ha-esc23002-p2750.html",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL
