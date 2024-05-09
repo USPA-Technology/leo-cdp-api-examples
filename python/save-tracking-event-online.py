@@ -18,15 +18,22 @@ headers = {
 
 test_metric = "purchase"
 
+
+# get current datetime in format %Y-%m-%dT%H:%M:%S.%fZ
+formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
 tracking_event = {
     # the target update profile's email
+    'eventTime': '2024-05-08T10:51:25.110Z',
     'targetUpdateEmail': "media@gatesfoundation.org",
-    'tpname': "Bộ chăn bốn mùa Sắc Hạ ESC23002",  # TOUCHPOINT_NAME
-    'tpurl': "https://everon.com/bo-chan-bon-mua/bo-chan-bon-mua-sac-ha-esc23002-p2750.html",  # TOUCHPOINT_URL
+    'tpname': "Bộ Everon EPC-24041 thuộc bộ sưu tập 2024 - 2025",  # TOUCHPOINT_NAME
+    'tpurl': "https://www.everonvn.vn/chi-tiet/everon-epc24041.html",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL
-    'eventdata': '{"itemtId": "2750", "idType" : "item_ID", quantity : 1}',  # custom event data
-    'imageUrls': "https://everon.com/images/products/2022/10/05/compress_square/4-mua_1664934649.jpg",
-    'metric': test_metric
+    'eventdata': '{"itemtId": "2019010113333", "idType" : "SKU", quantity : 2}',  # custom event data
+    'imageUrls': "https://www.everonvn.vn/chi-tiet/images/upload/hinhanh/EPC-24041.jpg",
+    'metric': test_metric,
+    'tsval': 5120100,
+    'tscur': 'VND'
 }
 
 
