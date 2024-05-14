@@ -40,7 +40,9 @@ profile = {
     "totalTransactionValue": 200,  # this is example data
     "saleAgencies": "Agency A; Agency B; Agency C",  # the list of sales sources
     "saleAgents": "Mr.Thomas; Ms.Anna",  # the list of sales persons
-    "notes": "this is a test"
+    "notes": "this is a test",
+    "extAttributes": json.dumps({"facebook-friend": 10, "facebook-short-bio": "#Dataism #LEOCDP #InGodWeTrust"}),
+    "incomeHistory": json.dumps({"2022-2023": 2000000, "2023-2024": 3000000})
 }
 
 json_payload = json.dumps(profile)
