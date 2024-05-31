@@ -11,19 +11,23 @@ headers = {
     "tokenvalue": config('tokenvalue')
 }
 
+sampleExtAttributes = {"facebook-friend": 10, "facebook-short-bio": "#Dataism #LEOCDP #InGodWeTrust"}
+sampleSocialMediaProfiles = {"zalo": "123456789", "facebook": "123456789", "linkedin": "123456789","twitter": "123456789","github": "123456789"}
+sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
+
 profile = {
-    "journeyMapIds": "id_default_journey; 1N0iuKVy226Oh8yKLybUaK; ",
+    "journeyMapIds": "id_default_journey; ",
     "dataLabels": "DATA_FROM_CDP_API; CRM; KOL person; investors",
-    "crmRefId": "123456",
+    "crmRefId": "123",
     "governmentIssuedIDs": "US_123",
     "primaryAvatar": "https://www.thelist.com/img/gallery/surprising-things-the-male-body-can-actually-do/intro-1547150254.jpg",
-    "primaryEmail": "bill.john@example.com",
+    "primaryEmail": "bill.john123@example.com",
     "secondaryEmails": "",
-    "primaryPhone": "1234567",
+    "primaryPhone": "1234567-123",
     "secondaryPhones": "(206) 709-3401; (206) 709-3402",
     "firstName": "Bill",
     "middleName": "",
-    "lastName": "John",
+    "lastName": "John 12345",
     "gender": "male",  # or female
     "dateOfBirth": "1955-10-28",  # yyyy-MM-dd
     "livingLocation": " Medina, Washington",  # the address of customer
@@ -41,8 +45,9 @@ profile = {
     "saleAgencies": "Agency A; Agency B; Agency C",  # the list of sales sources
     "saleAgents": "Mr.Thomas; Ms.Anna",  # the list of sales persons
     "notes": "this is a test",
-    "extAttributes": json.dumps({"facebook-friend": 10, "facebook-short-bio": "#Dataism #LEOCDP #InGodWeTrust"}),
-    "incomeHistory": json.dumps({"2022-2023": 2000000, "2023-2024": 3000000})
+    "extAttributes": json.dumps(sampleExtAttributes),
+    "incomeHistory": json.dumps(sampleIncomeHistory),
+    "socialMediaProfiles": json.dumps(sampleSocialMediaProfiles)
 }
 
 json_payload = json.dumps(profile)
