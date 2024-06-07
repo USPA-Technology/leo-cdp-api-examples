@@ -12,7 +12,7 @@ headers = {
 }
 
 sampleExtAttributes = {}
-sampleSocialMediaProfiles = {"zalo": "123456789"}
+sampleSocialMediaProfiles = {"zalo": "123456789", "facebook": "123456789", "linkedin": "123456789"}
 sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
@@ -26,7 +26,7 @@ profile = {
     "primaryPhone": "",
     "secondaryPhones": "",
     "firstName": "Thomas",
-    "middleName": "",
+    "middleName": "Tan",
     "lastName": "Moore",
     "gender": "male",  # or female
     "dateOfBirth": "1986-10-28",  # yyyy-MM-dd
@@ -51,7 +51,7 @@ profile = {
 }
 
 json_payload = json.dumps(profile)
-uri = '/api/profile/save'
+uri = '/api/profile/save?debug=true'
 connection.request('POST', uri, json_payload, headers)
 
 print("uri " + uri)
