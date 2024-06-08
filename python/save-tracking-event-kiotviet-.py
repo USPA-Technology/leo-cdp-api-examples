@@ -7,7 +7,7 @@ from datetime import datetime, timezone, timedelta
 
 now = datetime.now()  # current date and time
 
-kiotviet_invoice_json = Path('./sample-data/kiotviet_invoices.json').read_text()
+kiotviet_invoice_json = Path('./sample-data/real_kiotviet_invoices.json').read_text()
 kiotviet_invoice = json.loads(kiotviet_invoice_json)
 
 connection = http.client.HTTPSConnection(config('cdp_host'))
