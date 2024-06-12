@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Simple HTML Page</title>
+</head>
+<body>
+
+    <h1>Welcome to my page!</h1>
+
+    <p>This is a paragraph of text.</p>
+
+
+    <script>
+        // JavaScript code goes here
+
+        var updateProfileToCDP = window.updateProfileToCDP || function(firstName, lastName, email, phone) {
+            var userData = {'firstName': firstName, 'lastName': lastName, 'email':email, 'phone': phone, loginId : "" ,loginProvider: location.host};
+            if(typeof window.LeoObserverProxy ==='object') {
+                LeoObserverProxy.updateProfileBySession(userData);
+            } else {
+                console.log("LeoObserverProxy is not defined");
+            }
+        }
+
+        setTimeout(function(){
+            updateProfileToCDP("Trieu", "Nguyen Tan", "tantrieuf31.database@gmail.com", "0903880047");
+        },2000)
+    </script>
+</body>
+</html>
