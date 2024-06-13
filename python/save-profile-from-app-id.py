@@ -17,13 +17,13 @@ sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
     "journeyMapIds": "id_default_journey; ",
-    "dataLabels": "CRM; KOL person; investors",
+    "dataLabels": "CRM;",
     "crmRefId": "123",
-    "governmentIssuedIDs": "US_123",
-    "primaryAvatar": "https://www.thelist.com/img/gallery/surprising-things-the-male-body-can-actually-do/intro-1547150254.jpg",
-    "primaryEmail": "bill.john123@example.com",
+    "governmentIssuedIDs": "",
+    "primaryAvatar": "",
+    "primaryEmail": "tantrieuf31@gmail.com",
     "secondaryEmails": "",
-    "primaryPhone": "1234567-123",
+    "primaryPhone": "0903122290",
     "secondaryPhones": "(206) 709-3401; (206) 709-3402",
     "firstName": "Bill",
     "middleName": "",
