@@ -40,6 +40,7 @@ def kiotviet_to_cdp(kiotviet_data):
     cdp_events = []
 
     for item in kiotviet_data["invoiceDetails"]:
+        # TODO check item to map data 
         cdp_event = {
             "name": item["productName"],
             "itemtId": item["productId"],  # Assuming productId is the item ID
@@ -61,27 +62,28 @@ def kiotviet_to_cdp(kiotviet_data):
     return cdp_events
 
 
-test_metric = "purchase"
+event_name_metric = "purchase"
 
 tracking_event = {
     # the target update profile's CRM ID
     'eventTime': convert_kiotviettime_to_CDP_time(kiotviet_invoice["purchaseDate"]),
     'targetUpdateCrmId': "KiotViet-" + kiotviet_invoice["customerCode"],  # customerCode
     'tpname': kiotviet_invoice["soldByName"],  # soldByName
-    'tpurl': "uri://KiotViet:soldById:" + str(kiotviet_invoice["soldById"]),  # soldById
+    'tpurl': "https://maps.google.com?q=" + str(kiotviet_invoice["branchName"]),  # branchName
     'tprefurl': "",  
     'rawJsonData': kiotviet_invoice_json,  # custom event data
     'imageUrls': "",
-    'metric': test_metric
+    'metric': event_name_metric
 }
 
 
 
-if test_metric == 'purchase':
-    shoppingCartItems = kiotviet_to_cdp(kiotviet_invoice)
+if event_name_metric == 'purchase':
     tracking_event['tsid'] = kiotviet_invoice["code"]  # code
     tracking_event['tscur'] = "VND"
     tracking_event['tsval'] = kiotviet_invoice["totalPayment"]  # code
+    items = kiotviet_to_cdp(kiotviet_invoice)
+    tracking_event['scitems'] = json.dumps(items)
     
 
 json_payload = json.dumps(tracking_event)
