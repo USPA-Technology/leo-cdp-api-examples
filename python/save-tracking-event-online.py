@@ -53,7 +53,7 @@ if test_metric == 'purchase' :
         "imageUrl": "https://everon.com/images/products/2022/10/05/compress_square/4-mua_1664934649.jpg"
     })
     transaction_id = "DEMO_TRANSACTION_" + now.strftime("%m/%d/%Y, %H:%M:%S")
-    tracking_event['scitems'] = json.dumps(shoppingCartItems)
+    tracking_event['scitems'] = shoppingCartItems
     tracking_event['tsid'] = transaction_id
 
 

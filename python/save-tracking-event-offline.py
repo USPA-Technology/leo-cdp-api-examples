@@ -4,7 +4,7 @@ from decouple import config
 
 from datetime import datetime
 
-now = datetime.now() # current date and time
+now = datetime.now()  # current date and time
 
 connection = http.client.HTTPSConnection(config('cdp_host'))
 
@@ -16,37 +16,39 @@ headers = {
 }
 # print(headers)
 
-test_metric = "qr-code-scan"
+test_metric = "purchase"
 
 tracking_event = {
     # the target update profile's email
-    'targetUpdatePhone': "2067093400",
-    'tpname': "Bộ chăn bốn mùa Sắc Hạ ESC23002",  # TOUCHPOINT_NAME
-    'tpurl': "https://maps.app.goo.gl/YpdoePpFMTCycSCZ9",  # TOUCHPOINT_URL
+    'targetUpdatePhone': "5626775267",
+    'tpname': "K-Bedding Him Lam",  # TOUCHPOINT_NAME
+    'tpurl': "https://maps.app.goo.gl/AEhVe18TWpEzTUdW6",  # TOUCHPOINT_URL
     'tprefurl': "",  # TOUCHPOINT_REFERRER_URL
-    'eventdata': '{"itemtId": "2750", "idType" : "item_ID", quantity : 1}',  # custom event data
-    'imageUrls': "https://everon.com/upload_images/images/dia-chi-mua-cha-ga-goi-everon/mua-dem-everon-chinh-hang-o-dau-3.jpg",
-    'metric': test_metric
+    # custom event data
+    'eventdata': '',
+    'imageUrls': "",
+    'metric': test_metric,
+   # 'eventTime': "2024-06-27T17:26:42Z",
 }
 
 
-if test_metric == 'purchase' :
-    shoppingCartItems = [];
-    shoppingCartItems.append({
-        "name": "Bộ chăn bốn mùa Sắc Hạ ESC23002",
-        "itemtId": "2750",
-        "idType": "item_ID",
-        "originalPrice": 5299000,
-        "salePrice": 5299000,
-        "quantity": 1,
-        "currency": "VND",
-        "supplierId": "",
-        "couponCode": "",
-        "fullUrl": "https://everon.com/bo-chan-bon-mua/bo-chan-bon-mua-sac-ha-esc23002-p2750.html",
-        "imageUrl": "https://everon.com/images/products/2022/10/05/compress_square/4-mua_1664934649.jpg"
-    })
+if test_metric == 'purchase':
+    shoppingCartItems = []
+    shoppingCartItems.append(
+        {'name': 'Chăn hè K-Bedding 200*220KNTS401',
+         'itemId': 'kiotviet-'+str(1001105919),
+         'idType': 'item_ID',
+         'originalPrice': 1900000.0,
+         'salePrice': 1140000.0,
+         'quantity': 1,
+         'currency': 'VND',
+         'supplierId': '', 'couponCode': '',
+         'fullUrl': 'https://www.google.com/search?q=KCBM2022KNTS401',
+         'imageUrl': 'https://www.everonvn.vn/images/global/everonvn-vn.png'
+         }
+    )
     transaction_id = "DEMO_TRANSACTION_" + now.strftime("%m/%d/%Y, %H:%M:%S")
-    tracking_event['scitems'] = json.dumps(shoppingCartItems)
+    tracking_event['scitems'] = shoppingCartItems
     tracking_event['tsid'] = transaction_id
 
 
