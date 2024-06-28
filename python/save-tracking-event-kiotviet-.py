@@ -83,7 +83,7 @@ if event_name_metric == 'purchase':
     tracking_event['tscur'] = "VND"
     tracking_event['tsval'] = kiotviet_invoice["totalPayment"]  # code
     items = kiotviet_to_cdp(kiotviet_invoice)
-    tracking_event['scitems'] = json.dumps(items)
+    tracking_event['scitems'] = items
     
 
 json_payload = json.dumps(tracking_event)
