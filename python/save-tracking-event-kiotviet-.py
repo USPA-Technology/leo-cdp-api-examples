@@ -43,7 +43,7 @@ def kiotviet_to_cdp(kiotviet_data):
         # TODO check item to map data 
         cdp_event = {
             "name": item["productName"],
-            "itemtId": item["productId"],  # Assuming productId is the item ID
+            "itemId": item["productId"],  # Assuming productId is the item ID
             "idType": "item_ID",
             # Assuming price is the original price
             "originalPrice": item["price"],

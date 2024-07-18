@@ -24,24 +24,26 @@ formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 tracking_event = {
     # the target update profile's email
-    'eventTime': '2024-05-08T10:51:25.110Z',
-    'targetUpdateEmail': "media@gatesfoundation.org",
+    'eventTime': '2024-07-18T11:51:25.110Z',
+    'targetUpdateEmail': "trieu@leocdp.com",
     'tpname': "Bộ Everon EPC-24041 thuộc bộ sưu tập 2024 - 2025",  # TOUCHPOINT_NAME
     'tpurl': "https://www.everonvn.vn/chi-tiet/everon-epc24041.html",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL
-    'eventdata': '{"itemtId": "2019010113333", "idType" : "SKU", quantity : 2}',  # custom event data
+    'eventdata': '{"itemId": "2019010113333", "idType" : "SKU", quantity : 2}',  # custom event data
     'imageUrls': "https://www.everonvn.vn/chi-tiet/images/upload/hinhanh/EPC-24041.jpg",
     'metric': test_metric,
     'tsval': 5120100,
-    'tscur': 'VND'
+    'tscur': 'VND',
+    'tsstatus': 'OK',
+    'message':'test'
 }
 
 
 if test_metric == 'purchase' :
-    shoppingCartItems = [];
+    shoppingCartItems = []
     shoppingCartItems.append({
         "name": "Bộ chăn bốn mùa Sắc Hạ ESC23002",
-        "itemtId": "2750",
+        "itemId": "2750",
         "idType": "item_ID",
         "originalPrice": 5299000,
         "salePrice": 5299000,

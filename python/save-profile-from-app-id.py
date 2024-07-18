@@ -17,7 +17,7 @@ sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
     "journeyMapIds": "id_default_journey; ",
-    "dataLabels": "CRM;",
+    "dataLabels": "CRM;test",
     "crmRefId": "123",
     "governmentIssuedIDs": "",
     "primaryAvatar": "",
@@ -47,7 +47,7 @@ profile = {
     "notes": "this is a test",
     "extAttributes": json.dumps(sampleExtAttributes),
     "incomeHistory": json.dumps(sampleIncomeHistory),
-    "applicationIDs": json.dumps(applicationIDs)
+    "applicationIDs": 'kiotviet-KH410273'
 }
 
 json_payload = json.dumps(profile)

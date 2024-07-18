@@ -20,11 +20,11 @@ test_metric = "like"
 
 tracking_event = {
     # the target update profile's email
-    'targetUpdateCrmId': "12345678",
+    'targetUpdateCrmId': "KiotViet-KH414335",
     'tpname': "Bộ chăn bốn mùa Sắc Hạ ESC23002",  # TOUCHPOINT_NAME
     'tpurl': "https://maps.app.goo.gl/YpdoePpFMTCycSCZ9",  # TOUCHPOINT_URL
     'tprefurl': "",  # TOUCHPOINT_REFERRER_URL
-    'eventdata': '{"itemtId": "2750", "idType" : "item_ID", quantity : 1}',  # custom event data
+    'eventdata': '{"itemId": "2750", "idType" : "item_ID", quantity : 1}',  # custom event data
     'imageUrls': "https://everon.com/upload_images/images/dia-chi-mua-cha-ga-goi-everon/mua-dem-everon-chinh-hang-o-dau-3.jpg",
     'metric': test_metric
 }
@@ -34,7 +34,7 @@ if test_metric == 'purchase' :
     shoppingCartItems = [];
     shoppingCartItems.append({
         "name": "Bộ chăn bốn mùa Sắc Hạ ESC23002",
-        "itemtId": "2750",
+        "itemId": "2750",
         "idType": "item_ID",
         "originalPrice": 5299000,
         "salePrice": 5299000,
