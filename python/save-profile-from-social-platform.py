@@ -12,6 +12,8 @@ headers = {
 }
 
 sampleExtAttributes = {}
+
+# set Social Media Profile ID here
 sampleSocialMediaProfiles = {"zalo": "123456789", "facebook": "123456789", "linkedin": "123456789"}
 sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
@@ -20,6 +22,7 @@ profile = {
     "dataLabels": " KOL person; investors",
     "crmRefId": "",
     "governmentIssuedIDs": "",
+    'targetUpdateCrmId': "KiotViet-" + kiotviet_invoice["customerCode"],  # customerCode
     "primaryAvatar": "https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png",
     "primaryEmail": "",
     "secondaryEmails": "",

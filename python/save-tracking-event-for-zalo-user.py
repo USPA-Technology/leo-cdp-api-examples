@@ -25,7 +25,9 @@ formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 tracking_event = {
     # the target update profile's email
     'eventTime': '2024-07-18T11:51:25.110Z',
-    'targetUpdateEmail': "trieu@leocdp.com",
+    # Set Zalo User ID here 
+    'targetUpdateaSocialMediaID': "zalo:123456789",
+    
     'tpname': "Bộ Everon EPC-24041 thuộc bộ sưu tập 2024 - 2025",  # TOUCHPOINT_NAME
     'tpurl': "https://www.everonvn.vn/chi-tiet/everon-epc24041.html",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL
@@ -34,8 +36,8 @@ tracking_event = {
     'metric': test_metric,
     'tsval': 5120100,
     'tscur': 'VND',
-    'tsstatus': 'OK',
-    'message':'test',
+    'tsstatus': 'transaction OK',
+    'message':'test transaction from zalo',
     'locationName': "1 Trần Hưng Đạo, Tp.HCM"
 }
 
