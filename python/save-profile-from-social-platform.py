@@ -1,6 +1,7 @@
 import http.client
 import json
 from decouple import config
+from pathlib import Path
 
 connection = http.client.HTTPSConnection(config('cdp_host'))
 
@@ -16,6 +17,9 @@ sampleExtAttributes = {}
 # set Social Media Profile ID here
 sampleSocialMediaProfiles = {"zalo": "123456789", "facebook": "123456789", "linkedin": "123456789"}
 sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
+
+kiotviet_invoice_json = Path('./sample-data/real_kiotviet_invoices.json').read_text()
+kiotviet_invoice = json.loads(kiotviet_invoice_json)
 
 profile = {
     "journeyMapIds": "id_default_journey; ",
