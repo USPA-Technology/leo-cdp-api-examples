@@ -25,16 +25,16 @@ tracking_event = {
     'tpurl': "https://maps.app.goo.gl/RAdDJqiQe5qKvvrx5",  # TOUCHPOINT_URL
     'tprefurl': "",  # TOUCHPOINT_REFERRER_URL
     'funnelStage':"engaged-customer",
-    'eventTime': '2024-07-24T10:51:25.110Z',
+    'eventtime': '2024-07-24T10:51:25.110Z',
     # custom event data
     'eventdata': '',
     'imageUrls': "https://ohtea.vn/img/B%C3%A1nh%20tr%C3%A1ng%20cu%E1%BB%91n.jpg",
     'metric': test_metric,
-    'tsval': 28000,
+    'tsval': -28000,
     'tscur': 'VND',
     'tsstatus': 'yesy ',
     'message':'test aaaa'
-   # 'eventTime': "2024-06-27T17:26:42Z",
+   # 'eventtime': "2024-06-27T17:26:42Z",
 }
 
 

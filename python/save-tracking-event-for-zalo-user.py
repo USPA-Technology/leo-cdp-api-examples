@@ -24,7 +24,7 @@ formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 tracking_event = {
     # the target update profile's email
-    'eventTime': '2024-07-18T11:51:25.110Z',
+    'eventtime': '2024-07-25T11:51:25.110Z',
     # Set Zalo User ID here 
     'targetUpdateaSocialMediaID': "zalo:123456789",
     
@@ -34,7 +34,7 @@ tracking_event = {
     'eventdata': '{"itemId": "2019010113333", "idType" : "SKU", quantity : 2}',  # custom event data
     'imageUrls': "https://www.everonvn.vn/chi-tiet/images/upload/hinhanh/EPC-24041.jpg",
     'metric': test_metric,
-    'tsval': 5120100,
+    'tsval': -100,
     'tscur': 'VND',
     'tsstatus': 'transaction OK',
     'message':'test transaction from zalo',

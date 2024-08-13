@@ -24,7 +24,7 @@ formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 tracking_event = {
     # the target update profile's email
-    'eventTime': '2024-07-18T11:51:25.110Z',
+    'eventtime': '2024-07-18T11:51:25.110Z',
     'targetUpdateEmail': "trieu@leocdp.com",
     'tpname': "Bộ Everon EPC-24041 thuộc bộ sưu tập 2024 - 2025",  # TOUCHPOINT_NAME
     'tpurl': "https://www.everonvn.vn/chi-tiet/everon-epc24041.html",  # TOUCHPOINT_URL

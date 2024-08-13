@@ -29,7 +29,7 @@ profile = {
     "middleName": "",
     "lastName": "John 12345",
     "gender": "male",  # or female
-    "dateOfBirth": "1955-10-28",  # yyyy-MM-dd
+    "dateOfBirth": "1990-08-05",  # yyyy-MM-dd
     "livingLocation": " Medina, Washington",  # the address of customer
     "livingCity": "Washington",  # the city where customer is living
     "jobTitles": "Manager",  # the Job Title, e.g: CEO; Manager; Head of Sales
