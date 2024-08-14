@@ -24,7 +24,8 @@ headers = {
 
 def process_data():
     eventdata = {
-        "message": "Facial Bar"
+        "product_code":1234,
+        "branch":"FacialBar Nguyễn Đình Chiều TP.HCM",
     }
     tracking_event = {
         'eventtime': "2024-08-14T16:53:46Z",  # Direct example value
@@ -35,7 +36,8 @@ def process_data():
         'tprefurl': "",
         'imageUrls': "",
         'metric': "chat-for-support",  # Direct example value
-        "eventdata": eventdata
+        "eventdata": eventdata,
+        "message": "sản phẩm giá bao nhiêu ?"
     }
     print(type(tracking_event))
     print(json.dumps(tracking_event, indent=4, ensure_ascii=True))
