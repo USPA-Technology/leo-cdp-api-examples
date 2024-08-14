@@ -9,7 +9,7 @@ async function makeRequest(processData) {
       tpname: "TP bank", // TOUCHPOINT_NAME
       tpurl: "https://tpb.vn", // TOUCHPOINT_URL
       tprefurl: "https://google.com", // TOUCHPOINT_REFERRER_URL
-      eventdata: "{'source':'test api'}", // custom event data
+      eventdata: {'source':'test api'}, // custom event data
       imageUrls:"https://onlinebank.com.vn/wp-content/uploads/2019/10/tpbank.jpg",
       metric: "apply-loan",
     },

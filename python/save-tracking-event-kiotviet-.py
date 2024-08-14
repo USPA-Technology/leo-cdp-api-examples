@@ -66,7 +66,7 @@ event_name_metric = "purchase"
 
 tracking_event = {
     # the target update profile's CRM ID
-    'eventTime': convert_kiotviettime_to_CDP_time(kiotviet_invoice["purchaseDate"]),
+    'eventtime': convert_kiotviettime_to_CDP_time(kiotviet_invoice["purchaseDate"]),
     'targetUpdateCrmId': "KiotViet-" + kiotviet_invoice["customerCode"],  # customerCode
     'tpname': kiotviet_invoice["soldByName"],  # soldByName
     'tpurl': "https://maps.google.com?q=" + str(kiotviet_invoice["branchName"]),  # branchName

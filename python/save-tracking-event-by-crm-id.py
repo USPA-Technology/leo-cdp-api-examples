@@ -18,13 +18,14 @@ headers = {
 
 test_metric = "like"
 
+eventdata = {"itemId": "2751", "idType" : "item_ID", "quantity" : 1}
 tracking_event = {
     # the target update profile's email
     'targetUpdateCrmId': "KiotViet-KH414335",
     'tpname': "Bộ chăn bốn mùa Sắc Hạ ESC23002",  # TOUCHPOINT_NAME
     'tpurl': "https://maps.app.goo.gl/YpdoePpFMTCycSCZ9",  # TOUCHPOINT_URL
     'tprefurl': "",  # TOUCHPOINT_REFERRER_URL
-    'eventdata': '{"itemId": "2750", "idType" : "item_ID", quantity : 1}',  # custom event data
+    'eventdata': eventdata,  # custom event data
     'imageUrls': "https://everon.com/upload_images/images/dia-chi-mua-cha-ga-goi-everon/mua-dem-everon-chinh-hang-o-dau-3.jpg",
     'metric': test_metric
 }

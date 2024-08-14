@@ -22,16 +22,17 @@ test_metric = "purchase"
 # get current datetime in format %Y-%m-%dT%H:%M:%S.%fZ
 formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
+eventdata  = {"itemId": "2019010113333", "idType" : "SKU", "quantity" : 2}
 tracking_event = {
     # the target update profile's email
-    'eventtime': '2024-07-25T11:51:25.110Z',
+    'eventtime': '2024-08-14T11:51:25.110Z',
     # Set Zalo User ID here 
     'targetUpdateaSocialMediaID': "zalo:123456789",
     
     'tpname': "Bộ Everon EPC-24041 thuộc bộ sưu tập 2024 - 2025",  # TOUCHPOINT_NAME
     'tpurl': "https://www.everonvn.vn/chi-tiet/everon-epc24041.html",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL
-    'eventdata': '{"itemId": "2019010113333", "idType" : "SKU", quantity : 2}',  # custom event data
+    'eventdata': eventdata,  # custom event data
     'imageUrls': "https://www.everonvn.vn/chi-tiet/images/upload/hinhanh/EPC-24041.jpg",
     'metric': test_metric,
     'tsval': -100,
