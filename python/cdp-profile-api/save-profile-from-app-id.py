@@ -12,7 +12,7 @@ headers = {
 }
 
 sampleExtAttributes = {"facebook-friend": 10, "facebook-short-bio": "#Dataism #LEOCDP #InGodWeTrust"}
-applicationIDs = ['kiotviet-KH410273']
+applicationIDs = ['kiotviet-KH410273','zalo-1234']
 sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
@@ -47,7 +47,12 @@ profile = {
     "notes": "this is a test",
     "extAttributes": json.dumps(sampleExtAttributes),
     "incomeHistory": json.dumps(sampleIncomeHistory),
-    "applicationIDs": 'kiotviet-KH410273'
+    # identities 
+    "applicationIDs": json.dumps(applicationIDs),
+    "socialMediaProfiles": json.dumps({"zalo": "123456789", "facebook": "123456789", "linkedin": "123456789"}),
+    "loyaltyIDs": json.dumps(['kiotviet-KH410273','dpoint-1234']),
+    "fintechSystemIDs": json.dumps(['bank-123','bank-456']),
+    "governmentIssuedIDs": json.dumps(['cccd-123','cccd-456'])
 }
 
 json_payload = json.dumps(profile)

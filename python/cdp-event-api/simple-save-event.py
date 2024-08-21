@@ -26,13 +26,13 @@ def process_data():
     eventdata = {
         "product_code":1234,
         "branch":"FacialBar Nguyễn Đình Chiều TP.HCM",
+        "sender":"user" # "everon zalo OA"
     }
     tracking_event = {
         'eventtime': "2024-08-14T16:53:46Z",  # Direct example value
         'targetUpdateCrmId': "kiotviet-HV01",  # Direct example value
-        'tpname': "INBOX",  # Direct example value
-        # Direct example value
-        'tpurl': "https://pancake.vn/199806393226746?c_id=199806393226746_7189156344522729",
+        'tpname': "Zalo Everon OA",  # Direct example value
+        'tpurl': "https://zalo.me/422456864632285156",
         'tprefurl': "",
         'imageUrls': "",
         'metric': "chat-for-support",  # Direct example value
