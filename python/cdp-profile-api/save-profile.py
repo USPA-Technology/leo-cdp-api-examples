@@ -17,7 +17,7 @@ sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
     "journeyMapIds": "id_default_journey; ",
-    "dataLabels": "CRM; KOL person; investors",
+    "dataLabels": "CRM; KOL person; người nổi tiếng; investors; doanh nhân đầu tư; hi <script>alert('hi')</script>",
     "crmRefId": "zalo-123456789",
     "governmentIssuedIDs": "US_123",
     "primaryAvatar": "https://www.thelist.com/img/gallery/surprising-things-the-male-body-can-actually-do/intro-1547150254.jpg",
@@ -47,7 +47,13 @@ profile = {
     "notes": "this is a test",
     "extAttributes": json.dumps(sampleExtAttributes),
     "incomeHistory": json.dumps(sampleIncomeHistory),
-    "socialMediaProfiles": json.dumps(sampleSocialMediaProfiles)
+    "socialMediaProfiles": json.dumps(sampleSocialMediaProfiles),
+    "totalLoyaltyScore": 100,
+    "extMetrics": json.dumps({'Dpoint_Loyalty_Score': 150}),
+    
+    # control how to save profile
+    "update": True,
+    "deduplicate": True
 }
 
 json_payload = json.dumps(profile)

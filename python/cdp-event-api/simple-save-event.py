@@ -36,7 +36,7 @@ def process_data():
         'tprefurl': "",
         'imageUrls': "",
         'metric': "chat-for-support",  # Direct example value
-        "eventdata": eventdata,
+        "jsonData": eventdata,
         "message": "sản phẩm giá bao nhiêu ?"
     }
     print(type(tracking_event))

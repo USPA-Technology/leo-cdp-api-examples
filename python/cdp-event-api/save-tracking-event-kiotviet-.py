@@ -72,6 +72,7 @@ tracking_event = {
     'tpurl': "https://maps.google.com?q=" + str(kiotviet_invoice["branchName"]),  # branchName
     'tprefurl': "",  
     'rawJsonData': kiotviet_invoice_json,  # custom event data
+    'eventData': kiotviet_invoice,
     'imageUrls': "",
     'metric': event_name_metric
 }
@@ -82,8 +83,8 @@ if event_name_metric == 'purchase':
     tracking_event['tsid'] = kiotviet_invoice["code"]  # code
     tracking_event['tscur'] = "VND"
     tracking_event['tsval'] = kiotviet_invoice["totalPayment"]  # code
-    items = kiotviet_to_cdp(kiotviet_invoice)
-    tracking_event['scitems'] = items
+    #items = kiotviet_to_cdp(kiotviet_invoice)
+   # tracking_event['scitems'] = items
     
 
 json_payload = json.dumps(tracking_event)
