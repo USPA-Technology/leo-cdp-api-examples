@@ -52,8 +52,11 @@ profile = {
     "extMetrics": json.dumps({'Dpoint_Loyalty_Score': 150}),
     
     # control how to save profile
-    "update": True,
-    "deduplicate": True
+    # valid value: primaryEmail, primaryPhone, crmRefId , socialMediaProfiles, applicationIDs, governmentIssuedIDs, loyaltyIDs, fintechSystemIDs
+    "updateByKey":"primaryPhone",
+    
+    # if deduplicate : True, the CDP will automatically merge duplicate profiles into one 
+    "deduplicate": False
 }
 
 json_payload = json.dumps(profile)

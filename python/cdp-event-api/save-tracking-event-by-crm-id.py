@@ -35,16 +35,15 @@ if test_metric == 'purchase' :
     shoppingCartItems = [];
     shoppingCartItems.append({
         "name": "Bộ chăn bốn mùa Sắc Hạ ESC23002",
-        "itemId": "2750",
-        "idType": "item_ID",
-        "originalPrice": 5299000,
-        "salePrice": 5299000,
+        "itemid": "2750",
+        "originalprice": 5299000,
+        "saleprice": 5299000,
         "quantity": 1,
         "currency": "VND",
-        "supplierId": "",
-        "couponCode": "",
-        "fullUrl": "https://everon.com/bo-chan-bon-mua/bo-chan-bon-mua-sac-ha-esc23002-p2750.html",
-        "imageUrl": "https://everon.com/images/products/2022/10/05/compress_square/4-mua_1664934649.jpg"
+        "supplierid": "",
+        "couponcode": "",
+        "fullurl": "https://everon.com/bo-chan-bon-mua/bo-chan-bon-mua-sac-ha-esc23002-p2750.html",
+        "imageurl": "https://everon.com/images/products/2022/10/05/compress_square/4-mua_1664934649.jpg"
     })
     transaction_id = "DEMO_TRANSACTION_" + now.strftime("%m/%d/%Y, %H:%M:%S")
     tracking_event['scitems'] = shoppingCartItems

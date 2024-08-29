@@ -43,18 +43,18 @@ def kiotviet_to_cdp(kiotviet_data):
         # TODO check item to map data 
         cdp_event = {
             "name": item["productName"],
-            "itemId": item["productId"],  # Assuming productId is the item ID
-            "idType": "item_ID",
+            "itemid": item["productId"],  # Assuming productId is the item ID
+            "idtype": "item_ID",
             # Assuming price is the original price
-            "originalPrice": item["price"],
-            "salePrice": item["price"] - item["discount"],
+            "originalprice": item["price"],
+            "saleprice": item["price"] - item["discount"],
             "quantity": item["quantity"],
             "currency": "VND",
-            "supplierId": "",  # Not available in KiotViet data
-            "couponCode": "",  # Not available in KiotViet data
+            "supplierid": "",  # Not available in KiotViet data
+            "couponcode": "",  # Not available in KiotViet data
             # Not available in KiotViet data
-            "fullUrl": 'uri://productCode:' + item["productCode"],
-            "imageUrl": ""  # Not available in KiotViet data
+            "fullurl": 'uri://productCode:' + item["productCode"],
+            "imageurl": ""  # Not available in KiotViet data
         }
 
         cdp_events.append(cdp_event)

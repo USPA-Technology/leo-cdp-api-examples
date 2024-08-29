@@ -42,15 +42,15 @@ if test_metric == 'purchase':
     shoppingCartItems = []
     shoppingCartItems.append(
         {'name': 'Chăn hè K-Bedding 200*220KNTS401',
-         'itemId': 'kiotviet-'+str(1001105919),
-         'idType': 'item_ID',
-         'originalPrice': 1900000.0,
-         'salePrice': 1140000.0,
+         'itemid': 'kiotviet-'+str(1001105919),
+         'idtype': 'item_ID',
+         'originalprice': 1900000.0,
+         'saleprice': 1140000.0,
          'quantity': 1,
          'currency': 'VND',
-         'supplierId': '', 'couponCode': '',
-         'fullUrl': 'https://www.google.com/search?q=KCBM2022KNTS401',
-         'imageUrl': 'https://www.everonvn.vn/images/global/everonvn-vn.png'
+         'supplierid': '', 'couponCode': '',
+         'fullurl': 'https://www.google.com/search?q=KCBM2022KNTS401',
+         'imageurl': 'https://www.everonvn.vn/images/global/everonvn-vn.png'
          }
     )
     transaction_id = "DEMO_TRANSACTION_" + now.strftime("%m/%d/%Y, %H:%M:%S")
