@@ -23,11 +23,11 @@ profile = {
     "primaryAvatar": "https://www.thelist.com/img/gallery/surprising-things-the-male-body-can-actually-do/intro-1547150254.jpg",
     "primaryEmail": "bill.john123@example.com",
     "secondaryEmails": "",
-    "primaryPhone": "1234567-123",
+    "primaryPhone": "+84936261365",
     "secondaryPhones": "(206) 709-3401; (206) 709-3402",
-    "firstName": "Bill",
+    "firstName": "Anh Huy",
     "middleName": "",
-    "lastName": "John 12345",
+    "lastName": "",
     "gender": "male",  # or female
     "dateOfBirth": "1955-10-28",  # yyyy-MM-dd
     "livingLocation": " Medina, Washington",  # the address of customer
@@ -49,7 +49,7 @@ profile = {
     "incomeHistory": json.dumps(sampleIncomeHistory),
     "socialMediaProfiles": json.dumps(sampleSocialMediaProfiles),
     "totalLoyaltyScore": 100,
-    "extMetrics": json.dumps({'Dpoint_Loyalty_Score': 150}),
+    "extMetrics": json.dumps({'Dpoint_Loyalty_Score': 150}),   
     
     # control how to save profile
     # valid value: primaryEmail, primaryPhone, crmRefId , socialMediaProfiles, applicationIDs, governmentIssuedIDs, loyaltyIDs, fintechSystemIDs
