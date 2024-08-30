@@ -54,8 +54,8 @@ profile = {
     # custom score 
     "extMetrics": json.dumps({'Dpoint_Loyalty_Score': 120}),   
     
-    "createdat": "2023-10-20",
-    "updatedat": "2024-01-20",
+    "createdat": "2020-03-09T02:27:41Z",
+    "updatedat": "2021-05-15T02:27:41Z",
     
     # control how to save profile
     # valid value: primaryEmail, primaryPhone, crmRefId , socialMediaProfiles, applicationIDs, governmentIssuedIDs, loyaltyIDs, fintechSystemIDs
