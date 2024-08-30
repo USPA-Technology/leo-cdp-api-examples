@@ -45,7 +45,7 @@ profile = {
     "totalTransactionValue": 200,  # this is example data
     "saleAgencies": "Agency A; Agency B; Agency C",  # the list of sales sources
     "saleAgents": "Mr.Thomas; Ms.Anna",  # the list of sales persons
-    "notes": "this is a test",
+
     "extAttributes": json.dumps(sampleExtAttributes),
     "incomeHistory": json.dumps(sampleIncomeHistory),
     "socialMediaProfiles": json.dumps(sampleSocialMediaProfiles),
@@ -56,6 +56,8 @@ profile = {
     
     "createdat": "2020-03-09T02:27:41Z",
     "updatedat": "2021-05-15T02:27:41Z",
+    
+     "notes": "this is a test primaryPhone",
     
     # control how to save profile
     # valid value: primaryEmail, primaryPhone, crmRefId , socialMediaProfiles, applicationIDs, governmentIssuedIDs, loyaltyIDs, fintechSystemIDs
