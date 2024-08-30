@@ -17,19 +17,20 @@ sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
     "journeyMapIds": "id_default_journey; ",
-    "dataLabels": "CRM; KOL person; người nổi tiếng; investors; doanh nhân đầu tư; hi <script>alert('hi')</script>",
+    "dataLabels": "CRM; KOL person; người nổi tiếng; investors; doanh nhân đầu tư;hot girl",
     "crmRefId": "zalo-123456789",
     "governmentIssuedIDs": "US_123",
-    "primaryAvatar": "https://www.thelist.com/img/gallery/surprising-things-the-male-body-can-actually-do/intro-1547150254.jpg",
+    "primaryAvatar": "https://vnn-imgs-a1.vgcloud.vn/icdn.dantri.com.vn/2021/05/26/ngo-ngang-voi-ve-dep-cua-hot-girl-anh-the-chua-tron-18-docx-1622043349706.jpeg",
     "primaryEmail": "bill.john123@example.com",
     "secondaryEmails": "",
-    "primaryPhone": "+84936261365",
+    "primaryPhone":"1112345678",
     "secondaryPhones": "(206) 709-3401; (206) 709-3402",
-    "firstName": "Anh Huy",
-    "middleName": "",
-    "lastName": "",
-    "gender": "male",  # or female
-    "dateOfBirth": "1955-10-28",  # yyyy-MM-dd
+    "firstName": "Anh ",
+    "middleName": "Ngoc",
+    "lastName": "Nguyen",
+    "gender": "female",  # or female
+   # "dateOfBirth": "1955-10-28",  # yyyy-MM-dd
+    "age": 20,
     "livingLocation": " Medina, Washington",  # the address of customer
     "livingCity": "Washington",  # the city where customer is living
     "jobTitles": "Manager",  # the Job Title, e.g: CEO; Manager; Head of Sales
@@ -49,7 +50,12 @@ profile = {
     "incomeHistory": json.dumps(sampleIncomeHistory),
     "socialMediaProfiles": json.dumps(sampleSocialMediaProfiles),
     "totalLoyaltyScore": 100,
-    "extMetrics": json.dumps({'Dpoint_Loyalty_Score': 150}),   
+    
+    # custom score 
+    "extMetrics": json.dumps({'Dpoint_Loyalty_Score': 120}),   
+    
+    "createdat": "2023-10-20",
+    "updatedat": "2024-01-20",
     
     # control how to save profile
     # valid value: primaryEmail, primaryPhone, crmRefId , socialMediaProfiles, applicationIDs, governmentIssuedIDs, loyaltyIDs, fintechSystemIDs
