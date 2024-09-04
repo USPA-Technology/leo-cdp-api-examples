@@ -22,11 +22,11 @@ test_metric = "purchase"
 # get current datetime in format %Y-%m-%dT%H:%M:%S.%fZ
 formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
-eventdata = {"itemId": "2019010113333", "idType" : "SKU", "quantity" : 2}
+eventdata = {"itemId": "2019010113333", "idType" : "SKU", "quantity" : 2, "ghi chú": "khuyến mãi 20% <b> rất hot </b>"}
 tracking_event = {
     # the target update profile's email
-    'eventtime': '2024-08-14T11:51:25.110Z',
-    'targetUpdateEmail': "trieu@leocdp.com",
+    'eventtime': '2024-09-04T11:51:25.110Z',
+    'targetUpdateEmail': "thomas@example.com",
     'tpname': "Bộ Everon EPC-24041 thuộc bộ sưu tập 2024 - 2025",  # TOUCHPOINT_NAME
     'tpurl': "https://www.everonvn.vn/chi-tiet/everon-epc24041.html",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL

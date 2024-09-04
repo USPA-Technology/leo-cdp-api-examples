@@ -31,6 +31,7 @@ tracking_event = {
     'imageUrls': "https://ohtea.vn/img/B%C3%A1nh%20tr%C3%A1ng%20cu%E1%BB%91n.jpg",
     'metric': test_metric,
     'tsval': -28000,
+    'tspayment': 'momo', # cash, card
     'tscur': 'VND',
     'tsstatus': 'yesy ',
     'message':'test aaaa'

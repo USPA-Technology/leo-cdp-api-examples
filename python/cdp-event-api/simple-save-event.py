@@ -40,7 +40,7 @@ def process_data():
         'imageUrls': "",
         'metric': "chat-for-support",  # Direct example value
         "jsonData": eventdata,
-        "message": "iPhone 16 giá bao nhiêu ?"
+        "message": "iPhone 15 xịn không ?"
     }
     print(type(tracking_event))
     print(json.dumps(tracking_event, indent=4, ensure_ascii=True))
