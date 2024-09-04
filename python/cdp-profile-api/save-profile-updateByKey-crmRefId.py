@@ -17,16 +17,16 @@ sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
     "journeyMapIds": "id_default_journey; ",
-    "dataLabels": "CRM; KOL person; người nổi tiếng; investors; doanh nhân đầu tư;hot girl",
-    "crmRefId": "crm-123456789",
+    "dataLabels": "CRM; KOL person; người nổi tiếng; investors; doanh nhân đầu tư; test",
+    "crmRefId": "crm-1112",
     "governmentIssuedIDs": "US_123",
     "primaryAvatar": "https://vnn-imgs-a1.vgcloud.vn/icdn.dantri.com.vn/2021/05/26/ngo-ngang-voi-ve-dep-cua-hot-girl-anh-the-chua-tron-18-docx-1622043349706.jpeg",
     "primaryEmail": "bill.john123@example.com",
     "secondaryEmails": "",
     "primaryPhone":"1112345678",
     "secondaryPhones": "(206) 709-3401; (206) 709-3402",
-    "firstName": "Anh ",
-    "middleName": "Ngoc",
+    "firstName": "Anh",
+    "middleName": "Thi Ngoc",
     "lastName": "Nguyen",
     "gender": "female",  # or female
    # "dateOfBirth": "1955-10-28",  # yyyy-MM-dd

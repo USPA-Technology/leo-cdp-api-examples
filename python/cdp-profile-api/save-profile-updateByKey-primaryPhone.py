@@ -23,7 +23,7 @@ profile = {
     "primaryAvatar": "https://vnn-imgs-a1.vgcloud.vn/icdn.dantri.com.vn/2021/05/26/ngo-ngang-voi-ve-dep-cua-hot-girl-anh-the-chua-tron-18-docx-1622043349706.jpeg",
     "primaryEmail": "bill.john123@example.com",
     "secondaryEmails": "",
-    "primaryPhone":"1112345678",
+    "primaryPhone":"09031222271",
     "secondaryPhones": "(206) 709-3401; (206) 709-3402",
     "firstName": "Anh ",
     "middleName": "Ngoc",
@@ -55,9 +55,9 @@ profile = {
     "extMetrics": json.dumps({'Dpoint_Loyalty_Score': 120}),   
     
     "createdat": "2020-03-09T02:27:41Z",
-    "updatedat": "2021-05-15T02:27:41Z",
+    "updatedat": "2024-08-15T02:27:41Z",
     
-     "notes": "this is a test primaryPhone",
+    "notes": "this is a test primaryPhone sep4",
     
     # control how to save profile
     # valid value: primaryEmail, primaryPhone, crmRefId , socialMediaProfiles, applicationIDs, governmentIssuedIDs, loyaltyIDs, fintechSystemIDs
