@@ -106,3 +106,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# dot-net
+*/bin/*
+csharp-dotnet/ProfileApiExample/bin
+*/obj/*
+csharp-dotnet/ProfileApiExample/obj
