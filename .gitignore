@@ -108,6 +108,7 @@ dist
 .tern-port
 
 # dot-net
+*.sln
 */bin/*
 csharp-dotnet/ProfileApiExample/bin
 */obj/*
