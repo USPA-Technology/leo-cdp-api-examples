@@ -19,7 +19,8 @@ headers = {
 tracking_event = {
     # the target update profile's email
     'targetUpdatePhone': "0903122290",
-    'tpname': "",  # TOUCHPOINT_NAME
+    'tpname': "ALPHA TOWER",  # TOUCHPOINT_NAME
+    'tpurl': "https://maps.app.goo.gl/RAdDJqiQe5qKvvrx5",  # TOUCHPOINT_URL
     'funnelStage': "customer",
     'eventtime': '2024-09-09T16:51:25.11+07:00',
     # custom event data
