@@ -159,6 +159,16 @@ LeoObserver.recordEventPurchase = function(eventData, shoppingCartItems, transac
 	LeoObserverProxy.recordConversionEvent("purchase", eventData , transactionId, shoppingCartItems, transactionValue, currencyCode);
 }
 
+LeoObserver.recordEventAddToCart = function(shoppingCartItems, currencyCode) {
+	// need 5 params
+	eventData = typeof eventData === "object" ? eventData : {};
+	shoppingCartItems = typeof shoppingCartItems === "object" ? shoppingCartItems : [];
+	transactionId = typeof transactionId === "string" ? transactionId : "";
+	transactionValue = typeof transactionValue === "number" ? transactionValue : 0;
+	currencyCode = typeof currencyCode === "string" ? currencyCode : "USD";
+	LeoObserverProxy.recordConversionEvent("purchase", {} , "", shoppingCartItems, 0, currencyCode);
+}
+
 
 // (3) CDP EVENT OBSERVER is ready
 function leoObserverProxyReady(session) {
@@ -222,3 +232,37 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
         console.log("LeoObserverProxy is not defined");
     }
 }
+
+
+jQuery(function($) {
+
+	var a = function(event, fragments, cart_hash, $button) {
+        var product_id = $button.data('product_id');   
+        var product_name = $button.closest('.product').find('.woocommerce-loop-product__title').text();  
+        LeoObserver.recordEventAddToCart({
+            product_id: product_id,
+            product_name: product_name
+        });
+    };
+
+	$(document.body).on('added_to_cart', a);
+	
+	$('.single_add_to_cart_button').on('click', function(event) {
+        event.preventDefault(); 
+        
+        var product_id = $(this).val(); 
+        var product_name = $(this).closest('.product').find('.woocommerce-loop-product__title').text();  
+
+        LeoObserver.recordEventAddToCart({
+            product_id: product_id,
+            product_name: product_name
+        });
+    });
+
+
+	 // Lắng nghe sự kiện "added_to_cart" của WooCommerce
+	 $(document.body).on('init_checkout', function(event, fragments, cart_hash, button) {
+        // Lấy thông tin sản phẩm từ nút "Add to Cart"
+        console.log(event);
+    });
+});
