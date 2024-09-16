@@ -25,8 +25,8 @@ formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 eventdata = {"itemId": "2019010113333", "idType" : "SKU", "quantity" : 2, "ghi chú": "khuyến mãi 20% <b> rất hot </b>"}
 tracking_event = {
     # the target update profile's email
-    'eventtime': '2024-09-04T11:51:25.110Z',
-    'targetUpdateEmail': "thomas@example.com",
+    'eventtime': '2024-09-16T11:51:25.110Z',
+    'targetUpdateEmail': "thomas@dgvdigital.com",
     'tpname': "Bộ Everon EPC-24041 thuộc bộ sưu tập 2024 - 2025",  # TOUCHPOINT_NAME
     'tpurl': "https://www.everonvn.vn/chi-tiet/everon-epc24041.html",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL
@@ -37,7 +37,9 @@ tracking_event = {
     'tscur': 'VND',
     'tsstatus': 'OK',
     'message':'test',
-    'locationName': "1 Trần Hưng Đạo, Tp.HCM"
+    'locationName': "1 Trần Hưng Đạo, Tp.HCM", 
+    'sourceip':'42.115.94.101',
+    'useragent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
 }
 
 
