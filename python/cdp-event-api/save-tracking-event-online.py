@@ -39,7 +39,8 @@ tracking_event = {
     'tsstatus': 'OK',
     
     'tstax': 10.1,
-    'tsshippinginfo': {"cost":30000,"address":"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam"},
+    'tsshippingvalue': 30000,
+    'tsshippinginfo': {"address":"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam"},
     
     'message': 'test',
     'locationName': "1 Trần Hưng Đạo, Tp.HCM",
