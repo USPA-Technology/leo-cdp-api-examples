@@ -251,61 +251,85 @@ function setUpWooCommerceTrackingEvents() {
     // Add product to cart from a list
     var list_view_added_to_cart_event = function(event) {
         console.log(event);
-
-        var product_id = event.target.dataset.product_id;
-        var product_name = event.target.closest('.product').querySelector('.woocommerce-loop-product__title').textContent.trim();
-
+    
+        var product_id = event.target.dataset.product_id || 'Unknown Product ID';
+    
+        var productElement = event.target.closest('.product');
+        var product_name_element = productElement ? productElement.querySelector('.woocommerce-loop-product__title') : null;
+        var product_name = product_name_element ? product_name_element.textContent.trim() : 'Unknown Product Name';
+    
         var data = {
             'Product ID': product_id,
             'Product Name': product_name,
-            'Quantity': '1',
+            'Quantity': '1',  
         };
-
+    
         console.log(data);
-
+    
         LeoObserver.recordEventAddToCart(data);
     };
+    
 
     // Add product to cart from product's details screen
     var single_view_added_to_cart_event = function(event) {
         console.log(event);
-
+    
         const table = document.querySelector('.variations');
-        const radios = table.querySelectorAll('input[type="radio"]');
-        const select = table.querySelector('select');
-
-        let selectedRadioValue;
-        radios.forEach(function(radio) {
-            if (radio.checked) {
-                selectedRadioValue = radio.value;
-            }
-        });
-
-        let selectedSelectValue = select ? select.value : null;
-
-        var product_id = event.target.value || document.querySelector('input[name="add-to-cart"]').value || document.querySelector('.variations_form').dataset.product_id;
-        var product_name = document.querySelector('.product_title').textContent.trim();
-        var quantity = document.querySelector('.quantity input[name="quantity"]').value;
-        var variation = selectedRadioValue || selectedSelectValue || null
-
+        let selectedRadioValue = null;
+        let selectedSelectValue = null;
+    
+        if (table) {
+            const radios = table.querySelectorAll('input[type="radio"]');
+            const select = table.querySelector('select');
+    
+            radios.forEach(function(radio) {
+                if (radio.checked) {
+                    selectedRadioValue = radio.value;
+                }
+            });
+    
+            selectedSelectValue = select ? select.value : null;
+        }
+    
+        var product_id = event.target.value || 
+                         document.querySelector('input[name="add-to-cart"]')?.value || 
+                         document.querySelector('.variations_form')?.dataset.product_id;
+    
+        var product_name = document.querySelector('.product_title')?.textContent.trim();
+    
+        var quantityInput = document.querySelector('.quantity input[name="quantity"]');
+        var quantity = quantityInput ? quantityInput.value : 1;  // Nếu không có, đặt mặc định là 1
+    
+        var variation = selectedRadioValue || selectedSelectValue || null;
+    
         var data = {
             'Product ID': product_id,
             'Product Name': product_name,
             'Variation': variation,
             'Quantity': quantity
         };
-
+    
         console.log(data);
 
         LeoObserver.recordEventAddToCart(data);
     };
 
+    // Plus the cart item quantity
+    var remove_from_cart_event = function(event) {
+        console.log(event);
+
+        
+
+        LeoObserver.recordEventAddToCart(data);
+    };
+    
+
     // Remove a product from cart screen
     var remove_from_cart_event = function(event) {
         console.log(event);
 
-        var product_id = this.getAttribute('data-product_id');
-        var action_name = this.getAttribute('aria-label');
+        var product_id = this.getAttribute('data-product_id') || 'Unknown Product ID';
+       var action_name = this.getAttribute('aria-label') || 'Unknown Action'
         var data = {
             'Product ID': product_id,
             'Action Name': action_name,
@@ -322,7 +346,7 @@ function setUpWooCommerceTrackingEvents() {
         console.log(event);
     
         var productId = event.target.dataset.originalProductId;
-        
+
         var productItem = document.querySelector('.products .post-' + productId);
     
         if (!productItem) {
@@ -374,24 +398,37 @@ function setUpWooCommerceTrackingEvents() {
     var remove_from_wishlist_event = function(event) {
         event.preventDefault();
         console.log(event);
-
+    
         var removed_item = event.target.closest('tr');
-        var product_name = removed_item.querySelector('.product-name').textContent.trim();
-
+    
+        if (!removed_item) {
+            console.log('Không tìm thấy sản phẩm bị xóa trong danh sách yêu thích.');
+            return;
+        }
+    
+        var product_name_element = removed_item.querySelector('.product-name');
+        var product_name = product_name_element ? product_name_element.textContent.trim() : 'Unknown Product';
+    
+        if (!dcdpProfileInfo || !dcdpProfileInfo.first_name || !dcdpProfileInfo.last_name || !dcdpProfileInfo.email) {
+            console.log('Thông tin hồ sơ người dùng bị thiếu.');
+            return;
+        }
+    
         var data = {
             'First Name': dcdpProfileInfo.first_name,
             'Last Name': dcdpProfileInfo.last_name,
             'Email': dcdpProfileInfo.email,
-            'Phone': dcdpProfileInfo.phone,
+            'Phone': dcdpProfileInfo.phone || 'Unknown Phone', 
             'Login ID': '',
             'Login Provider': location.host,
             'Product Name': product_name,
         };
-
+    
         console.log(data);
-
+    
         LeoObserver.recordEventUnlike(data);
     };
+    
 
     
     // Catch events from components
