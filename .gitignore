@@ -117,3 +117,8 @@ csharp-dotnet/ProfileApiExample/obj
 
 # local test
 python/convert-data.py
+
+# PHP
+vendor/*
+composer.json
+composer.lock

@@ -1,8 +1,9 @@
 <?php
+
 /*
 Plugin Name: D-CDP Observer
 Description: Passes user login information (first name, last name, email) to D-CDP
-Version: 2.0.3
+Version: 2.0.4
 Author: Trieu Dataism
 */
 
@@ -10,7 +11,10 @@ Author: Trieu Dataism
 if (!defined('ABSPATH')) {
     exit;
 }
-define("DCDP_VERSION", "2.0.3");
+
+$plugin_data = get_file_data(__FILE__, array('Version' => 'Version'), false);
+$plugin_version = $plugin_data['Version'];
+define("DCDP_VERSION", $plugin_version);
 
 // Hook to enqueue the script
 add_action('wp_enqueue_scripts', 'user_info_to_ga_enqueue_script');
