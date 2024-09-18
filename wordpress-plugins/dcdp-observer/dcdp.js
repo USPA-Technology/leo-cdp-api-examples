@@ -438,11 +438,6 @@ function setUpWooCommerceTrackingEvents() {
     
         var removed_item = event.target.closest('tr');
     
-        if (!removed_item) {
-            console.log('Không tìm thấy sản phẩm bị xóa trong danh sách yêu thích.');
-            return;
-        }
-    
         var product_name_element = removed_item.querySelector('.product-name');
         var product_name = product_name_element ? product_name_element.textContent.trim() : 'Unknown Product';
     
