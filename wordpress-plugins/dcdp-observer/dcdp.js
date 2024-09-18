@@ -487,7 +487,7 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', single_view_added_to_cart_event);
     });
 
-    document.querySelectorAll('.cart a[href*="remove_item"]').forEach(function(button) {
+    document.querySelectorAll('.woocommerce-cart-form a[href*="remove_item"]').forEach(function(button) {
         button.addEventListener('click', remove_from_cart_event);
     });
 
