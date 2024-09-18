@@ -159,14 +159,16 @@ LeoObserver.recordEventPurchase = function(eventData, shoppingCartItems, transac
 	LeoObserverProxy.recordConversionEvent("purchase", eventData , transactionId, shoppingCartItems, transactionValue, currencyCode);
 }
 
-LeoObserver.recordEventAddToCart = function(shoppingCartItems, currencyCode) {
-	// need 5 params
-	eventData = typeof eventData === "object" ? eventData : {};
-	shoppingCartItems = typeof shoppingCartItems === "object" ? shoppingCartItems : [];
-	transactionId = typeof transactionId === "string" ? transactionId : "";
-	transactionValue = typeof transactionValue === "number" ? transactionValue : 0;
-	currencyCode = typeof currencyCode === "string" ? currencyCode : "USD";
-	LeoObserverProxy.recordConversionEvent("purchase", {} , "", shoppingCartItems, 0, currencyCode);
+// (2.20) function to track Action Event "ProductTrial"
+LeoObserver.recordEventAddToCart = function(eventData) {
+    eventData = eventData ? eventData : {};
+    LeoObserverProxy.recordActionEvent("add-to-cart",eventData);
+}
+
+// (2.21) function to track Action Event "Dislike"
+LeoObserver.recordEventDislike = function(eventData) {
+    eventData = eventData ? eventData : {};
+    LeoObserverProxy.recordActionEvent("dislike",eventData);
 }
 
 
@@ -174,6 +176,9 @@ LeoObserver.recordEventAddToCart = function(shoppingCartItems, currencyCode) {
 function leoObserverProxyReady(session) {
    	// auto tracking when CDP JS is ready
    	LeoObserver.recordEventPageView(parseDataUTM()) ;
+    
+    // woocommerce tracking
+    setUpWooCommerceTrackingEvents();
    	
    	// set tracking CDP web visitor ID into all a[href] nodes
 	LeoObserverProxy.synchLeoVisitorId(function(vid){
@@ -233,36 +238,155 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
     }
 }
 
+// tracking 
+// EXECUTE TRACKING EVENTS  
+function setUpWooCommerceTrackingEvents() {
+    // Add product to cart from a list
+    var list_view_added_to_cart_event = function(event) {
+        console.log(event);
 
-jQuery(function($) {
+        var product_id = event.target.dataset.product_id;
+        var product_name = event.target.closest('.product').querySelector('.woocommerce-loop-product__title').textContent.trim();
 
-	var a = function(event, fragments, cart_hash, $button) {
-        var product_id = $button.data('product_id');   
-        var product_name = $button.closest('.product').find('.woocommerce-loop-product__title').text();  
-        LeoObserver.recordEventAddToCart({
-            product_id: product_id,
-            product_name: product_name
-        });
+        var data = {
+            'Product ID': product_id,
+            'Product Name': product_name,
+            'Quantity': '1',
+        };
+
+        console.log(data);
+
+        LeoObserver.recordEventAddToCart(data);
     };
 
-	$(document.body).on('added_to_cart', a);
-	
-	$('.single_add_to_cart_button').on('click', function(event) {
-        event.preventDefault(); 
-        
-        var product_id = $(this).val(); 
-        var product_name = $(this).closest('.product').find('.woocommerce-loop-product__title').text();  
-
-        LeoObserver.recordEventAddToCart({
-            product_id: product_id,
-            product_name: product_name
-        });
-    });
-
-
-	 // Lắng nghe sự kiện "added_to_cart" của WooCommerce
-	 $(document.body).on('init_checkout', function(event, fragments, cart_hash, button) {
-        // Lấy thông tin sản phẩm từ nút "Add to Cart"
+    // Add product to cart from product's details screen
+    var single_view_added_to_cart_event = function(event) {
         console.log(event);
+
+        const table = document.querySelector('.variations');
+        const radios = table.querySelectorAll('input[type="radio"]');
+        const select = table.querySelector('select');
+
+        let selectedRadioValue;
+        radios.forEach(function(radio) {
+            if (radio.checked) {
+                selectedRadioValue = radio.value;
+            }
+        });
+
+        let selectedSelectValue = select ? select.value : null;
+
+        var product_id = event.target.value || document.querySelector('input[name="add-to-cart"]').value || document.querySelector('.variations_form').dataset.product_id;
+        var product_name = document.querySelector('.product_title').textContent.trim();
+        var quantity = document.querySelector('.quantity input[name="quantity"]').value;
+        var variation = selectedRadioValue || selectedSelectValue || null
+
+        var data = {
+            'Product ID': product_id,
+            'Product Name': product_name,
+            'Variation': variation,
+            'Quantity': quantity
+        };
+
+        console.log(data);
+
+        LeoObserver.recordEventAddToCart(data);
+    };
+
+    // Remove a product from cart screen
+    var remove_from_cart_event = function(event) {
+        console.log(event);
+
+        var product_id = this.getAttribute('data-product_id');
+        var action_name = this.getAttribute('aria-label');
+        var data = {
+            'Product ID': product_id,
+            'Action Name': action_name,
+        };
+
+        console.log(data);
+
+        LeoObserver.recordEventRemoveFromCart(data);
+    };
+
+    // Add product to wishlist from a list
+    var list_view_added_to_wishlist_event = function(event) {
+        event.preventDefault();
+        console.log(event);
+
+        var productId = event.target.dataset.originalProductId;
+        var productItem = document.querySelector('.products .post-' + productId);
+        var productName = productItem.querySelector('.product-title, .woocommerce-loop-product__title').textContent.trim();
+        var originalPrice = productItem.querySelector('.price del .woocommerce-Price-amount') ? productItem.querySelector('.price del .woocommerce-Price-amount').textContent.trim() : null;
+        var salePrice = productItem.querySelector('.price ins .woocommerce-Price-amount') ? productItem.querySelector('.price ins .woocommerce-Price-amount').textContent.trim() : null;
+
+        if (!salePrice) {
+            salePrice = productItem.querySelector('.price .woocommerce-Price-amount').textContent.trim();
+            originalPrice = null;
+        }
+
+        var data = {
+            'First Name': dcdpProfileInfo.first_name,
+            'Last Name': dcdpProfileInfo.last_name,
+            'Email': dcdpProfileInfo.email,
+            'Phone': dcdpProfileInfo.phone,
+            'Login ID': '',
+            'Login Provider': location.host,
+            'Product Name': productName,
+            'Sale Price': salePrice,
+            'Original Price': originalPrice,
+        };
+
+        console.log(data);
+
+        LeoObserver.recordEventLike(data);
+    };
+
+    // Remove a product from wishlist on wishlist screen
+    var remove_from_wishlist_event = function(event) {
+        event.preventDefault();
+        console.log(event);
+
+        var removed_item = event.target.closest('tr');
+        var product_name = removed_item.querySelector('.product-name').textContent.trim();
+
+        var data = {
+            'First Name': dcdpProfileInfo.first_name,
+            'Last Name': dcdpProfileInfo.last_name,
+            'Email': dcdpProfileInfo.email,
+            'Phone': dcdpProfileInfo.phone,
+            'Login ID': '',
+            'Login Provider': location.host,
+            'Product Name': product_name,
+        };
+
+        console.log(data);
+
+        LeoObserver.recordEventDislike(data);
+    };
+
+    
+    // Catch events from components
+    document.querySelectorAll('.wishlist_table .remove_from_wishlist').forEach(function(button) {
+        button.addEventListener('click', remove_from_wishlist_event);
     });
-});
+
+    document.querySelectorAll('.products .add_to_wishlist').forEach(function(button) {
+        button.addEventListener('click', list_view_added_to_wishlist_event);
+    });
+
+    document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
+        button.addEventListener('click', single_view_added_to_cart_event);
+    });
+
+    document.querySelectorAll('.product button[name*="buy-now"]').forEach(function(button) {
+        button.addEventListener('click', single_view_added_to_cart_event);
+    });
+
+    document.querySelectorAll('.cart a[href*="remove_item"]').forEach(function(button) {
+        button.addEventListener('click', remove_from_cart_event);
+    });
+
+    document.body.addEventListener('added_to_cart', list_view_added_to_cart_event);
+    // document.body.addEventListener('added_to_wishlist', list_view_added_to_wishlist_event);
+}

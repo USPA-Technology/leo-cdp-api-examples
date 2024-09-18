@@ -1,18 +1,19 @@
 import http.client
-import json
-from decouple import config
-
 from datetime import datetime
+import json
+from decouple import Config, RepositoryEnv
 
+DOTENV_FILE = 'qc.env'
+
+env_config = Config(RepositoryEnv(DOTENV_FILE))
 now = datetime.now()  # current date and time
-
-connection = http.client.HTTPSConnection(config('cdp_host'))
+connection = http.client.HTTPSConnection(env_config('cdp_host'))
 
 headers = {
     "Content-Type": 'application/json',
     "Access-Control-Allow-Origin": "*",
-    "tokenkey": config('tokenkey'),
-    "tokenvalue": config('tokenvalue')
+    "tokenkey": env_config('tokenkey'),
+    "tokenvalue": env_config('tokenvalue')
 }
 # print(headers)
 
@@ -28,20 +29,21 @@ tracking_event = {
     # the target update profile's email
     'eventtime': '2024-09-17T19:57:25.110Z',
     'targetUpdateEmail': "bill.john123@example.com",
+    'targetUpdatePhone': "bill.john123@example.com",
     'tpname': "Bộ Everon Esm-21016",  # TOUCHPOINT_NAME
     'tpurl': "https://everonvn.com.vn/everon/3662/bo-everon-epm-24060",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL
     'eventdata': eventdata,  # custom event data
-  #  'imageUrls': "https://www.everonvn.vn/chi-tiet/images/upload/hinhanh/EPC-24041.jpg",
+    #  'imageUrls': "https://www.everonvn.vn/chi-tiet/images/upload/hinhanh/EPC-24041.jpg",
     'metric': test_metric,
     'tsval': 2015000,
     'tscur': 'VND',
     'tsstatus': 'OK',
-    
+
     'tstax': 10.1,
     'tsshippingvalue': 30000,
-    'tsshippinginfo': {"address":"151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam"},
-    
+    'tsshippinginfo': {"address": "151 - 155 Đ. Bến Vân Đồn, Phường 6, Quận 4, Thành phố Hồ Chí Minh 754522, Việt Nam"},
+
     'message': 'test',
     'locationName': "1 Trần Hưng Đạo, Tp.HCM",
     'sourceip': '42.115.94.101',
@@ -51,20 +53,21 @@ tracking_event = {
 
 if test_metric == 'purchase':
     shoppingCartItems = [{
-        "name": "Bộ Everon Esm-21016",
+        "name": "Bộ Everon ESC 23002 – Everon 379",
         "itemid": "2750",
         "idtype": "item_ID",
-        "originalprice":  2239000,
-        "saleprice": 2015000,
+        "originalprice":  199000,
+        "saleprice": 179100,
         "quantity": 1,
         "currency": "VND",
         "supplierid": "",
         "couponcode": "",
         "fullurl": "https://everonvn.com.vn/everon/3662/bo-everon-epm-24060",
-        "imageurl": "https://everonvn.com.vn/media/CK/images/2024/epm-24060.jpg"
+        "imageurl": "https://product.hstatic.net/200000514721/product/320884299_513929560521602_5292932644256658938_n_ffcd2718404248b3bedc2e30ec033909_master.jpeg"
     },
     {
         "name": "Bộ Everon Esm-21017",
+        "description": "test item",
         "itemid": "2751",
         "idtype": "item_ID",
         "originalprice":  2239000,
@@ -74,7 +77,10 @@ if test_metric == 'purchase':
         "supplierid": "",
         "couponcode": "",
         "fullurl": "https://everonvn.com.vn/everon/3662/bo-everon-epm-24060",
-        "imageurl": "https://everonvn.com.vn/media/CK/images/2024/epm-24060.jpg"
+        "imageurl": "https://everonvn.com.vn/media/CK/images/2024/epm-24060.jpg",
+        "categoryid": "",
+        "categoryname": "",
+        "productcode": "24060"
     }]
     transaction_id = "DEMO_TRANSACTION_" + now.strftime("%m/%d/%Y, %H:%M:%S")
     tracking_event['scitems'] = shoppingCartItems

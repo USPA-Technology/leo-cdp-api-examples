@@ -2,7 +2,7 @@
 /*
 Plugin Name: D-CDP Observer
 Description: Passes user login information (first name, last name, email) to D-CDP
-Version: 1.0
+Version: 2.0.3
 Author: Trieu Dataism
 */
 
@@ -10,6 +10,7 @@ Author: Trieu Dataism
 if (!defined('ABSPATH')) {
     exit;
 }
+define("DCDP_VERSION", "2.0.3");
 
 // Hook to enqueue the script
 add_action('wp_enqueue_scripts', 'user_info_to_ga_enqueue_script');
@@ -19,6 +20,7 @@ function user_info_to_ga_enqueue_script() {
     $observer_id = get_option( 'dcdp_observer_settings' )['observer_id'];
     $observer_log_domain = get_option( 'dcdp_observer_settings' )['observer_log_domain'];
 
+    $js_url = plugin_dir_url(__FILE__) . 'dcdp.js?_=' . DCDP_VERSION;
     if(!empty($observer_id)){
         if (is_user_logged_in()) {
             $current_user = wp_get_current_user();
@@ -32,7 +34,7 @@ function user_info_to_ga_enqueue_script() {
             );
     
             // Enqueue the script and localize user data
-            wp_enqueue_script('dcdp-observer', plugin_dir_url(__FILE__) . 'dcdp.js', array(), null, true);
+            wp_enqueue_script('dcdp-observer',  $js_url, array(), null, true);
             wp_localize_script('dcdp-observer', 'dcdpProfileInfo', $user_data);
         }
         else {
@@ -45,7 +47,7 @@ function user_info_to_ga_enqueue_script() {
                 'observer_log_domain' => $observer_log_domain
             );
             // Enqueue the script and localize user data
-            wp_enqueue_script('dcdp-observer', plugin_dir_url(__FILE__) . 'dcdp.js', array(), null, true);
+            wp_enqueue_script('dcdp-observer', $js_url, array(), null, true);
             wp_localize_script('dcdp-observer', 'dcdpProfileInfo', $user_data);
         }
     }

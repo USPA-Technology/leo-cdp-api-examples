@@ -74,6 +74,7 @@ typings/
 
 # dotenv environment variables file
 .env
+*.env
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -113,3 +114,6 @@ dist
 csharp-dotnet/ProfileApiExample/bin
 */obj/*
 csharp-dotnet/ProfileApiExample/obj
+
+# local test
+python/convert-data.py
