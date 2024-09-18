@@ -382,7 +382,7 @@ function setUpWooCommerceTrackingEvents() {
         event.preventDefault();
         console.log(event);
     
-        var productId = event.target.dataset.originalProductId;
+        var productId = this.dataset.productId;
 
         var productItem = document.querySelector('.products .post-' + productId);
     
@@ -446,11 +446,6 @@ function setUpWooCommerceTrackingEvents() {
         var product_name_element = removed_item.querySelector('.product-name');
         var product_name = product_name_element ? product_name_element.textContent.trim() : 'Unknown Product';
     
-        if (!dcdpProfileInfo || !dcdpProfileInfo.first_name || !dcdpProfileInfo.last_name || !dcdpProfileInfo.email) {
-            console.log('Thông tin hồ sơ người dùng bị thiếu.');
-            return;
-        }
-    
         var data = {
             'First Name': dcdpProfileInfo.first_name,
             'Last Name': dcdpProfileInfo.last_name,
@@ -473,7 +468,7 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', remove_from_wishlist_event);
     });
 
-    document.querySelectorAll('.products .add_to_wishlist').forEach(function(button) {
+    document.querySelectorAll('.products .single_add_to_wishlist').forEach(function(button) {
         button.addEventListener('click', list_view_added_to_wishlist_event);
     });
 
