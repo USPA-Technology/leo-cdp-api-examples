@@ -357,11 +357,9 @@ function setUpWooCommerceTrackingEvents() {
 
         console.log(data);
     
-        LeoObserver.recordEventAddToCart(data);
+        LeoObserver.recordEventUpdateCart(data);
     };
     
-    
-
     // Remove a product from cart screen
     var remove_from_cart_event = function(event) {
         event.preventDefault();
