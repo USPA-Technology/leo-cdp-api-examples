@@ -166,9 +166,9 @@ LeoObserver.recordEventAddToCart = function(eventData) {
 }
 
 // (2.21) function to track Action Event "Dislike"
-LeoObserver.recordEventDislike = function(eventData) {
+LeoObserver.recordEventUnlike = function(eventData) {
     eventData = eventData ? eventData : {};
-    LeoObserverProxy.recordActionEvent("dislike",eventData);
+    LeoObserverProxy.recordActionEvent("unlike",eventData);
 }
 
 // (2.22) function to track Action Event "RemoveFromCart"
@@ -369,7 +369,7 @@ function setUpWooCommerceTrackingEvents() {
 
         console.log(data);
 
-        LeoObserver.recordEventDislike(data);
+        LeoObserver.recordEventUnlike(data);
     };
 
     
