@@ -177,6 +177,12 @@ LeoObserver.recordEventRemoveFromCart = function(eventData) {
     LeoObserverProxy.recordActionEvent("remove-from-cart",eventData);
 }
 
+// (2.23) function to track Action Event "UpdateCart"
+LeoObserver.recordEventUpdateCart = function(eventData) {
+    eventData = eventData ? eventData : {};
+    LeoObserverProxy.recordActionEvent("update-cart",eventData);
+}
+
 
 
 // (3) CDP EVENT OBSERVER is ready
@@ -245,6 +251,7 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
     }
 }
 
+
 // tracking 
 // EXECUTE TRACKING EVENTS  
 function setUpWooCommerceTrackingEvents() {
@@ -272,6 +279,7 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to cart from product's details screen
     var single_view_added_to_cart_event = function(event) {
+        event.preventDefault();
         console.log(event);
     
         const table = document.querySelector('.variations');
@@ -290,23 +298,34 @@ function setUpWooCommerceTrackingEvents() {
     
             selectedSelectValue = select ? select.value : null;
         }
+
+        var productPrice = document.querySelector('.price');
     
-        var product_id = event.target.value || 
-                         document.querySelector('input[name="add-to-cart"]')?.value || 
-                         document.querySelector('.variations_form')?.dataset.product_id;
-    
-        var product_name = document.querySelector('.product_title')?.textContent.trim();
-    
+        var productId = event.target.value || document.querySelector('input[name="add-to-cart"]')?.value ||  document.querySelector('.variations_form')?.dataset.product_id;
+        var productName = document.querySelector('.product_title')?.textContent.trim();
         var quantityInput = document.querySelector('.quantity input[name="quantity"]');
         var quantity = quantityInput ? quantityInput.value : 1;  // Nếu không có, đặt mặc định là 1
-    
         var variation = selectedRadioValue || selectedSelectValue || null;
-    
+        var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
+            ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
+            : null;
+
+        var salePrice = productPrice.querySelector('ins .woocommerce-Price-amount') 
+            ? productPrice.querySelector('ins .woocommerce-Price-amount').textContent.trim() 
+            : null;
+
+        if (!salePrice) {
+            salePrice = productPrice.querySelector('.woocommerce-Price-amount').textContent.trim();
+            originalPrice = null;
+        }
+
         var data = {
-            'Product ID': product_id,
-            'Product Name': product_name,
+            'Product ID': productId,
+            'Product Name': productName,
             'Variation': variation,
-            'Quantity': quantity
+            'Quantity': quantity,
+            'Sale Price': salePrice,
+            'Original Price': originalPrice
         };
     
         console.log(data);
@@ -314,18 +333,46 @@ function setUpWooCommerceTrackingEvents() {
         LeoObserver.recordEventAddToCart(data);
     };
 
-    // Plus the cart item quantity
-    var remove_from_cart_event = function(event) {
+    // Update cart items on cart screen (KBedding only)
+    var update_cart_event = function(event) {
+        event.preventDefault();
         console.log(event);
 
-        
+        var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
+        var data = [];
 
+        cartItems.forEach(function(cartItem) {
+            var productName = cartItem.querySelector('.product-name a').textContent.trim();
+    
+            var quantityInput = cartItem.querySelector('input[name*="[qty]"]');
+            var quantity = quantityInput ? quantityInput.value : 'Unknown';
+    
+            var productPriceElement = cartItem.querySelector('.product-price ins .woocommerce-Price-amount') || cartItem.querySelector('.product-price .woocommerce-Price-amount');
+            var productPrice = productPriceElement ? productPriceElement.textContent.trim() : 'Unknown';
+    
+            var totalPriceElement = cartItem.querySelector('.product-subtotal .woocommerce-Price-amount');
+            var totalPrice = totalPriceElement ? totalPriceElement.textContent.trim() : 'Unknown';
+    
+            var cartItemInfo = {
+                'Product Name': productName,
+                'Quantity': quantity,
+                'Unit Price': productPrice,
+                'Total Price': totalPrice
+            };
+
+            data.push(cartItemInfo);
+        });
+
+        console.log(data);
+    
         LeoObserver.recordEventAddToCart(data);
     };
+    
     
 
     // Remove a product from cart screen
     var remove_from_cart_event = function(event) {
+        event.preventDefault();
         console.log(event);
 
         var product_id = this.getAttribute('data-product_id') || 'Unknown Product ID';
@@ -450,6 +497,10 @@ function setUpWooCommerceTrackingEvents() {
 
     document.querySelectorAll('.cart a[href*="remove_item"]').forEach(function(button) {
         button.addEventListener('click', remove_from_cart_event);
+    });
+
+    document.querySelectorAll('.woocommerce-cart-form button[name*="update_cart"]').forEach(function(button) {
+        button.addEventListener('click', update_cart_event);
     });
 
     document.body.addEventListener('added_to_cart', list_view_added_to_cart_event);
