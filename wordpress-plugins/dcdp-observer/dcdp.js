@@ -171,6 +171,13 @@ LeoObserver.recordEventDislike = function(eventData) {
     LeoObserverProxy.recordActionEvent("dislike",eventData);
 }
 
+// (2.22) function to track Action Event "RemoveFromCart"
+LeoObserver.recordEventRemoveFromCart = function(eventData) {
+    eventData = eventData ? eventData : {};
+    LeoObserverProxy.recordActionEvent("remove-from-cart",eventData);
+}
+
+
 
 // (3) CDP EVENT OBSERVER is ready
 function leoObserverProxyReady(session) {
