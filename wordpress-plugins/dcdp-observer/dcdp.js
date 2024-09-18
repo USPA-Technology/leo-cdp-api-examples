@@ -320,18 +320,38 @@ function setUpWooCommerceTrackingEvents() {
     var list_view_added_to_wishlist_event = function(event) {
         event.preventDefault();
         console.log(event);
-
+    
         var productId = event.target.dataset.originalProductId;
+        
         var productItem = document.querySelector('.products .post-' + productId);
-        var productName = productItem.querySelector('.product-title, .woocommerce-loop-product__title').textContent.trim();
-        var originalPrice = productItem.querySelector('.price del .woocommerce-Price-amount') ? productItem.querySelector('.price del .woocommerce-Price-amount').textContent.trim() : null;
-        var salePrice = productItem.querySelector('.price ins .woocommerce-Price-amount') ? productItem.querySelector('.price ins .woocommerce-Price-amount').textContent.trim() : null;
-
+    
+        if (!productItem) {
+            console.log('Không tìm thấy phần tử sản phẩm với ID:', productId);
+            return;
+        }
+    
+        var productTitleSelector = productItem.querySelector('.product-title');
+        var wcLooPproductTitleSelector = productItem.querySelector('.woocommerce-loop-product__title');
+    
+        var productName = productTitleSelector != null 
+            ? productTitleSelector.textContent.trim() 
+            : (wcLooPproductTitleSelector != null 
+                ? wcLooPproductTitleSelector.textContent.trim() 
+                : null);
+    
+        var originalPrice = productItem.querySelector('.price del .woocommerce-Price-amount') 
+            ? productItem.querySelector('.price del .woocommerce-Price-amount').textContent.trim() 
+            : null;
+    
+        var salePrice = productItem.querySelector('.price ins .woocommerce-Price-amount') 
+            ? productItem.querySelector('.price ins .woocommerce-Price-amount').textContent.trim() 
+            : null;
+    
         if (!salePrice) {
             salePrice = productItem.querySelector('.price .woocommerce-Price-amount').textContent.trim();
             originalPrice = null;
         }
-
+    
         var data = {
             'First Name': dcdpProfileInfo.first_name,
             'Last Name': dcdpProfileInfo.last_name,
@@ -343,11 +363,12 @@ function setUpWooCommerceTrackingEvents() {
             'Sale Price': salePrice,
             'Original Price': originalPrice,
         };
-
+    
         console.log(data);
-
+    
         LeoObserver.recordEventLike(data);
     };
+    
 
     // Remove a product from wishlist on wishlist screen
     var remove_from_wishlist_event = function(event) {
