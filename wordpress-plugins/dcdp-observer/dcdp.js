@@ -347,21 +347,9 @@ function setUpWooCommerceTrackingEvents() {
             var quantityInput = cartItem.querySelector('input[name*="[qty]"]');
             var quantity = quantityInput ? quantityInput.value : 'Unknown';
     
-            var productPriceElement = cartItem.querySelector('.product-price ins .woocommerce-Price-amount') 
-                                    || cartItem.querySelector('.product-price .woocommerce-Price-amount') 
-                                    || cartItem.querySelector('.product-subtotal ins .woocommerce-Price-amount')
-                                    || cartItem.querySelector('.product-subtotal .woocommerce-Price-amount');
-            var productPrice = productPriceElement ? productPriceElement.textContent.trim() : 'Unknown';
-    
-            var totalPriceElement = cartItem.querySelector('.product-subtotal .woocommerce-Price-amount') 
-                                    || cartItem.querySelector('.custom-summary-price .woocommerce-Price-amount');
-            var totalPrice = totalPriceElement ? totalPriceElement.textContent.trim() : 'Unknown';
-    
             var cartItemInfo = {
                 'Product Name': productName,
-                'Quantity': quantity,
-                'Unit Price': productPrice,
-                'Total Price': totalPrice
+                'Quantity': quantity
             };
 
             data.push(cartItemInfo);
