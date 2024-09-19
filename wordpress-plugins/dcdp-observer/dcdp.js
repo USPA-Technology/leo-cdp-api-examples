@@ -279,7 +279,6 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to cart from product's details screen
     var single_view_added_to_cart_event = function(event) {
-        event.preventDefault();
         console.log(event);
     
         const table = document.querySelector('.variations');
@@ -335,7 +334,6 @@ function setUpWooCommerceTrackingEvents() {
 
     // Update cart items on cart screen (KBedding only)
     var update_cart_event = function(event) {
-        event.preventDefault();
         console.log(event);
 
         var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
@@ -362,11 +360,10 @@ function setUpWooCommerceTrackingEvents() {
     
     // Remove a product from cart screen
     var remove_from_cart_event = function(event) {
-        event.preventDefault();
         console.log(event);
 
         var product_id = this.getAttribute('data-product_id') || 'Unknown Product ID';
-       var action_name = this.getAttribute('aria-label') || 'Unknown Action'
+        var action_name = this.getAttribute('aria-label') || 'Unknown Action'
         var data = {
             'Product ID': product_id,
             'Action Name': action_name,
@@ -379,7 +376,6 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to wishlist from a list
     var list_view_added_to_wishlist_event = function(event) {
-        event.preventDefault();
         console.log(event);
     
         var productId = this.dataset.productId;
@@ -433,7 +429,6 @@ function setUpWooCommerceTrackingEvents() {
 
     // Remove a product from wishlist on wishlist screen
     var remove_from_wishlist_event = function(event) {
-        event.preventDefault();
         console.log(event);
     
         var removed_item = event.target.closest('tr');
