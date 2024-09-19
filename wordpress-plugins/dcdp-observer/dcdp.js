@@ -454,7 +454,7 @@ function setUpWooCommerceTrackingEvents() {
 
     
     // Catch events from components
-    document.querySelectorAll('.wishlist_table .remove_from_wishlist').forEach(function(button) {
+    document.querySelectorAll('.wishlist_table a[href*="remove_from_wishlist"]').forEach(function(button) {
         button.addEventListener('click', remove_from_wishlist_event);
     });
 
