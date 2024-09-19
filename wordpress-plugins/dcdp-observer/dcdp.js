@@ -166,9 +166,9 @@ LeoObserver.recordEventAddToCart = function(eventData) {
 }
 
 // (2.21) function to track Action Event "Dislike"
-LeoObserver.recordEventUnlike = function(eventData) {
+LeoObserver.recordEventRemoveLike = function(eventData) {
     eventData = eventData ? eventData : {};
-    LeoObserverProxy.recordActionEvent("unlike",eventData);
+    LeoObserverProxy.recordActionEvent("remove-like",eventData);
 }
 
 // (2.22) function to track Action Event "RemoveFromCart"
@@ -178,9 +178,9 @@ LeoObserver.recordEventRemoveFromCart = function(eventData) {
 }
 
 // (2.23) function to track Action Event "UpdateCart"
-LeoObserver.recordEventUpdateCart = function(eventData) {
-    eventData = eventData ? eventData : {};
-    LeoObserverProxy.recordActionEvent("update-cart",eventData);
+LeoObserver.recordEventUpdateCart = function(shoppingCartItems) {
+	shoppingCartItems = typeof shoppingCartItems === "object" ? shoppingCartItems : [];
+    LeoObserverProxy.recordConversionEvent("update-cart", {} , "", shoppingCartItems, -1, "USD");
 }
 
 
@@ -300,7 +300,7 @@ function setUpWooCommerceTrackingEvents() {
 
         var productPrice = document.querySelector('.price');
     
-        var productId = event.target.value || document.querySelector('input[name="add-to-cart"]')?.value ||  document.querySelector('.variations_form')?.dataset.product_id;
+        var productId = event.target.value || document.querySelector('input[name="add-to-cart"]')?.value || document.querySelector('.variations_form')?.dataset.product_id;
         var productName = document.querySelector('.product_title')?.textContent.trim();
         var quantityInput = document.querySelector('.quantity input[name="quantity"]');
         var quantity = quantityInput ? quantityInput.value : 1;  // Nếu không có, đặt mặc định là 1
@@ -337,25 +337,26 @@ function setUpWooCommerceTrackingEvents() {
         console.log(event);
 
         var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
-        var data = [];
+        var items = [];
 
         cartItems.forEach(function(cartItem) {
             var productName = cartItem.querySelector('.product-name a').textContent.trim();
-    
+            var productId = cartItem.querySelector('a[href*="remove_item"]').getAttribute('data-product_id');
             var quantityInput = cartItem.querySelector('input[name*="[qty]"]');
-            var quantity = quantityInput ? quantityInput.value : 'Unknown';
+            var quantity = quantityInput ? quantityInput.value : '0';
     
             var cartItemInfo = {
-                'Product Name': productName,
-                'Quantity': quantity
+                'itemid': productId,
+                'name': productName,
+                'quantity': parseInt(quantity),
             };
 
-            data.push(cartItemInfo);
+            items.push(cartItemInfo);
         });
 
-        console.log(data);
+        console.log(items);
     
-        LeoObserver.recordEventUpdateCart(data);
+        LeoObserver.recordEventUpdateCart(items);
     };
     
     // Remove a product from cart screen
@@ -363,10 +364,23 @@ function setUpWooCommerceTrackingEvents() {
         console.log(event);
 
         var product_id = this.getAttribute('data-product_id') || 'Unknown Product ID';
-        var action_name = this.getAttribute('aria-label') || 'Unknown Action'
+        var action_name = this.getAttribute('aria-label') || 'Unknown Action';
+        var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
+        var quantity = '0';
+
+        cartItems.forEach(function(cartItem) {
+            var quantityInput = cartItem.querySelector('.quantity input[name*="[qty]"]');
+            var productName = cartItem.querySelector('.product-name a').textContent.trim();
+            
+            if(action_name.includes(productName)) {
+                quantity = quantityInput ? quantityInput.value : '0';
+            }
+        });
+
         var data = {
             'Product ID': product_id,
             'Action Name': action_name,
+            'Quantity': quantity
         };
 
         console.log(data);
@@ -448,7 +462,7 @@ function setUpWooCommerceTrackingEvents() {
     
         console.log(data);
     
-        LeoObserver.recordEventUnlike(data);
+        LeoObserver.recordEventRemoveLike(data);
     };
     
 
