@@ -458,7 +458,7 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', remove_from_wishlist_event);
     });
 
-    document.querySelectorAll('.products .single_add_to_wishlist').forEach(function(button) {
+    document.querySelectorAll('.products a[href*="add_to_wishlist"]').forEach(function(button) {
         button.addEventListener('click', list_view_added_to_wishlist_event);
     });
 
