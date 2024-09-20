@@ -362,6 +362,7 @@ function setUpWooCommerceTrackingEvents() {
     // Remove a product from cart screen KBedding
     var remove_from_cart_event_kbedding = function(event) {
         console.log(event);
+        console.log('@@@@');
     
         var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
         var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
@@ -510,7 +511,7 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', list_view_added_to_wishlist_event);
     });
 
-    // add to cart - test
+    // add to cart - kbedding testing, kingkoi test
     document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
         button.addEventListener('click', single_view_added_to_cart_event);
     });
