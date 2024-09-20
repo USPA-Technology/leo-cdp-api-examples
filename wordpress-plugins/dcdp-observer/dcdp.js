@@ -511,13 +511,8 @@ function setUpWooCommerceTrackingEvents() {
     });
 
     // add to cart
-    document.getElementsByClassName('variations_form')[0].addEventListener('submit', function(event) {
-        console.log('Clicked element:', event.target);
-        event.preventDefault();
-    
-        if (event.target && event.target.matches('button[class*="single_add_to_cart_button"]')) {
-            single_view_added_to_cart_event(event);
-        }
+    document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
+        button.addEventListener('click', single_view_added_to_cart_event);
     });
 
     // buy now
