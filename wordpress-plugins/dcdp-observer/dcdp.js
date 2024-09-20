@@ -359,15 +359,15 @@ function setUpWooCommerceTrackingEvents() {
         LeoObserver.recordEventUpdateCart(items);
     };
     
-    // Remove a product from cart screen
-    var remove_from_cart_event = function(event) {
+    // Remove a product from cart screen KBedding
+    var remove_from_cart_event_kbedding = function(event) {
         console.log(event);
-
-        var product_id = this.getAttribute('data-product_id') || 'Unknown Product ID';
-        var action_name = this.getAttribute('aria-label') || 'Unknown Action';
+    
+        var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
+        var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
         var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
         var quantity = '0';
-
+    
         cartItems.forEach(function(cartItem) {
             var quantityInput = cartItem.querySelector('.quantity input[name*="[qty]"]');
             var productName = cartItem.querySelector('.product-name a').textContent.trim();
@@ -376,17 +376,47 @@ function setUpWooCommerceTrackingEvents() {
                 quantity = quantityInput ? quantityInput.value : '0';
             }
         });
-
+    
         var data = {
             'Product ID': product_id,
             'Action Name': action_name,
             'Quantity': quantity
         };
-
+    
         console.log(data);
-
+    
         LeoObserver.recordEventRemoveFromCart(data);
     };
+
+    // Remove a product from cart screen Kingkoil
+    var remove_from_cart_event_kingkoil = function(event) {
+        console.log(event);
+    
+        var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
+        var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
+        var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
+        var quantity = '0';
+    
+        cartItems.forEach(function(cartItem) {
+            var quantityInput = cartItem.querySelector('.quantity input[name*="[qty]"]');
+            var productName = cartItem.querySelector('.box-info-price a[href*="/product"]').textContent.trim();
+            
+            if(action_name.includes(productName)) {
+                quantity = quantityInput ? quantityInput.value : '0';
+            }
+        });
+    
+        var data = {
+            'Product ID': product_id,
+            'Action Name': action_name,
+            'Quantity': quantity
+        };
+    
+        console.log(data);
+    
+        LeoObserver.recordEventRemoveFromCart(data);
+    };
+
 
     // Add product to wishlist from a list
     var list_view_added_to_wishlist_event = function(event) {
@@ -467,29 +497,51 @@ function setUpWooCommerceTrackingEvents() {
     
 
     
-    // Catch events from components
-    document.body.addEventListener('click', function(event) {
-        console.log('Clicked element:', event.target); 
-        
+    // remove from wishlist
+    document.body.addEventListener('click', function(event) {        
         if (event.target && event.target.matches('a[href*="remove_from_wishlist"]')) {
+            event.preventDefault();
             remove_from_wishlist_event(event);
         }
     });
 
+    // add to wishlist
     document.querySelectorAll('.products a[href*="add_to_wishlist"]').forEach(function(button) {
         button.addEventListener('click', list_view_added_to_wishlist_event);
     });
 
-    document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
-        button.addEventListener('click', single_view_added_to_cart_event);
+    // add to cart
+    document.getElementsByClassName('variations_form')[0].addEventListener('submit', function(event) {
+        console.log('Clicked element:', event.target);
+        event.preventDefault();
+    
+        if (event.target && event.target.matches('button[class*="single_add_to_cart_button"]')) {
+            single_view_added_to_cart_event(event);
+        }
     });
 
+    // buy now
     document.querySelectorAll('.product button[name*="buy-now"]').forEach(function(button) {
         button.addEventListener('click', single_view_added_to_cart_event);
     });
 
-    document.querySelectorAll('.woocommerce-cart-form a[href*="remove_item"]').forEach(function(button) {
-        button.addEventListener('click', remove_from_cart_event);
+    // remove from cart KBedding
+    document.body.addEventListener('click', function(event) {
+        console.log('Clicked element:', event.target); 
+        event.preventDefault();
+        
+        if (event.target && event.target.matches('a[href*="remove_item"]')) {
+            remove_from_cart_event_kbedding(event);
+        }
+    });
+
+    // remove from cart King koil
+    document.body.addEventListener('click', function(event) {
+        console.log('Clicked element:', event.target); 
+        
+        if (event.target && event.target.matches('a[href*="remove_item"]')) {
+            remove_from_cart_event_kingkoil(event);
+        }
     });
 
     document.querySelectorAll('.woocommerce-cart-form button[name*="update_cart"]').forEach(function(button) {
