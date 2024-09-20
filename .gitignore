@@ -122,3 +122,6 @@ python/convert-data.py
 vendor/*
 composer.json
 composer.lock
+
+# Wordpress
+wordpress-plugins/dcdp-observer.zip

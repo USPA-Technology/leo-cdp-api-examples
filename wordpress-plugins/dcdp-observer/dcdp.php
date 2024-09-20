@@ -3,7 +3,7 @@
 /*
 Plugin Name: D-CDP Observer
 Description: Passes user login information (first name, last name, email) to D-CDP
-Version: 2.0.4
+Version: 2.0.9
 Author: Trieu Dataism
 */
 
