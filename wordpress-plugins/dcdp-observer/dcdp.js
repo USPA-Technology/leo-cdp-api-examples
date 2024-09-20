@@ -537,10 +537,13 @@ function setUpWooCommerceTrackingEvents() {
 
     // remove from cart King koil
     document.body.addEventListener('click', function(event) {
-        console.log('Clicked element:', event.target); 
-        
         if (event.target && event.target.matches('a[href*="remove_item"]')) {
+            event.preventDefault();
+    
             remove_from_cart_event_kingkoil(event);
+    
+            var targetUrl = event.target.getAttribute('href'); 
+            window.location.href = targetUrl; 
         }
     });
 
@@ -548,6 +551,6 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', update_cart_event);
     });
 
-    document.body.addEventListener('added_to_cart', list_view_added_to_cart_event);
+    // document.body.addEventListener('added_to_cart', list_view_added_to_cart_event);
     // document.body.addEventListener('added_to_wishlist', list_view_added_to_wishlist_event);
 }
