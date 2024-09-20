@@ -497,7 +497,7 @@ function setUpWooCommerceTrackingEvents() {
     
 
     
-    // remove from wishlist
+    // remove from wishlist - ok
     document.body.addEventListener('click', function(event) {        
         if (event.target && event.target.matches('a[href*="remove_from_wishlist"]')) {
             event.preventDefault();
@@ -505,23 +505,23 @@ function setUpWooCommerceTrackingEvents() {
         }
     });
 
-    // add to wishlist
+    // add to wishlist - ok
     document.querySelectorAll('.products a[href*="add_to_wishlist"]').forEach(function(button) {
         button.addEventListener('click', list_view_added_to_wishlist_event);
     });
 
-    // add to cart
+    // add to cart - test
     document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
         button.addEventListener('click', single_view_added_to_cart_event);
     });
 
-    // buy now
+    // buy now - ok
     document.querySelectorAll('.product button[name*="buy-now"]').forEach(function(button) {
         button.addEventListener('click', single_view_added_to_cart_event);
     });
 
-    // remove from cart KBedding
-    document.body.addEventListener('click', function(event) {
+    // remove from cart KBedding - test
+    document.getElementsByClassName('woocommerce-cart-form')[0].addEventListener('click', function(event) {
         console.log('Clicked element:', event.target); 
         event.preventDefault();
         
@@ -530,8 +530,8 @@ function setUpWooCommerceTrackingEvents() {
         }
     });
 
-    // remove from cart King koil
-    document.body.addEventListener('click', function(event) {
+    // remove from cart King koil - test
+    document.getElementsByClassName('woocommerce-cart-form')[0].addEventListener('click', function(event) {
         if (event.target && event.target.matches('a[href*="remove_item"]')) {
             event.preventDefault();
     
