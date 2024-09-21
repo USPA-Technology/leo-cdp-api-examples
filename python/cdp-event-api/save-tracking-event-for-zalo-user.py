@@ -1,18 +1,18 @@
 import http.client
 import json
-from decouple import config
+from init_api_config import cdp_api_config
 
 from datetime import datetime
 
 now = datetime.now() # current date and time
 
-connection = http.client.HTTPSConnection(config('cdp_host'))
+connection = http.client.HTTPSConnection(cdp_api_config('cdp_host'))
 
 headers = {
     "Content-Type": 'application/json',
     "Access-Control-Allow-Origin": "*",
-    "tokenkey": config('tokenkey'),
-    "tokenvalue": config('tokenvalue')
+    "tokenkey": cdp_api_config('tokenkey'),
+    "tokenvalue": cdp_api_config('tokenvalue')
 }
 # print(headers)
 

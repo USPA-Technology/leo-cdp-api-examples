@@ -1,21 +1,19 @@
 import http.client
 from datetime import datetime
 import json
-from decouple import Config, RepositoryEnv
+from init_api_config import cdp_api_config
 
-DOTENV_FILE = 'qc.env'
-
-env_config = Config(RepositoryEnv(DOTENV_FILE))
 now = datetime.now()  # current date and time
-connection = http.client.HTTPSConnection(env_config('cdp_host'))
+connection = http.client.HTTPSConnection(cdp_api_config('cdp_host'))
 
 headers = {
     "Content-Type": 'application/json',
     "Access-Control-Allow-Origin": "*",
-    "tokenkey": env_config('tokenkey'),
-    "tokenvalue": env_config('tokenvalue')
+    "tokenkey": cdp_api_config('tokenkey'),
+    "tokenvalue": cdp_api_config('tokenvalue')
 }
-# print(headers)
+
+print(headers)
 
 test_metric = "purchase"
 
@@ -27,9 +25,8 @@ eventdata = {"itemId": "2019010113333", "idType": "SKU",
              "quantity": 2, "ghi chú": "khuyến mãi 20% <b> rất hot </b>"}
 tracking_event = {
     # the target update profile's email
-    'eventtime': '2024-09-17T19:57:25.110Z',
+    'eventtime': '2024-09-20T19:57:25.110Z',
     'targetUpdateEmail': "bill.john123@example.com",
-    'targetUpdatePhone': "bill.john123@example.com",
     'tpname': "Bộ Everon Esm-21016",  # TOUCHPOINT_NAME
     'tpurl': "https://everonvn.com.vn/everon/3662/bo-everon-epm-24060",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL
