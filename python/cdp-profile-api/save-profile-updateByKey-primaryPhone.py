@@ -1,14 +1,14 @@
 import http.client
 import json
-from decouple import config
+from init_api_config import cdp_api_config
 
-connection = http.client.HTTPSConnection(config('cdp_host'))
+connection = http.client.HTTPSConnection(cdp_api_config('cdp_host'))
 
 headers = {
     "Content-Type": 'application/json',
     "Access-Control-Allow-Origin": "*",
-    "tokenkey": config('tokenkey'),
-    "tokenvalue": config('tokenvalue')
+    "tokenkey": cdp_api_config('tokenkey'),
+    "tokenvalue": cdp_api_config('tokenvalue')
 }
 
 sampleExtAttributes = {"facebook-friend": 10, "facebook-short-bio": "#Dataism #LEOCDP #InGodWeTrust"}
@@ -17,7 +17,7 @@ sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
     "journeyMapIds": "id_default_journey; ",
-    "dataLabels": "CRM; KOL person; người nổi tiếng; investors; doanh nhân đầu tư;hot girl",
+    
     "crmRefId": "zalo-123456789",
     "governmentIssuedIDs": "US_123",
     "primaryAvatar": "https://vnn-imgs-a1.vgcloud.vn/icdn.dantri.com.vn/2021/05/26/ngo-ngang-voi-ve-dep-cua-hot-girl-anh-the-chua-tron-18-docx-1622043349706.jpeg",
@@ -62,9 +62,11 @@ profile = {
     # control how to save profile
     # valid value: primaryEmail, primaryPhone, crmRefId , socialMediaProfiles, applicationIDs, governmentIssuedIDs, loyaltyIDs, fintechSystemIDs
     "updateByKey":"primaryPhone",
+    "dataLabels": "CRM; investors;",
     
     # if deduplicate : True, the CDP will automatically merge duplicate profiles into one 
-    "deduplicate": False
+    "deduplicate": False, 
+    "overwriteData" : True
 }
 
 json_payload = json.dumps(profile)
