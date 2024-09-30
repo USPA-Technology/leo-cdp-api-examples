@@ -535,7 +535,7 @@ function setUpWooCommerceTrackingEvents() {
     });
 
     // remove from cart King koil - test
-    document.getElementsByClassName('woocommerce-cart-form')[0].addEventListener('submit', function(event) {
+    document.getElementsByClassName('woocommerce-cart-form')[0].addEventListener('click', function(event) {
         console.log('Clicked element:', event.target); 
 
         if (event.target && event.target.matches('a[href*="remove_item"]')) {
