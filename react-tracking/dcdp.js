@@ -1,3 +1,15 @@
+const booking_url = 'https://pos.facialbar.vn/send_request?model=vmt.loyalty.booking';
+const create_booking_url = 'https://api-gateway.facialbar.vn/booking/booking/create-booking';
+const sign_in_url = 'https://api-gateway.facialbar.vn/marketing/customer/login';
+const sign_up_url = 'https://api-gateway.facialbar.vn/marketing/customer/create-password';
+const create_service_details_url = function(serviceName) {return `https://facialbar.vn/_next/data/6nOzGMP03IO8bk7PzUR1v/dich-vu/${serviceName}-.json?id=${serviceName}-`;};
+const service_view_url = 'https://facialbar.vn/dich-vu/';
+const sign_in_button_id = '#button-login-s';
+const sign_up_button_id = '#button-login-s';
+const booking_button_id = '#button-login-s';
+
+
+
 // (1) CDP EVENT OBSERVER: load JavaScript code for [Facial Bar]
 (function() { 	
 	// Observer ID
@@ -245,6 +257,51 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
 
 
 
+
+// track service view event
+(function() { 	
+    function extractServiceName(url) {
+        console.log(url);
+        const parts = url.split('/');
+        const lastPart = parts[parts.length - 1].split('-')[0];
+        return lastPart;
+    }
+    
+    if(window.location.href.includes(service_view_url)) {
+        var serviceName = extractServiceName(window.location.href);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', create_service_details_url(serviceName), true);
+                
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                var eventData = {};
+                var resJson = JSON.parse(xhr.responseText);
+
+                eventData['ID'] = resJson.pageProps.dataDetail._id;
+                eventData['Name'] = resJson.pageProps.dataDetail.seo.title || 'N/A';
+                eventData['Keyword'] = resJson.pageProps.dataDetail.seo.keyword || 'N/A';
+                eventData['Description'] = resJson.pageProps.dataDetail.seo.description || 'N/A';
+                eventData['Content'] = resJson.pageProps.dataDetail.content || 'N/A';
+                eventData['Price'] = resJson.pageProps.dataDetail.price || 'N/A';
+
+                console.log('Final Event Data:', eventData);
+                LeoObserver.recordEventItemView(eventData)
+            } else {
+                console.error("Request failed with status:", xhr.status);
+            }
+        };
+        
+        xhr.onerror = function () {
+            console.error("Request failed");
+        };
+        
+        xhr.send();
+    }
+})();
+
+
+// track event via request and response after clicking a component
 document.addEventListener('DOMContentLoaded', function() {
     // get current formattedDate
     function getCurrentFormattedDate() {
@@ -301,15 +358,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var booking_event = function() {    
         const originalSend = XMLHttpRequest.prototype.send;
         const originalOpen = XMLHttpRequest.prototype.open;
-        const bookingUrl = 'https://pos.facialbar.vn/send_request?model=vmt.loyalty.booking';
-        const createBookingUrl = 'https://api-gateway.facialbar.vn/booking/booking/create-booking';
-
+        
         var requestBody = null;
         var firstRequestDone = false;
         var secondRequestDone = false;
     
         XMLHttpRequest.prototype.open = function(method, url) {
-            if (url.includes(bookingUrl)) {
+            if (url.includes(booking_url)) {
                 this.isLoyaltyBooking = true;
             } else {
                 this.isLoyaltyBooking = false;
@@ -333,13 +388,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (xhr.readyState === 4) { 
                     const url = xhr.responseURL;
                     
-                    if (url.includes(createBookingUrl) || url.includes(bookingUrl)) {
+                    if (url.includes(create_booking_url) || url.includes(booking_url)) {
                         try {
                             var resJson = JSON.parse(xhr.responseText);
                             var eventData = {};
                             console.log('Response JSON:', resJson);
     
-                            if (url.includes(createBookingUrl) && resJson != null && xhr.status == 200) {
+                            if (url.includes(create_booking_url) && resJson != null && xhr.status == 200) {
                                 eventData['Bed ID'] = resJson.data.bedId;
                                 eventData['Bed Name'] = resJson.data.bedName;
                                 eventData['Created Date'] = getCurrentFormattedDate();
@@ -347,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 firstRequestDone = true;
                             }
     
-                            if (url.includes(bookingUrl) && resJson != null && xhr.status == 200) {
+                            if (url.includes(booking_url) && resJson != null && xhr.status == 200) {
                                 eventData['Salon'] = resJson.data.salon;
                                 eventData['Start Time'] = resJson.data.start_time;
                                 eventData = {...eventData, ...get_services_info_on_click()};
@@ -379,11 +434,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var sign_in_event = function() {
         const originalOpen = XMLHttpRequest.prototype.open;
         const originalSend = XMLHttpRequest.prototype.send;
-        const loginUrl = 'https://api-gateway.facialbar.vn/marketing/customer/login';
         var requestBody = null;
     
         XMLHttpRequest.prototype.open = function(method, url) {
-            if (url.includes(loginUrl)) {
+            if (url.includes(sign_in_url)) {
                 this.isLoginRequest = true;  
             } else {
                 this.isLoginRequest = false;
@@ -407,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (xhr.readyState === 4) { 
                     const url = xhr.responseURL;
     
-                    if (xhr.isLoginRequest && url.includes(loginUrl)) {
+                    if (xhr.isLoginRequest && url.includes(sign_in_url)) {
                         try {    
                             if (xhr.status === 200) {
                                 var eventData = { 
@@ -436,7 +490,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // track signing up event
     var sign_up_event = function(event) {
         const originalSend = XMLHttpRequest.prototype.send;
-        const createPasswordUrl = 'https://api-gateway.facialbar.vn/marketing/customer/create-password';
     
         XMLHttpRequest.prototype.send = function(body) {
             const xhr = this;
@@ -446,7 +499,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (xhr.readyState === 4) {
                     const url = xhr.responseURL;
     
-                    if (url.includes(createPasswordUrl)) {
+                    if (url.includes(sign_up_url)) {
                         try {
                             var resJson = JSON.parse(xhr.responseText);
 
@@ -474,63 +527,10 @@ document.addEventListener('DOMContentLoaded', function() {
             originalSend.apply(xhr, arguments);
         };
     };
-
-    // track viewing details event 
-    var view_details_event = function(serviceName) {
-        serviceName = reformatServiceName(serviceName);
-        const serviceDetailsUrl = `https://facialbar.vn/_next/data/6nOzGMP03IO8bk7PzUR1v/dich-vu/${serviceName}-.json?id=${serviceName}-`;
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', serviceDetailsUrl, true);
-                
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                var eventData = {};
-                var resJson = JSON.parse(xhr.responseText);
-
-                eventData['ID'] = resJson.pageProps.dataDetail._id;
-                eventData['Name'] = resJson.pageProps.dataDetail.seo.title || 'N/A';
-                eventData['Keyword'] = resJson.pageProps.dataDetail.seo.keyword || 'N/A';
-                eventData['Description'] = resJson.pageProps.dataDetail.seo.description || 'N/A';
-                eventData['Content'] = resJson.pageProps.dataDetail.content || 'N/A';
-                eventData['Price'] = resJson.pageProps.dataDetail.price || 'N/A';
-
-                console.log('Final Event Data:', eventData);
-                LeoObserver.recordEventClickDetails(eventData)
-            } else {
-                console.error("Request failed with status:", xhr.status);
-            }
-        };
-        
-        xhr.onerror = function () {
-            console.error("Request failed");
-        };
-        
-        xhr.send();
-    };
-    
     
 
     // Tracking button clicking
-    document.querySelector('#button-login-s').addEventListener('click', booking_event);
-    document.querySelector('#button-login-s').addEventListener('click', sign_in_event);
-    document.querySelector('#button-login-s').addEventListener('click', sign_up_event);
-    document.querySelectorAll('div[class="bg-cover bg-center xx:rounded-[12.5px] md:rounded-[30px] relative mx-[10px] xx:w-[148px] xx:h-[205px] md:w-[190px] lg:w-[240px] xl:w-[300px] 2xl:w-[366px] 2sxl:w-[425px] 3xl:w-[500px] md:h-[270px] lg:h-[320px] xl:h-[390px] 2xl:h-[493px] 2sxl:h-[560px] 3xl:h-[670px] overflow-hidden"]').forEach(function(elem) {
-        var serviceName = elem.querySelector('h3[class="text-white xx:text-[12.5px] lg:text-[18px] xl:text-[20px] 2xl:text-[30px]"]').textContent.trim();
-                
-        elem.querySelectorAll('.config-text-parent').forEach(function(button) {
-            button.addEventListener('click', function() {
-                view_details_event(serviceName);
-            });
-        });
-    });
-    document.querySelectorAll('div[class="relative xx:h-[138px] xx:w-[107px] md:h-[234px] md:w-[190px] lg:h-[330px] xl:h-[400px] 2xl:h-[457px] 2sxl:h-[490px]  3xl:h-[530px] 3xl:w-[480px] 2sxl:w-[450px] 2xl:w-[368px] xl:w-[320px] lg:w-[245px] mx-[10px] bg-white xx:rounded-[9px] md:rounded-[20px] lg:rounded-[30px]"]').forEach(function(elem) {
-        var serviceName = elem.querySelector('h3[class="text-[#76996E] 2xl:text-[30px] xl:text-[24px] lg:text-[16px] md:text-[14px] xx:text-[9px]"]').textContent.trim();
-                
-        elem.querySelectorAll('.config-text-parent').forEach(function(button) {
-            button.addEventListener('click', function() {
-                view_details_event(serviceName);
-            });
-        });
-    });
+    document.querySelector(booking_button_id).addEventListener('click', booking_event);
+    document.querySelector(sign_in_button_id).addEventListener('click', sign_in_event);
+    document.querySelector(sign_up_button_id).addEventListener('click', sign_up_event);
 });
