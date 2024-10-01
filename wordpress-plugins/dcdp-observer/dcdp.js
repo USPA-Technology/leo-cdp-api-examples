@@ -89,10 +89,10 @@ LeoObserver.recordEventItemView = function(eventData) {
 }
 
 // (2.9) function to track Action Event "ClickDetails"
-LeoObserver.recordEventClickDetails = function(eventData) {
-	eventData = eventData ? eventData : {};
-	LeoObserverProxy.recordActionEvent("click-details",eventData);
-}
+// LeoObserver.recordEventClickDetails = function(eventData) {
+// 	eventData = eventData ? eventData : {};
+// 	LeoObserverProxy.recordActionEvent("click-details",eventData);
+// }
 
 // (2.10) function to track Action Event "PlayVideo"
 LeoObserver.recordEventPlayVideo = function(eventData) {
