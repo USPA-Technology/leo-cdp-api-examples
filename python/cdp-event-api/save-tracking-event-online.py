@@ -25,8 +25,8 @@ eventdata = {"itemId": "2019010113333", "idType": "SKU",
              "quantity": 2, "ghi chú": "khuyến mãi 20% <b> rất hot </b>"}
 tracking_event = {
     # the target update profile's email
-    'eventtime': '2024-09-21T16:57:25+7:00',
-    'targetUpdateEmail': "bill.john123@example.com",
+    'eventtime': '2024-09-28T16:57:25+7:00',
+    'targetUpdatePhone': "0903122280",  # phone
     'tpname': "Everon Kinh Duong Vuong",  # TOUCHPOINT_NAME
     'tpurl': "https://everonvn.com.vn/everon/3662/bo-everon-epm-24060",  # TOUCHPOINT_URL
     'tprefurl': "https://google.com",  # TOUCHPOINT_REFERRER_URL

@@ -1,33 +1,33 @@
 import http.client
 import json
-from decouple import config
+from init_api_config import cdp_api_config
 
-connection = http.client.HTTPSConnection(config('cdp_host'))
+connection = http.client.HTTPSConnection(cdp_api_config('cdp_host'))
 
 headers = {
     "Content-Type": 'application/json',
     "Access-Control-Allow-Origin": "*",
-    "tokenkey": config('tokenkey'),
-    "tokenvalue": config('tokenvalue')
+    "tokenkey": cdp_api_config('tokenkey'),
+    "tokenvalue": cdp_api_config('tokenvalue')
 }
 
-sampleExtAttributes = {"facebook-friend": 10, "facebook-short-bio": "#Dataism #LEOCDP #InGodWeTrust"}
-applicationIDs = ['kiotviet-KH410273','zalo-1234']
+sampleExtAttributes = {"facebook-friend": 100, "facebook-short-bio": "#Dataism #LEOCDP #InGodWeTrust"}
+applicationIDs = ['kiotviet-KH412555','zalo-123']
 sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
 profile = {
     "journeyMapIds": "id_default_journey; ",
     "dataLabels": "CRM;test",
-    "crmRefId": "123",
+    "crmRefId": "1232",
     "governmentIssuedIDs": "",
     "primaryAvatar": "",
-    "primaryEmail": "tantrieuf31@gmail.com",
+    "primaryEmail": "tantrieuf32@gmail.com",
     "secondaryEmails": "",
     "primaryPhone": "0903122290",
     "secondaryPhones": "(206) 709-3401; (206) 709-3402",
-    "firstName": "Bill",
+    "firstName": "trieu 2",
     "middleName": "",
-    "lastName": "John 12345",
+    "lastName": "nguyen",
     "gender": "male",  # or female
     "dateOfBirth": "1990-08-05",  # yyyy-MM-dd
     "livingLocation": " Medina, Washington",  # the address of customer
