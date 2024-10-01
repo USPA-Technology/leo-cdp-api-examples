@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
     
                 if (originalOnReadyStateChange) {
-                    originalOnReadyStateChange.apply(xhr, arguments);
+                    originalOnReadyStateChange.apply(xhr, arguments);e4
                 }
             };
     

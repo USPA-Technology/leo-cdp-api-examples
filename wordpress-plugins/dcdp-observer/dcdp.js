@@ -284,29 +284,36 @@ function setUpWooCommerceTrackingEvents() {
         console.log("Tracking adding to cart event on product details screen");
     
         const table = document.querySelector('.variations');
-        let selectedRadioValue = null;
-        let selectedSelectValue = null;
+        let selectedRadioValues = [];
+        let selectedVariationValue = null;
     
         if (table) {
-            const radios = table.querySelectorAll('input[type="radio"]');
+            const variationLabels = table.querySelectorAll('label[class="radio-btn-variation"]')
             const select = table.querySelector('select');
-    
-            radios.forEach(function(radio) {
+            
+            variationLabels.forEach(function(label) {
+                const radio = label.querySelector('input[type="radio"]');
+
                 if (radio.checked) {
-                    selectedRadioValue = radio.value;
+                    selectedRadioValues.push(label.textContent);
                 }
             });
     
-            selectedSelectValue = select ? select.value : null;
+            selectedVariationValue = select ? select.value : null;
         }
+
+        var selectedVariations = "";
+        selectedRadioValues.forEach(function(variation) {
+            selectedVariations += variation + '   ';
+        });
 
         var productPrice = document.querySelector('.price');
     
         var productId = event.target.value || document.querySelector('input[name="add-to-cart"]')?.value || document.querySelector('.variations_form')?.dataset.product_id;
         var productName = document.querySelector('.product_title')?.textContent.trim();
         var quantityInput = document.querySelector('.quantity input[name="quantity"]');
-        var quantity = quantityInput ? quantityInput.value : 1;  // Nếu không có, đặt mặc định là 1
-        var variation = selectedRadioValue || selectedSelectValue || null;
+        var quantity = quantityInput ? quantityInput.value : 1; 
+        var variation = selectedVariations || selectedVariationValue || null;
         var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
             ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
             : null;
