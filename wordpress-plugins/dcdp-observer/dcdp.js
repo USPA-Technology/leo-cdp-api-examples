@@ -279,7 +279,9 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to cart from product's details screen
     var single_view_added_to_cart_event = function(event) {
+        event.preventDefault();
         console.log(event);
+        console.log("Tracking adding to cart event on product details screen");
     
         const table = document.querySelector('.variations');
         let selectedRadioValue = null;
@@ -335,6 +337,7 @@ function setUpWooCommerceTrackingEvents() {
     // Update cart items on cart screen (KBedding only)
     var update_cart_event = function(event) {
         console.log(event);
+        console.log("Tracking updating cart event");
 
         var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
         var items = [];
@@ -362,6 +365,7 @@ function setUpWooCommerceTrackingEvents() {
     // Remove a product from cart screen KBedding
     var remove_from_cart_event_kbedding = function(event) {
         console.log(event);
+        console.log("Tracking removing from cart event")
     
         var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
         var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
@@ -391,6 +395,7 @@ function setUpWooCommerceTrackingEvents() {
     // Remove a product from cart screen Kingkoil
     var remove_from_cart_event_kingkoil = function(event) {
         console.log(event);
+        console.log("Tracking removing from cart event")
     
         var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
         var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
@@ -421,9 +426,9 @@ function setUpWooCommerceTrackingEvents() {
     // Add product to wishlist from a list
     var list_view_added_to_wishlist_event = function(event) {
         console.log(event);
+        console.log("Tracking adding to wishlist event");
     
         var productId = this.dataset.productId;
-
         var productItem = document.querySelector('.products .post-' + productId);
     
         if (!productItem) {
@@ -474,6 +479,7 @@ function setUpWooCommerceTrackingEvents() {
     // Remove a product from wishlist on wishlist screen
     var remove_from_wishlist_event = function(event) {
         console.log(event);
+        console.log("Tracking removing from wishlist event");
     
         var removed_item = event.target.closest('tr');
     
@@ -520,34 +526,34 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', single_view_added_to_cart_event);
     });
 
-    // remove from cart KBedding - ok
+    // remove from cart - kbedding ok, kingkoil testing
     document.body.addEventListener('click', function(event) {
         console.log('Clicked element:', event.target); 
+
+        if(event.target && event.target.matches('a[href*="remove_item"]')) {
+            if(event.target.matches('a[href*="kingkoil.vn"]')) {
+                event.preventDefault();
+                console.log("Kingkoil");
+    
+                remove_from_cart_event_kingkoil(event);
         
-        if (event.target && event.target.matches('a[href*="remove_item"]')) {
-            event.preventDefault();
+                var targetUrl = event.target.getAttribute('href'); 
+                window.location.href = targetUrl; 
+            }
 
-            remove_from_cart_event_kbedding(event);
+            if(event.target.matches('a[href*="kbedding.vn"]')) {
+                event.preventDefault();
+                console.log("Kbedding");
 
-            var targetUrl = event.target.getAttribute('href'); 
-            window.location.href = targetUrl; 
+                remove_from_cart_event_kbedding(event);
+    
+                var targetUrl = event.target.getAttribute('href'); 
+                window.location.href = targetUrl; 
+            }
         }
     });
 
-    // remove from cart King koil - test
-    document.getElementsByClassName('woocommerce-cart-form')[0].addEventListener('click', function(event) {
-        console.log('Clicked element:', event.target); 
-
-        if (event.target && event.target.matches('a[href*="remove_item"]')) {
-            event.preventDefault();
-    
-            remove_from_cart_event_kingkoil(event);
-    
-            var targetUrl = event.target.getAttribute('href'); 
-            window.location.href = targetUrl; 
-        }
-    });
-
+    // update cart - get full data ok, but can not show these data to UI -> Mr Trieu will fix this
     document.querySelectorAll('.woocommerce-cart-form button[name*="update_cart"]').forEach(function(button) {
         button.addEventListener('click', update_cart_event);
     });

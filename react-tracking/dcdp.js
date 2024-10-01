@@ -48,109 +48,109 @@ var LeoObserver = {};
 LeoObserver.recordEventAdImpression = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordViewEvent("ad-impression",eventData);
-}
+};
 
 // (2.2) function to track View Event "PageView"
 LeoObserver.recordEventPageView = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordViewEvent("page-view",eventData);
-}
+};
 
 // (2.3) function to track View Event "AcceptTracking"
 LeoObserver.recordEventAcceptTracking = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordViewEvent("accept-tracking",eventData);
-}
+};
 
 // (2.4) function to track View Event "EngagedSession"
 LeoObserver.recordEventEngagedSession = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordViewEvent("engaged-session",eventData);
-}
+};
 
 // (2.5) function to track Action Event "Like"
 LeoObserver.recordEventLike = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("like",eventData);
-}
+};
 
 // (2.6) function to track View Event "ContentView"
 LeoObserver.recordEventContentView = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordViewEvent("content-view",eventData);
-}
+};
 
 // (2.7) function to track Action Event "Search"
 LeoObserver.recordEventSearch = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("search",eventData);
-}
+};
 
 // (2.8) function to track View Event "ItemView"
 LeoObserver.recordEventItemView = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordViewEvent("item-view",eventData);
-}
+};
 
 // (2.9) function to track Action Event "ClickDetails"
 LeoObserver.recordEventClickDetails = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("click-details",eventData);
-}
+};
 
 // (2.10) function to track Action Event "PlayVideo"
 LeoObserver.recordEventPlayVideo = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("play-video",eventData);
-}
+};
 
 // (2.11) function to track Action Event "SubmitContact"
 LeoObserver.recordEventSubmitContact = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("submit-contact",eventData);
-}
+};
 
 // (2.12) function to track Action Event "AdminView"
 LeoObserver.recordEventAdminView = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("admin-view",eventData);
-}
+};
 
 // (2.13) function to track Action Event "FileDownload"
 LeoObserver.recordEventFileDownload = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("file-download",eventData);
-}
+};
 
 // (2.14) function to track Action Event "RegisterAccount"
 LeoObserver.recordEventRegisterAccount = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("register-account",eventData);
-}
+};
 
 // (2.15) function to track Action Event "UserLogin"
 LeoObserver.recordEventUserLogin = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("user-login",eventData);
-}
+};
 
 // (2.16) function to track Action Event "ShortLinkClick"
 LeoObserver.recordEventShortLinkClick = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("short-link-click",eventData);
-}
+};
 
 // (2.17) function to track Action Event "AskQuestion"
 LeoObserver.recordEventAskQuestion = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("ask-question",eventData);
-}
+};
 
 // (2.18) function to track Action Event "ProductTrial"
 LeoObserver.recordEventProductTrial = function(eventData) {
 	eventData = eventData ? eventData : {};
 	LeoObserverProxy.recordActionEvent("product-trial",eventData);
-}
+};
 
 // (2.19) function to track Conversion Event "Purchase"
 LeoObserver.recordEventPurchase = function(eventData, shoppingCartItems, transactionId, transactionValue, currencyCode) {
@@ -161,37 +161,37 @@ LeoObserver.recordEventPurchase = function(eventData, shoppingCartItems, transac
 	transactionValue = typeof transactionValue === "number" ? transactionValue : 0;
 	currencyCode = typeof currencyCode === "string" ? currencyCode : "USD";
 	LeoObserverProxy.recordConversionEvent("purchase", eventData , transactionId, shoppingCartItems, transactionValue, currencyCode);
-}
+};
 
 // (2.20) function to track Action Event "ProductTrial"
 LeoObserver.recordEventAddToCart = function(eventData) {
     eventData = eventData ? eventData : {};
     LeoObserverProxy.recordActionEvent("add-to-cart",eventData);
-}
+};
 
 // (2.21) function to track Action Event "Dislike"
 LeoObserver.recordEventRemoveLike = function(eventData) {
     eventData = eventData ? eventData : {};
     LeoObserverProxy.recordActionEvent("remove-like",eventData);
-}
+};
 
 // (2.22) function to track Action Event "RemoveFromCart"
 LeoObserver.recordEventRemoveFromCart = function(eventData) {
     eventData = eventData ? eventData : {};
     LeoObserverProxy.recordActionEvent("remove-from-cart",eventData);
-}
+};
 
 // (2.23) function to track Action Event "UpdateCart"
 LeoObserver.recordEventUpdateCart = function(shoppingCartItems) {
 	shoppingCartItems = typeof shoppingCartItems === "object" ? shoppingCartItems : [];
     LeoObserverProxy.recordConversionEvent("update-cart", {} , "", shoppingCartItems, -1, "USD");
-}
+};
 
 // (2.24) function to track Action Event "Book"
 LeoObserver.recordEventBook = function(eventData) {
     eventData = eventData ? eventData : {};
     LeoObserverProxy.recordActionEvent("book",eventData);
-}
+};
 
 
 
@@ -216,7 +216,7 @@ function leoObserverProxyReady(session) {
             window.synchLeoCdpToGA4(vid)
         }
     });
-}
+};
 
 // track users when they click any link in the web-page
 LeoObserver.addTrackingAllLinks = function(){
@@ -229,7 +229,7 @@ LeoObserver.addTrackingAllLinks = function(){
             })
         })
     },1500);
-}
+};
 
 // track users when they click any button in the web-page
 LeoObserver.addTrackingAllButtons = function(){
@@ -241,7 +241,7 @@ LeoObserver.addTrackingAllButtons = function(){
             })
         })
     },1600);
-}
+};
 
 LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
     var isValid = (typeof email === 'string' && email.length > 0) || (typeof phone === 'string' && phone.length > 0);
@@ -253,14 +253,14 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
     } else {
         console.log("LeoObserverProxy is not defined");
     }
-}
+};
 
 
 
 
 // track service view event
 (function() { 	
-    function extractServiceName(url) {
+	function extractServiceName(url) {
         console.log(url);
         const parts = url.split('/');
         const lastPart = parts[parts.length - 1].split('-')[0];
@@ -278,12 +278,12 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
                 var eventData = {};
                 var resJson = JSON.parse(xhr.responseText);
 
-                eventData['ID'] = resJson.pageProps.dataDetail._id;
-                eventData['Name'] = resJson.pageProps.dataDetail.seo.title || 'N/A';
-                eventData['Keyword'] = resJson.pageProps.dataDetail.seo.keyword || 'N/A';
-                eventData['Description'] = resJson.pageProps.dataDetail.seo.description || 'N/A';
-                eventData['Content'] = resJson.pageProps.dataDetail.content || 'N/A';
-                eventData['Price'] = resJson.pageProps.dataDetail.price || 'N/A';
+                eventData['ID'] = resJson.pageProps.dataDetail._id || 'Unknown';
+                eventData['Name'] = resJson.pageProps.dataDetail.seo.title || 'Unknown';
+                eventData['Keyword'] = resJson.pageProps.dataDetail.seo.keyword || 'Unknown';
+                eventData['Description'] = resJson.pageProps.dataDetail.seo.description || 'Unknown';
+                eventData['Content'] = resJson.pageProps.dataDetail.content || 'Unknown';
+                eventData['Price'] = resJson.pageProps.dataDetail.price || 'Unknown';
 
                 console.log('Final Event Data:', eventData);
                 LeoObserver.recordEventItemView(eventData)
@@ -299,6 +299,7 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
         xhr.send();
     }
 })();
+
 
 
 // track event via request and response after clicking a component
@@ -327,11 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = String(date.getMinutes()).padStart(2, '0');
         
         return `${year}-${month}-${day} ${hours}:${minutes}`;
-    }
-
-    // keep normal latin letters only and remove others
-    function reformatServiceName(text) {
-        return text.replace(/[^a-zA-Z]/g, '').toLowerCase();
     }
 
     // get service list and add to eventData
