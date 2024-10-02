@@ -343,7 +343,6 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to cart from Kingkoil product's details screen
     var single_view_add_to_cart_event_kingkoil = function(event) {
-        event.preventDefault();
         console.log(event);
         console.log("Tracking adding to cart event on product details screen");
     
@@ -403,10 +402,6 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
 
         LeoObserver.recordEventAddToCart(data);
-
-        setTimeout(function() {
-            event.target.submit();
-        }, 500);
     };
 
     // Update cart items on cart screen (KBedding only)
@@ -577,52 +572,31 @@ function setUpWooCommerceTrackingEvents() {
     };
     
 
-    
-    // remove from wishlist - ok
-    document.body.addEventListener('click', function(event) {        
-        if (event.target && event.target.matches('a[href*="remove_from_wishlist"]')) {
-            event.preventDefault();
-            remove_from_wishlist_event(event);
-        }
-    });
-
-    // add to wishlist - ok
-    document.querySelectorAll('.products a[href*="add_to_wishlist"]').forEach(function(button) {
-        button.addEventListener('click', list_view_added_to_wishlist_event);
-    });
-
-    // add to cart - kbedding ok. kingkoil testing
-    document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
-        if(window.location.href.includes('kbedding.vn')) {
-            button.addEventListener('click', single_view_add_to_cart_event_kbedding);
-        }
-
-        if(window.location.href.includes('kingkoil.vn')) {
-            button.addEventListener('submit', single_view_add_to_cart_event_kingkoil);
-        }
-    });
-
-    // buy now - ok
-    document.querySelectorAll('.product button[name*="buy-now"]').forEach(function(button) {
-        button.addEventListener('click', single_view_add_to_cart_event_kbedding);
-    });
-
-    // remove from cart - kbedding ok, kingkoil testing
-    document.body.addEventListener('click', function(event) {
-        console.log('Clicked element:', event.target); 
-
-        if(event.target && event.target.matches('a[href*="remove_item"]')) {
-            if(event.target.matches('a[href*="kingkoil.vn"]')) {
+    // KBEDDING 
+    if(window.location.href.includes('kbedding.vn')) {
+        // remove from wishlist - ok
+        document.body.addEventListener('click', function(event) {        
+            if (event.target && event.target.matches('a[href*="remove_from_wishlist"]')) {
                 event.preventDefault();
-                console.log("Kingkoil");
-    
-                remove_from_cart_event_kingkoil(event);
-        
-                var targetUrl = event.target.getAttribute('href'); 
-                window.location.href = targetUrl; 
+                remove_from_wishlist_event(event);
             }
+        });
 
-            if(event.target.matches('a[href*="kbedding.vn"]')) {
+        // add to wishlist - ok
+        document.querySelectorAll('.products a[href*="add_to_wishlist"]').forEach(function(button) {
+            button.addEventListener('click', list_view_added_to_wishlist_event);
+        });
+
+        // add to cart - ok
+        document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
+            button.addEventListener('click', single_view_add_to_cart_event_kbedding);
+        });
+
+        // remove from cart - kbedding ok, kingkoil testing
+        document.body.addEventListener('click', function(event) {
+            console.log('Clicked element:', event.target); 
+
+            if(event.target && event.target.matches('a[href*="remove_item"]')) {
                 event.preventDefault();
                 console.log("Kbedding");
 
@@ -631,13 +605,59 @@ function setUpWooCommerceTrackingEvents() {
                 var targetUrl = event.target.getAttribute('href'); 
                 window.location.href = targetUrl; 
             }
+        });
+
+        // update cart - get full data ok, but can not show these data to UI -> Mr Trieu will fi x this
+        document.querySelectorAll('.woocommerce-cart-form button[name*="update_cart"]').forEach(function(button) {
+            button.addEventListener('click', update_cart_event);
+        });
+    }
+    
+
+    // KINGKOIL
+    if(window.location.href.includes('kingkoil.vn')) {
+        // add to cart - testing
+        document.querySelector('.single_add_to_cart_button').addEventListener('click', single_view_add_to_cart_event_kingkoil);
+
+        
+        // remove from cart - testing
+        document.body.addEventListener('click', function(event) {
+            console.log('Clicked element:', event.target); 
+
+            if(event.target && event.target.matches('a[href*="remove_item"]')) {
+                event.preventDefault();
+                console.log("Kingkoil");
+    
+                remove_from_cart_event_kingkoil(event);
+        
+                var targetUrl = event.target.getAttribute('href'); 
+                window.location.href = targetUrl; 
+            }
+        });
+
+        // buy now - testing
+        document.querySelectorAll('.product button[name*="buy-now"]').forEach(function(button) {
+            button.addEventListener('click', single_view_add_to_cart_event_kingkoil);
+        });
+    }
+
+    
+    
+
+    
+
+    // buy now - kbedding ok. kingkoil testing
+    document.querySelectorAll('.product button[name*="buy-now"]').forEach(function(button) {
+        if(window.location.href.includes('kbedding.vn')) {
+            button.addEventListener('click', single_view_add_to_cart_event_kbedding);
+        }
+
+        if(window.location.href.includes('kingkoil.vn')) {
+            button.addEventListener('click', single_view_add_to_cart_event_kingkoil);
         }
     });
 
-    // update cart - get full data ok, but can not show these data to UI -> Mr Trieu will fix this
-    document.querySelectorAll('.woocommerce-cart-form button[name*="update_cart"]').forEach(function(button) {
-        button.addEventListener('click', update_cart_event);
-    });
+    
 
     document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
         button.addEventListener('click', function(event) {
