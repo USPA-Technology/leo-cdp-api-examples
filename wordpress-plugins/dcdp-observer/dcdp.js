@@ -343,6 +343,7 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to cart from Kingkoil product's details screen
     var single_view_add_to_cart_event_kingkoil = function(event) {
+        event.preventDefault();
         console.log(event);
         console.log("Tracking adding to cart event on product details screen");
     
@@ -402,6 +403,11 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
 
         LeoObserver.recordEventAddToCart(data);
+
+        setTimeout(function() {
+            console.log("Submitting form after 1low.5 second delay.");
+            event.target.closest('form').submit();
+        }, 1500);
     };
 
     // Update cart items on cart screen (KBedding only)
@@ -617,8 +623,9 @@ function setUpWooCommerceTrackingEvents() {
     // KINGKOIL
     if(window.location.href.includes('kingkoil.vn')) {
         // add to cart - testing
-        document.querySelector('.single_add_to_cart_button').addEventListener('click', single_view_add_to_cart_event_kingkoil);
-
+        if(document.querySelector('.single_add_to_cart_button') != null) {
+            document.querySelector('.single_add_to_cart_button').addEventListener('click', single_view_add_to_cart_event_kingkoil);
+        }
         
         // remove from cart - testing
         document.body.addEventListener('click', function(event) {
@@ -640,32 +647,6 @@ function setUpWooCommerceTrackingEvents() {
             button.addEventListener('click', single_view_add_to_cart_event_kingkoil);
         });
     }
-
-    
-    
-
-    
-
-    // buy now - kbedding ok. kingkoil testing
-    document.querySelectorAll('.product button[name*="buy-now"]').forEach(function(button) {
-        if(window.location.href.includes('kbedding.vn')) {
-            button.addEventListener('click', single_view_add_to_cart_event_kbedding);
-        }
-
-        if(window.location.href.includes('kingkoil.vn')) {
-            button.addEventListener('click', single_view_add_to_cart_event_kingkoil);
-        }
-    });
-
-    
-
-    document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
-        button.addEventListener('click', function(event) {
-            var targetUrl = event.target.formAction; 
-            console.log(targetUrl);
-            window.location.href = targetUrl; 
-        });
-    });
 
     // document.body.addEventListener('added_to_wishlist', list_view_added_to_wishlist_event);
 }
