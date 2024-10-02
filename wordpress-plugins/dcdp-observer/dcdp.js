@@ -343,6 +343,7 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to cart from Kingkoil product's details screen
     var single_view_add_to_cart_event_kingkoil = function(event) {
+        event.preventDefault();
         console.log(event);
         console.log("Tracking adding to cart event on product details screen");
     
@@ -402,6 +403,10 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
 
         LeoObserver.recordEventAddToCart(data);
+
+        setTimeout(function() {
+            event.target.submit();
+        }, 500);
     };
 
     // Update cart items on cart screen (KBedding only)
@@ -593,7 +598,7 @@ function setUpWooCommerceTrackingEvents() {
         }
 
         if(window.location.href.includes('kingkoil.vn')) {
-            button.addEventListener('click', single_view_add_to_cart_event_kingkoil);
+            button.addEventListener('submit', single_view_add_to_cart_event_kingkoil);
         }
     });
 
