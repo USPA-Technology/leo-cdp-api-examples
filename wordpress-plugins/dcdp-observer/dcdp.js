@@ -405,7 +405,7 @@ function setUpWooCommerceTrackingEvents() {
         LeoObserver.recordEventAddToCart(data);
 
         setTimeout(function() {
-            console.log("Submitting form after 1low.5 second delay.");
+            console.log("Submitting form after 1.5 second delay.");
             event.target.closest('form').submit();
         }, 1500);
     };
@@ -633,7 +633,6 @@ function setUpWooCommerceTrackingEvents() {
 
             if(event.target && event.target.matches('a[href*="remove_item"]')) {
                 event.preventDefault();
-                console.log("Kingkoil");
     
                 remove_from_cart_event_kingkoil(event);
         
