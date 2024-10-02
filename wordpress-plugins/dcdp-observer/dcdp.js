@@ -402,9 +402,6 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
 
         LeoObserver.recordEventAddToCart(data);
-
-        var targetUrl = event.target.getAttribute('href'); 
-        window.location.href = targetUrl; 
     };
 
     // Update cart items on cart screen (KBedding only)
@@ -637,8 +634,13 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', update_cart_event);
     });
 
-    document.body.addEventListener('added_to_cart', function() {
-        console.log("@@@@@@@");
+    document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            var targetUrl = event.target.formAction; 
+            console.log(targetUrl);
+            window.location.href = targetUrl; 
+        });
     });
+
     // document.body.addEventListener('added_to_wishlist', list_view_added_to_wishlist_event);
 }
