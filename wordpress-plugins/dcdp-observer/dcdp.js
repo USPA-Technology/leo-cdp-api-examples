@@ -394,11 +394,11 @@ function setUpWooCommerceTrackingEvents() {
         }, 1500);
     };
 
-    // Add product to cart from Kingkoil product's details screen
+    // Buy now from Kingkoil product's details screen
     var single_view_buy_now_event_kingkoil = function(event) {
         // event.preventDefault();
         console.log(event);
-        console.log("Tracking adding to cart event on product details screen");
+        console.log("Tracking buy now event on product details screen");
     
         const table = document.querySelector('.variations');
         let selectedVariationValue = null;
@@ -622,7 +622,7 @@ function setUpWooCommerceTrackingEvents() {
     };
     
 
-    // KBEDDING 
+    // KBEDDING - have to wait until finishing initiation
     if(window.location.href.includes('kbedding.vn')) {
         // remove from wishlist - ok
         document.body.addEventListener('click', function(event) {        
@@ -657,14 +657,14 @@ function setUpWooCommerceTrackingEvents() {
             }
         });
 
-        // update cart - get full data ok, but can not show these data to UI -> Mr Trieu will fi x this
+        // update cart - get full data ok, but can not show these data to UI -> Mr Trieu will fix this
         document.querySelectorAll('.woocommerce-cart-form button[name*="update_cart"]').forEach(function(button) {
             button.addEventListener('click', update_cart_event_kbedding);
         });
     }
     
 
-    // KINGKOIL
+    // KINGKOIL - have to wait until finishing initiation
     if(window.location.href.includes('kingkoil.vn')) {
         // add to cart - ok
         if(document.querySelector('.single_add_to_cart_button.bt-add-cart') != null) {
@@ -676,7 +676,7 @@ function setUpWooCommerceTrackingEvents() {
             button.addEventListener('click', remove_from_cart_event_kingkoil);
         });
         
-        // buy now - testing
+        // buy now - ok
         if(document.querySelector('.product button[name*="buy-now"]') != null) {
             document.querySelector('.product button[name*="buy-now"]').addEventListener('click', single_view_buy_now_event_kingkoil);
         }
