@@ -277,8 +277,8 @@ function setUpWooCommerceTrackingEvents() {
     };
     
 
-    // Add product to cart from product's details screen
-    var single_view_added_to_cart_event = function(event) {
+    // Add product to cart from Kbedding product's details screen
+    var single_view_add_to_cart_event_kbedding = function(event) {
         event.preventDefault();
         console.log(event);
         console.log("Tracking adding to cart event on product details screen");
@@ -339,6 +339,72 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
 
         LeoObserver.recordEventAddToCart(data);
+    };
+
+    // Add product to cart from Kingkoil product's details screen
+    var single_view_add_to_cart_event_kingkoil = function(event) {
+        console.log(event);
+        console.log("Tracking adding to cart event on product details screen");
+    
+        const table = document.querySelector('.variations');
+        let selectedRadioValues = [];
+        let selectedVariationValue = null;
+    
+        if (table) {
+            const variationLabels = table.querySelectorAll('label[class="radio-btn-variation"]')
+            const select = table.querySelector('select');
+            
+            variationLabels.forEach(function(label) {
+                const radio = label.querySelector('input[type="radio"]');
+
+                if (radio.checked) {
+                    selectedRadioValues.push(label.textContent);
+                }
+            });
+    
+            selectedVariationValue = select ? select.value : null;
+        }
+
+        var selectedVariations = "";
+        selectedRadioValues.forEach(function(variation) {
+            selectedVariations += variation + '   ';
+        });
+
+        var productPrice = document.querySelector('.price');
+    
+        var productId = event.target.value || document.querySelector('input[name="add-to-cart"]')?.value || document.querySelector('.variations_form')?.dataset.product_id;
+        var productName = document.querySelector('.product_title')?.textContent.trim();
+        var quantityInput = document.querySelector('.quantity input[name="quantity"]');
+        var quantity = quantityInput ? quantityInput.value : 1; 
+        var variation = selectedVariations || selectedVariationValue || null;
+        var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
+            ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
+            : null;
+
+        var salePrice = productPrice.querySelector('ins .woocommerce-Price-amount') 
+            ? productPrice.querySelector('ins .woocommerce-Price-amount').textContent.trim() 
+            : null;
+
+        if (!salePrice) {
+            salePrice = productPrice.querySelector('.woocommerce-Price-amount').textContent.trim();
+            originalPrice = null;
+        }
+
+        var data = {
+            'Product ID': productId,
+            'Product Name': productName,
+            'Variation': variation,
+            'Quantity': quantity,
+            'Sale Price': salePrice,
+            'Original Price': originalPrice
+        };
+    
+        console.log(data);
+
+        LeoObserver.recordEventAddToCart(data);
+
+        var targetUrl = event.target.getAttribute('href'); 
+        window.location.href = targetUrl; 
     };
 
     // Update cart items on cart screen (KBedding only)
@@ -523,14 +589,20 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', list_view_added_to_wishlist_event);
     });
 
-    // add to cart - ok
+    // add to cart - kbedding ok. kingkoil testing
     document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
-        button.addEventListener('click', single_view_added_to_cart_event);
+        if(window.location.href.includes('kbedding.vn')) {
+            button.addEventListener('click', single_view_add_to_cart_event_kbedding);
+        }
+
+        if(window.location.href.includes('kingkoil.vn')) {
+            button.addEventListener('click', single_view_add_to_cart_event_kingkoil);
+        }
     });
 
     // buy now - ok
     document.querySelectorAll('.product button[name*="buy-now"]').forEach(function(button) {
-        button.addEventListener('click', single_view_added_to_cart_event);
+        button.addEventListener('click', single_view_add_to_cart_event_kbedding);
     });
 
     // remove from cart - kbedding ok, kingkoil testing
@@ -565,6 +637,8 @@ function setUpWooCommerceTrackingEvents() {
         button.addEventListener('click', update_cart_event);
     });
 
-    // document.body.addEventListener('added_to_cart', list_view_added_to_cart_event);
+    document.body.addEventListener('added_to_cart', function() {
+        console.log("@@@@@@@");
+    });
     // document.body.addEventListener('added_to_wishlist', list_view_added_to_wishlist_event);
 }
