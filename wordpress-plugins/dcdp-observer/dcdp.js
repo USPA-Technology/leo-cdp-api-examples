@@ -159,7 +159,7 @@ LeoObserver.recordEventPurchase = function(eventData, shoppingCartItems, transac
 	LeoObserverProxy.recordConversionEvent("purchase", eventData , transactionId, shoppingCartItems, transactionValue, currencyCode);
 }
 
-// (2.20) function to track Action Event "ProductTrial"
+// (2.20) function to track Action Event "AddToCart"
 LeoObserver.recordEventAddToCart = function(eventData) {
     eventData = eventData ? eventData : {};
     LeoObserverProxy.recordActionEvent("add-to-cart",eventData);
