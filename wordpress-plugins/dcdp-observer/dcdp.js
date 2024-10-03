@@ -504,7 +504,7 @@ function setUpWooCommerceTrackingEvents() {
     // KINGKOIL EVENTS
     // Add product to cart from Kingkoil product's details screen
     var single_view_add_to_cart_event_kingkoil = function(event) {
-        if(document.querySelectorAll('.out-of-stock') == null) {
+        if(document.querySelectorAll('.out-of-stock').length == 0) {
             event.preventDefault();
             console.log(event);
             console.log("Tracking adding to cart event on product details screen");
@@ -562,8 +562,7 @@ function setUpWooCommerceTrackingEvents() {
 
     // Buy now from Kingkoil product's details screen
     var single_view_buy_now_event_kingkoil = function(event) {
-        if(document.querySelectorAll('.out-of-stock') == null) {
-            // event.preventDefault();
+        if(document.querySelectorAll('.out-of-stock').length == 0) {
             console.log(event);
             console.log("Tracking buy now event on product details screen");
         
@@ -607,11 +606,6 @@ function setUpWooCommerceTrackingEvents() {
             console.log(data);
 
             LeoObserver.recordEventAddToCart(data);
-
-            // setTimeout(function() {
-            //     console.log("Submitting form after 1.5 second delay.");
-            //     event.target.closest('form').submit();
-            // }, 1500);
         }
         else {
             console.log('Can not buy because this product is out of stock');
