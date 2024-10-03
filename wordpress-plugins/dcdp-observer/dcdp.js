@@ -256,7 +256,8 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
 // EXECUTE TRACKING EVENTS  
 function setUpWooCommerceTrackingEvents() {
     // Add product to cart from a list
-    var list_view_added_to_cart_event = function(event) {
+    var wishlist_add_to_cart_event = function(event) {
+        event.preventDefault
         console.log(event);
     
         var product_id = event.target.dataset.product_id || 'Unknown Product ID';
@@ -270,10 +271,25 @@ function setUpWooCommerceTrackingEvents() {
             'Product Name': product_name,
             'Quantity': '1',  
         };
+
+        // var data = {
+        //     'Product ID': productId,
+        //     'Product Name': productName,
+        //     'Variation': variation,
+        //     'Quantity': quantity,
+        //     'Sale Price': salePrice,
+        //     'Original Price': originalPrice
+        // };
     
         console.log(data);
     
-        LeoObserver.recordEventAddToCart(data);
+        // remove_from_wishlist_event_kbedding(event);
+        // LeoObserver.recordEventAddToCart(data);
+
+        setTimeout(function() {
+            console.log("Redirecting after 2 seconds delay.");
+            window.location.href = event.target.getAttribute('href'); 
+        }, 2000);
     };
     
 
@@ -285,11 +301,9 @@ function setUpWooCommerceTrackingEvents() {
     
         const table = document.querySelector('.variations');
         let selectedRadioValues = [];
-        let selectedVariationValue = null;
     
         if (table) {
             const variationLabels = table.querySelectorAll('label[class="radio-btn-variation"]')
-            const select = table.querySelector('select');
             
             variationLabels.forEach(function(label) {
                 const radio = label.querySelector('input[type="radio"]');
@@ -298,8 +312,6 @@ function setUpWooCommerceTrackingEvents() {
                     selectedRadioValues.push(label.textContent);
                 }
             });
-    
-            selectedVariationValue = select ? select.value : null;
         }
 
         var selectedVariations = "";
@@ -313,7 +325,7 @@ function setUpWooCommerceTrackingEvents() {
         var productName = document.querySelector('.product_title')?.textContent.trim();
         var quantityInput = document.querySelector('.quantity input[name="quantity"]');
         var quantity = quantityInput ? quantityInput.value : 1; 
-        var variation = selectedVariations || selectedVariationValue || null;
+        var variation = selectedVariations || null;
         var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
             ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
             : null;
@@ -477,6 +489,7 @@ function setUpWooCommerceTrackingEvents() {
     
     // Remove a product from cart screen KBedding
     var remove_from_cart_event_kbedding = function(event) {
+        event.preventDefault();
         console.log(event);
         console.log("Tracking removing from cart event")
     
@@ -503,6 +516,11 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
     
         LeoObserver.recordEventRemoveFromCart(data);
+
+        setTimeout(function() {
+            console.log("Redirecting after 1.5 second delay.");
+            window.location.href = event.target.getAttribute('href'); 
+        }, 1500);
     };
 
     // Remove a product from cart screen Kingkoil
@@ -544,7 +562,7 @@ function setUpWooCommerceTrackingEvents() {
 
 
     // Add product to wishlist from a list
-    var list_view_added_to_wishlist_event_kbeddiing = function(event) {
+    var list_view_add_to_wishlist_event_kbeddiing = function(event) {
         console.log(event);
         console.log("Tracking adding to wishlist event");
     
@@ -598,6 +616,7 @@ function setUpWooCommerceTrackingEvents() {
 
     // Remove a product from wishlist on wishlist screen
     var remove_from_wishlist_event_kbedding = function(event) {
+        event.preventDefault();
         console.log(event);
         console.log("Tracking removing from wishlist event");
     
@@ -618,43 +637,40 @@ function setUpWooCommerceTrackingEvents() {
     
         console.log(data);
     
-        LeoObserver.recordEventRemoveLike(data);1
+        LeoObserver.recordEventRemoveLike(data);
+
+        setTimeout(function() {
+            console.log("Redirecting after 1.5 second delay.");
+            window.location.href = event.target.getAttribute('href'); 
+        }, 1500);
     };
     
 
     // KBEDDING - have to wait until finishing initiation
     if(window.location.href.includes('kbedding.vn')) {
-        // remove from wishlist - ok
-        document.body.addEventListener('click', function(event) {        
-            if (event.target && event.target.matches('a[href*="remove_from_wishlist"]')) {
-                event.preventDefault();
-                remove_from_wishlist_event_kbedding(event);
-            }
+        // remove from wishlist - testing
+        document.querySelectorAll('a[href*="remove_from_wishlist="]').forEach(function(button) {
+            button.addEventListener('click', remove_from_wishlist_event_kbedding)
         });
 
-        // add to wishlist - ok
+        // add to wishlist - testing
         document.querySelectorAll('.products a[href*="add_to_wishlist"]').forEach(function(button) {
-            button.addEventListener('click', list_view_added_to_wishlist_event_kbeddiing);
+            button.addEventListener('click', list_view_add_to_wishlist_event_kbeddiing);
+        });
+        
+        // add to cart from wishlist - testing
+        document.querySelectorAll('a[href*="remove_from_wishlist_after_add_to_cart"]').forEach(function(button) {
+            button.addEventListener('click', wishlist_add_to_cart_event)
         });
 
-        // add to cart - ok
+        // add to cart from single view - testing
         document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
             button.addEventListener('click', single_view_add_to_cart_event_kbedding);
         });
 
-        // remove from cart - kbedding ok, kingkoil testing
-        document.body.addEventListener('click', function(event) {
-            console.log('Clicked element:', event.target); 
-
-            if(event.target && event.target.matches('a[href*="remove_item"]')) {
-                event.preventDefault();
-                console.log("Kbedding");
-
-                remove_from_cart_event_kbedding(event);
-    
-                var targetUrl = event.target.getAttribute('href'); 
-                window.location.href = targetUrl; 
-            }
+        // remove from cart - testing
+        document.querySelectorAll('a[href*="remove_item"]').forEach(function(button) {
+            button.addEventListener('click', remove_from_cart_event_kbedding);
         });
 
         // update cart - get full data ok, but can not show these data to UI -> Mr Trieu will fix this
@@ -682,5 +698,5 @@ function setUpWooCommerceTrackingEvents() {
         }
     }
 
-    // document.body.addEventListener('added_to_wishlist', list_view_added_to_wishlist_event_kbeddiing);
+    // document.body.addEventListener('added_to_wishlist', list_view_add_to_wishlist_event_kbeddiing);
 }
