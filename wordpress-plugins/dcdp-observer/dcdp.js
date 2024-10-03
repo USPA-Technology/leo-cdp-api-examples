@@ -353,6 +353,7 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to wishlist from a list
     var list_view_add_to_wishlist_event_kbedding = function(event) {
+        event.preventDefault();
         console.log(event);
         console.log("Tracking adding to wishlist event");
     
@@ -401,6 +402,11 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
     
         LeoObserver.recordEventLike(data);
+
+        setTimeout(function() {
+            console.log("Redirecting after 1 second delay.");
+            window.location.href = event.target.getAttribute('href'); 
+        }, 1000);
     };
     
 
@@ -494,9 +500,9 @@ function setUpWooCommerceTrackingEvents() {
         LeoObserver.recordEventRemoveFromCart(data);
 
         setTimeout(function() {
-            console.log("Redirecting after 1.5 second delay.");
+            console.log("Redirecting after 1 second delay.");
             window.location.href = event.target.getAttribute('href'); 
-        }, 1500);
+        }, 1000);
     };
 
 
@@ -504,108 +510,118 @@ function setUpWooCommerceTrackingEvents() {
     // KINGKOIL EVENTS
     // Add product to cart from Kingkoil product's details screen
     var single_view_add_to_cart_event_kingkoil = function(event) {
-        event.preventDefault();
-        console.log(event);
-        console.log("Tracking adding to cart event on product details screen");
-    
-        const table = document.querySelector('.variations');
-        let selectedVariationValue = null;
-    
-        if (table) {
-            const select = table.querySelector('select');
-            selectedVariationValue = select ? select.value : null;
+        if(document.querySelectorAll('p[class="out-of-stock"]') == null) {
+            event.preventDefault();
+            console.log(event);
+            console.log("Tracking adding to cart event on product details screen");
+        
+            const table = document.querySelector('.variations');
+            let selectedVariationValue = null;
+        
+            if (table) {
+                const select = table.querySelector('select');
+                selectedVariationValue = select ? select.value : null;
+            }
+
+            var productPrice = document.querySelector('.price');
+        
+            var productId = event.target.value || document.querySelector('.variations_form')?.dataset.product_id || 'Unknown';
+            var productName = document.querySelector('.product_title')?.textContent.trim()|| 'Unknown' ;
+            var quantityInput = document.querySelector('.quantity input[name="quantity"]') || 'Unknown';
+            var quantity = quantityInput ? quantityInput.value : 1; 
+            var variation =  selectedVariationValue || 'Unknown';
+            var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
+                ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
+                : null;
+
+            var salePrice = productPrice.querySelector('ins .woocommerce-Price-amount') 
+                ? productPrice.querySelector('ins .woocommerce-Price-amount').textContent.trim() 
+                : null;
+
+            if (!salePrice) {
+                salePrice = productPrice.querySelector('.woocommerce-Price-amount').textContent.trim();
+                originalPrice = null;
+            }
+
+            var data = {
+                'Product ID': productId,
+                'Product Name': productName,
+                'Variation': variation,
+                'Quantity': quantity,
+                'Sale Price': salePrice,
+                'Original Price': originalPrice
+            };
+        
+            console.log(data);
+
+            LeoObserver.recordEventAddToCart(data);
+
+            setTimeout(function() {
+                console.log("Submitting form after 1.5 second delay.");
+                event.target.closest('form').submit();
+            }, 1500);   
         }
-
-        var productPrice = document.querySelector('.price');
-    
-        var productId = event.target.value || document.querySelector('.variations_form')?.dataset.product_id || 'Unknown';
-        var productName = document.querySelector('.product_title')?.textContent.trim()|| 'Unknown' ;
-        var quantityInput = document.querySelector('.quantity input[name="quantity"]') || 'Unknown';
-        var quantity = quantityInput ? quantityInput.value : 1; 
-        var variation =  selectedVariationValue || 'Unknown';
-        var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
-            ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
-            : null;
-
-        var salePrice = productPrice.querySelector('ins .woocommerce-Price-amount') 
-            ? productPrice.querySelector('ins .woocommerce-Price-amount').textContent.trim() 
-            : null;
-
-        if (!salePrice) {
-            salePrice = productPrice.querySelector('.woocommerce-Price-amount').textContent.trim();
-            originalPrice = null;
+        else {
+            console.log('Can not add to cart because this product is out of stock');
         }
-
-        var data = {
-            'Product ID': productId,
-            'Product Name': productName,
-            'Variation': variation,
-            'Quantity': quantity,
-            'Sale Price': salePrice,
-            'Original Price': originalPrice
-        };
-    
-        console.log(data);
-
-        LeoObserver.recordEventAddToCart(data);
-
-        setTimeout(function() {
-            console.log("Submitting form after 1.5 second delay.");
-            event.target.closest('form').submit();
-        }, 1500);
     };
 
     // Buy now from Kingkoil product's details screen
     var single_view_buy_now_event_kingkoil = function(event) {
-        // event.preventDefault();
-        console.log(event);
-        console.log("Tracking buy now event on product details screen");
-    
-        const table = document.querySelector('.variations');
-        let selectedVariationValue = null;
-    
-        if (table) {
-            const select = table.querySelector('select');
-            selectedVariationValue = select ? select.value : null;
+        if(document.querySelectorAll('p[class="out-of-stock"]') == null) {
+            // event.preventDefault();
+            console.log(event);
+            console.log("Tracking buy now event on product details screen");
+        
+            const table = document.querySelector('.variations');
+            let selectedVariationValue = null;
+        
+            if (table) {
+                const select = table.querySelector('select');
+                selectedVariationValue = select ? select.value : null;
+            }
+
+            var productPrice = document.querySelector('.price');
+        
+            var productId = event.target.value || document.querySelector('.variations_form')?.dataset.product_id || 'Unknown';
+            var productName = document.querySelector('.product_title')?.textContent.trim()|| 'Unknown' ;
+            var quantityInput = document.querySelector('.quantity input[name="quantity"]') || 'Unknown';
+            var quantity = quantityInput ? quantityInput.value : 1; 
+            var variation =  selectedVariationValue || 'Unknown';
+            var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
+                ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
+                : null;
+
+            var salePrice = productPrice.querySelector('ins .woocommerce-Price-amount') 
+                ? productPrice.querySelector('ins .woocommerce-Price-amount').textContent.trim() 
+                : null;
+
+            if (!salePrice) {
+                salePrice = productPrice.querySelector('.woocommerce-Price-amount').textContent.trim();
+                originalPrice = null;
+            }
+
+            var data = {
+                'Product ID': productId,
+                'Product Name': productName,
+                'Variation': variation,
+                'Quantity': quantity,
+                'Sale Price': salePrice,
+                'Original Price': originalPrice
+            };
+        
+            console.log(data);
+
+            LeoObserver.recordEventAddToCart(data);
+
+            // setTimeout(function() {
+            //     console.log("Submitting form after 1.5 second delay.");
+            //     event.target.closest('form').submit();
+            // }, 1500);
         }
-
-        var productPrice = document.querySelector('.price');
-    
-        var productId = event.target.value || document.querySelector('.variations_form')?.dataset.product_id || 'Unknown';
-        var productName = document.querySelector('.product_title')?.textContent.trim()|| 'Unknown' ;
-        var quantityInput = document.querySelector('.quantity input[name="quantity"]') || 'Unknown';
-        var quantity = quantityInput ? quantityInput.value : 1; 
-        var variation =  selectedVariationValue || 'Unknown';
-        var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
-            ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
-            : null;
-
-        var salePrice = productPrice.querySelector('ins .woocommerce-Price-amount') 
-            ? productPrice.querySelector('ins .woocommerce-Price-amount').textContent.trim() 
-            : null;
-
-        if (!salePrice) {
-            salePrice = productPrice.querySelector('.woocommerce-Price-amount').textContent.trim();
-            originalPrice = null;
+        else {
+            console.log('Can not buy because this product is out of stock');
         }
-
-        var data = {
-            'Product ID': productId,
-            'Product Name': productName,
-            'Variation': variation,
-            'Quantity': quantity,
-            'Sale Price': salePrice,
-            'Original Price': originalPrice
-        };
-    
-        console.log(data);
-
-        LeoObserver.recordEventAddToCart(data);
-
-        // setTimeout(function() {
-        //     console.log("Submitting form after 1.5 second delay.");
-        //     event.target.closest('form').submit();
-        // }, 1500);
     };
 
     // Remove a product from cart screen Kingkoil
@@ -649,13 +665,13 @@ function setUpWooCommerceTrackingEvents() {
 
     // KBEDDING - have to wait until finishing initiation
     if(window.location.href.includes('kbedding.vn')) {
-        // remove from wishlist - testing
+        // remove from wishlist - ok
         document.querySelectorAll('a[href*="remove_from_wishlist="]').forEach(function(button) {
             button.addEventListener('click', remove_from_wishlist_event_kbedding)
         });
 
-        // add to wishlist - testing
-        document.querySelectorAll('.products a[href*="add_to_wishlist"]').forEach(function(button) {
+        // add to wishlist - ok
+        document.querySelectorAll('a[href*="add_to_wishlist"]').forEach(function(button) {
             button.addEventListener('click', list_view_add_to_wishlist_event_kbedding);
         });
         
@@ -664,12 +680,12 @@ function setUpWooCommerceTrackingEvents() {
             button.addEventListener('click', wishlist_add_to_cart_event)
         });
 
-        // add to cart from single view - testing
+        // add to cart from single view - ok
         document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
             button.addEventListener('click', single_view_add_to_cart_event_kbedding);
         });
 
-        // remove from cart - testing
+        // remove from cart - ok
         document.querySelectorAll('a[href*="remove_item"]').forEach(function(button) {
             button.addEventListener('click', remove_from_cart_event_kbedding);
         });
@@ -689,7 +705,7 @@ function setUpWooCommerceTrackingEvents() {
             document.querySelector('.single_add_to_cart_button.bt-add-cart').addEventListener('click', single_view_add_to_cart_event_kingkoil);
         }
 
-        // remove from cart - testing
+        // remove from cart - ok
         document.querySelectorAll('a[href*="remove_item"]').forEach(function(button) {
             button.addEventListener('click', remove_from_cart_event_kingkoil);
         });
