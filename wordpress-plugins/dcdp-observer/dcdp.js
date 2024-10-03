@@ -258,7 +258,7 @@ function setUpWooCommerceTrackingEvents() {
     // KBEDDING EVENTS
     // Add product to cart from a list
     var wishlist_add_to_cart_event = function(event) {
-        event.preventDefault
+        // event.preventDefault();
         var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
         var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
         var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
@@ -284,10 +284,10 @@ function setUpWooCommerceTrackingEvents() {
         // remove_from_wishlist_event_kbedding(event);
         // LeoObserver.recordEventAddToCart(data);
 
-        setTimeout(function() {
-            console.log("Redirecting after 2 seconds delay.");
-            window.location.href = event.target.getAttribute('href'); 
-        }, 2000);
+        // setTimeout(function() {
+        //     console.log("Redirecting after 2 seconds delay.");
+        //     window.location.href = event.target.getAttribute('href'); 
+        // }, 2000);
     };
     
 
@@ -500,7 +500,7 @@ function setUpWooCommerceTrackingEvents() {
     };
 
 
-    
+
     // KINGKOIL EVENTS
     // Add product to cart from Kingkoil product's details screen
     var single_view_add_to_cart_event_kingkoil = function(event) {
