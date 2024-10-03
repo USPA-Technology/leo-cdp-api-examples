@@ -290,7 +290,6 @@ function setUpWooCommerceTrackingEvents() {
         // }, 2000);
     };
     
-
     // Add product to cart from Kbedding product's details screen
     var single_view_add_to_cart_event_kbedding = function(event) {
         event.preventDefault();
@@ -319,7 +318,7 @@ function setUpWooCommerceTrackingEvents() {
 
         var productPrice = document.querySelector('.price');
     
-        var productId = event.target.value || document.querySelector('input[name="add-to-cart"]')?.value || document.querySelector('.variations_form')?.dataset.product_id;
+        var productId = document.querySelector('.variations_form')?.dataset.product_id;
         var productName = document.querySelector('.product_title')?.textContent.trim();
         var quantityInput = document.querySelector('.quantity input[name="quantity"]');
         var quantity = quantityInput ? quantityInput.value : 1; 
@@ -349,6 +348,76 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
 
         LeoObserver.recordEventAddToCart(data);
+
+        setTimeout(function() {
+            console.log("Submitting form after 1 second delay.");
+            event.target.closest('form').submit();
+        }, 1000);   
+    };
+
+    // Buy now from Kbedding product's details screen
+    var buy_now_event_kbedding = function(event) {
+        event.preventDefault();
+        console.log(event);
+        console.log("Tracking adding to cart event on product details screen");
+    
+        const table = document.querySelector('.variations');
+        let selectedRadioValues = [];
+    
+        if (table) {
+            const variationLabels = table.querySelectorAll('label[class="radio-btn-variation"]')
+            
+            variationLabels.forEach(function(label) {
+                const radio = label.querySelector('input[type="radio"]');
+
+                if (radio.checked) {
+                    selectedRadioValues.push(label.textContent);
+                }
+            });
+        }
+
+        var selectedVariations = "";
+        selectedRadioValues.forEach(function(variation) {
+            selectedVariations += variation + '   ';
+        });
+
+        var productPrice = document.querySelector('.price');
+    
+        var productId = document.querySelector('.variations_form')?.dataset.product_id;
+        var productName = document.querySelector('.product_title')?.textContent.trim();
+        var quantityInput = document.querySelector('.quantity input[name="quantity"]');
+        var quantity = quantityInput ? quantityInput.value : 1; 
+        var variation = selectedVariations || null;
+        var originalPrice = productPrice.querySelector('del .woocommerce-Price-amount') 
+            ? productPrice.querySelector('del .woocommerce-Price-amount').textContent.trim() 
+            : null;
+
+        var salePrice = productPrice.querySelector('ins .woocommerce-Price-amount') 
+            ? productPrice.querySelector('ins .woocommerce-Price-amount').textContent.trim() 
+            : null;
+
+        if (!salePrice) {
+            salePrice = productPrice.querySelector('.woocommerce-Price-amount').textContent.trim();
+            originalPrice = null;
+        }
+
+        var data = {
+            'Product ID': productId,
+            'Product Name': productName,
+            'Variation': variation,
+            'Quantity': quantity,
+            'Sale Price': salePrice,
+            'Original Price': originalPrice
+        };
+    
+        console.log(data);
+
+        LeoObserver.recordEventAddToCart(data);
+
+        setTimeout(function() {
+            console.log("Submitting form after 1 second delay.");
+            event.target.closest('form').submit();
+        }, 1000);   
     };
 
     // Add product to wishlist from a list
@@ -402,7 +471,6 @@ function setUpWooCommerceTrackingEvents() {
     
         LeoObserver.recordEventLike(data);
     };
-    
 
     // Remove a product from wishlist on wishlist screen
     var remove_from_wishlist_event_kbedding = function(event) {
@@ -669,9 +737,14 @@ function setUpWooCommerceTrackingEvents() {
         });
 
         // add to cart from single view - ok
-        document.querySelectorAll('.product .single_add_to_cart_button').forEach(function(button) {
-            button.addEventListener('click', single_view_add_to_cart_event_kbedding);
-        });
+        if(document.querySelector('.product .single_add_to_cart_button') != null) {
+            document.querySelector('.product .single_add_to_cart_button').addEventListener('click', single_view_add_to_cart_event_kbedding);
+        }
+
+        // buy now - testing
+        if(document.querySelector('button[name="wsb-buy-now"]') != null) {
+            document.querySelector('button[name="wsb-buy-now"]').addEventListener('click', buy_now_event_kbedding);
+        }
 
         // remove from cart - ok
         document.querySelectorAll('a[href*="remove_item"]').forEach(function(button) {
