@@ -255,31 +255,29 @@ LeoObserver.updateProfile = function(firstName, lastName, email, phone) {
 // tracking 
 // EXECUTE TRACKING EVENTS  
 function setUpWooCommerceTrackingEvents() {
+    // KBEDDING EVENTS
     // Add product to cart from a list
     var wishlist_add_to_cart_event = function(event) {
         event.preventDefault
-        console.log(event);
+        var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
+        var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
+        var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
+        var quantity = '0';
     
-        var product_id = event.target.dataset.product_id || 'Unknown Product ID';
-    
-        var productElement = event.target.closest('.product');
-        var product_name_element = productElement ? productElement.querySelector('.woocommerce-loop-product__title') : null;
-        var product_name = product_name_element ? product_name_element.textContent.trim() : 'Unknown Product Name';
+        cartItems.forEach(function(cartItem) {
+            var quantityInput = cartItem.querySelector('.quantity input[name*="[qty]"]');
+            var productName = cartItem.querySelector('.product-name a').textContent.trim();
+            
+            if(action_name.includes(productName)) {
+                quantity = quantityInput ? quantityInput.value : '0';
+            }
+        });
     
         var data = {
             'Product ID': product_id,
-            'Product Name': product_name,
-            'Quantity': '1',  
+            'Action Name': action_name,
+            'Quantity': quantity
         };
-
-        // var data = {
-        //     'Product ID': productId,
-        //     'Product Name': productName,
-        //     'Variation': variation,
-        //     'Quantity': quantity,
-        //     'Sale Price': salePrice,
-        //     'Original Price': originalPrice
-        // };
     
         console.log(data);
     
@@ -353,6 +351,157 @@ function setUpWooCommerceTrackingEvents() {
         LeoObserver.recordEventAddToCart(data);
     };
 
+    // Add product to wishlist from a list
+    var list_view_add_to_wishlist_event_kbedding = function(event) {
+        console.log(event);
+        console.log("Tracking adding to wishlist event");
+    
+        var productId = this.dataset.productId;
+        var productItem = document.querySelector('.products .post-' + productId);
+    
+        if (!productItem) {
+            console.log('Không tìm thấy phần tử sản phẩm với ID:', productId);
+            return;
+        }
+    
+        var productTitleSelector = productItem.querySelector('.product-title');
+        var wcLooPproductTitleSelector = productItem.querySelector('.woocommerce-loop-product__title');
+    
+        var productName = productTitleSelector != null 
+            ? productTitleSelector.textContent.trim() 
+            : (wcLooPproductTitleSelector != null 
+                ? wcLooPproductTitleSelector.textContent.trim() 
+                : null);
+    
+        var originalPrice = productItem.querySelector('.price del .woocommerce-Price-amount') 
+            ? productItem.querySelector('.price del .woocommerce-Price-amount').textContent.trim() 
+            : null;
+    
+        var salePrice = productItem.querySelector('.price ins .woocommerce-Price-amount') 
+            ? productItem.querySelector('.price ins .woocommerce-Price-amount').textContent.trim() 
+            : null;
+    
+        if (!salePrice) {
+            salePrice = productItem.querySelector('.price .woocommerce-Price-amount').textContent.trim();
+            originalPrice = null;
+        }
+    
+        var data = {
+            'First Name': dcdpProfileInfo.first_name,
+            'Last Name': dcdpProfileInfo.last_name,
+            'Email': dcdpProfileInfo.email,
+            'Phone': dcdpProfileInfo.phone,
+            'Login ID': '',
+            'Login Provider': location.host,
+            'Product Name': productName,
+            'Sale Price': salePrice,
+            'Original Price': originalPrice,
+        };
+    
+        console.log(data);
+    
+        LeoObserver.recordEventLike(data);
+    };
+    
+
+    // Remove a product from wishlist on wishlist screen
+    var remove_from_wishlist_event_kbedding = function(event) {
+        event.preventDefault();
+        console.log(event);
+        console.log("Tracking removing from wishlist event");
+    
+        var removed_item = event.target.closest('tr');
+    
+        var product_name_element = removed_item.querySelector('.product-name');
+        var product_name = product_name_element ? product_name_element.textContent.trim() : 'Unknown Product';
+    
+        var data = {
+            'First Name': dcdpProfileInfo.first_name,
+            'Last Name': dcdpProfileInfo.last_name,
+            'Email': dcdpProfileInfo.email,
+            'Phone': dcdpProfileInfo.phone || 'Unknown Phone', 
+            'Login ID': '',
+            'Login Provider': location.host,
+            'Product Name': product_name,
+        };
+    
+        console.log(data);
+    
+        LeoObserver.recordEventRemoveLike(data);
+
+        setTimeout(function() {
+            console.log("Redirecting after 1.5 second delay.");
+            window.location.href = event.target.getAttribute('href'); 
+        }, 1500);
+    };
+
+    // Update cart items on cart screen (KBedding only)
+    var update_cart_event_kbedding = function(event) {
+        console.log(event);
+        console.log("Tracking updating cart event");
+
+        var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
+        var items = [];
+
+        cartItems.forEach(function(cartItem) {
+            var productName = cartItem.querySelector('.product-name a').textContent.trim();
+            var productId = cartItem.querySelector('a[href*="remove_item"]').getAttribute('data-product_id');
+            var quantityInput = cartItem.querySelector('input[name*="[qty]"]');
+            var quantity = quantityInput ? quantityInput.value : '0';
+    
+            var cartItemInfo = {
+                'itemid': productId,
+                'name': productName,
+                'quantity': parseInt(quantity),
+            };
+
+            items.push(cartItemInfo);
+        });
+
+        console.log(items);
+    
+        LeoObserver.recordEventUpdateCart(items);
+    };
+    
+    // Remove a product from cart screen KBedding
+    var remove_from_cart_event_kbedding = function(event) {
+        event.preventDefault();
+        console.log(event);
+        console.log("Tracking removing from cart event")
+    
+        var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
+        var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
+        var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
+        var quantity = '0';
+    
+        cartItems.forEach(function(cartItem) {
+            var quantityInput = cartItem.querySelector('.quantity input[name*="[qty]"]');
+            var productName = cartItem.querySelector('.product-name a').textContent.trim();
+            
+            if(action_name.includes(productName)) {
+                quantity = quantityInput ? quantityInput.value : '0';
+            }
+        });
+    
+        var data = {
+            'Product ID': product_id,
+            'Action Name': action_name,
+            'Quantity': quantity
+        };
+    
+        console.log(data);
+    
+        LeoObserver.recordEventRemoveFromCart(data);
+
+        setTimeout(function() {
+            console.log("Redirecting after 1.5 second delay.");
+            window.location.href = event.target.getAttribute('href'); 
+        }, 1500);
+    };
+
+
+    
+    // KINGKOIL EVENTS
     // Add product to cart from Kingkoil product's details screen
     var single_view_add_to_cart_event_kingkoil = function(event) {
         event.preventDefault();
@@ -459,70 +608,6 @@ function setUpWooCommerceTrackingEvents() {
         // }, 1500);
     };
 
-    // Update cart items on cart screen (KBedding only)
-    var update_cart_event_kbedding = function(event) {
-        console.log(event);
-        console.log("Tracking updating cart event");
-
-        var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
-        var items = [];
-
-        cartItems.forEach(function(cartItem) {
-            var productName = cartItem.querySelector('.product-name a').textContent.trim();
-            var productId = cartItem.querySelector('a[href*="remove_item"]').getAttribute('data-product_id');
-            var quantityInput = cartItem.querySelector('input[name*="[qty]"]');
-            var quantity = quantityInput ? quantityInput.value : '0';
-    
-            var cartItemInfo = {
-                'itemid': productId,
-                'name': productName,
-                'quantity': parseInt(quantity),
-            };
-
-            items.push(cartItemInfo);
-        });
-
-        console.log(items);
-    
-        LeoObserver.recordEventUpdateCart(items);
-    };
-    
-    // Remove a product from cart screen KBedding
-    var remove_from_cart_event_kbedding = function(event) {
-        event.preventDefault();
-        console.log(event);
-        console.log("Tracking removing from cart event")
-    
-        var product_id = event.target.getAttribute('data-product_id') || 'Unknown Product ID';
-        var action_name = event.target.getAttribute('aria-label') || 'Unknown Action';
-        var cartItems = document.querySelectorAll('.woocommerce-cart-form__cart-item');
-        var quantity = '0';
-    
-        cartItems.forEach(function(cartItem) {
-            var quantityInput = cartItem.querySelector('.quantity input[name*="[qty]"]');
-            var productName = cartItem.querySelector('.product-name a').textContent.trim();
-            
-            if(action_name.includes(productName)) {
-                quantity = quantityInput ? quantityInput.value : '0';
-            }
-        });
-    
-        var data = {
-            'Product ID': product_id,
-            'Action Name': action_name,
-            'Quantity': quantity
-        };
-    
-        console.log(data);
-    
-        LeoObserver.recordEventRemoveFromCart(data);
-
-        setTimeout(function() {
-            console.log("Redirecting after 1.5 second delay.");
-            window.location.href = event.target.getAttribute('href'); 
-        }, 1500);
-    };
-
     // Remove a product from cart screen Kingkoil
     var remove_from_cart_event_kingkoil = function(event) {
         event.preventDefault();
@@ -559,92 +644,8 @@ function setUpWooCommerceTrackingEvents() {
             window.location.href = event.target.getAttribute('href'); 
         }, 1500);
     };
-
-
-    // Add product to wishlist from a list
-    var list_view_add_to_wishlist_event_kbeddiing = function(event) {
-        console.log(event);
-        console.log("Tracking adding to wishlist event");
-    
-        var productId = this.dataset.productId;
-        var productItem = document.querySelector('.products .post-' + productId);
-    
-        if (!productItem) {
-            console.log('Không tìm thấy phần tử sản phẩm với ID:', productId);
-            return;
-        }
-    
-        var productTitleSelector = productItem.querySelector('.product-title');
-        var wcLooPproductTitleSelector = productItem.querySelector('.woocommerce-loop-product__title');
-    
-        var productName = productTitleSelector != null 
-            ? productTitleSelector.textContent.trim() 
-            : (wcLooPproductTitleSelector != null 
-                ? wcLooPproductTitleSelector.textContent.trim() 
-                : null);
-    
-        var originalPrice = productItem.querySelector('.price del .woocommerce-Price-amount') 
-            ? productItem.querySelector('.price del .woocommerce-Price-amount').textContent.trim() 
-            : null;
-    
-        var salePrice = productItem.querySelector('.price ins .woocommerce-Price-amount') 
-            ? productItem.querySelector('.price ins .woocommerce-Price-amount').textContent.trim() 
-            : null;
-    
-        if (!salePrice) {
-            salePrice = productItem.querySelector('.price .woocommerce-Price-amount').textContent.trim();
-            originalPrice = null;
-        }
-    
-        var data = {
-            'First Name': dcdpProfileInfo.first_name,
-            'Last Name': dcdpProfileInfo.last_name,
-            'Email': dcdpProfileInfo.email,
-            'Phone': dcdpProfileInfo.phone,
-            'Login ID': '',
-            'Login Provider': location.host,
-            'Product Name': productName,
-            'Sale Price': salePrice,
-            'Original Price': originalPrice,
-        };
-    
-        console.log(data);
-    
-        LeoObserver.recordEventLike(data);
-    };
     
 
-    // Remove a product from wishlist on wishlist screen
-    var remove_from_wishlist_event_kbedding = function(event) {
-        event.preventDefault();
-        console.log(event);
-        console.log("Tracking removing from wishlist event");
-    
-        var removed_item = event.target.closest('tr');
-    
-        var product_name_element = removed_item.querySelector('.product-name');
-        var product_name = product_name_element ? product_name_element.textContent.trim() : 'Unknown Product';
-    
-        var data = {
-            'First Name': dcdpProfileInfo.first_name,
-            'Last Name': dcdpProfileInfo.last_name,
-            'Email': dcdpProfileInfo.email,
-            'Phone': dcdpProfileInfo.phone || 'Unknown Phone', 
-            'Login ID': '',
-            'Login Provider': location.host,
-            'Product Name': product_name,
-        };
-    
-        console.log(data);
-    
-        LeoObserver.recordEventRemoveLike(data);
-
-        setTimeout(function() {
-            console.log("Redirecting after 1.5 second delay.");
-            window.location.href = event.target.getAttribute('href'); 
-        }, 1500);
-    };
-    
 
     // KBEDDING - have to wait until finishing initiation
     if(window.location.href.includes('kbedding.vn')) {
@@ -655,7 +656,7 @@ function setUpWooCommerceTrackingEvents() {
 
         // add to wishlist - testing
         document.querySelectorAll('.products a[href*="add_to_wishlist"]').forEach(function(button) {
-            button.addEventListener('click', list_view_add_to_wishlist_event_kbeddiing);
+            button.addEventListener('click', list_view_add_to_wishlist_event_kbedding);
         });
         
         // add to cart from wishlist - testing
@@ -680,6 +681,7 @@ function setUpWooCommerceTrackingEvents() {
     }
     
 
+
     // KINGKOIL - have to wait until finishing initiation
     if(window.location.href.includes('kingkoil.vn')) {
         // add to cart - ok
@@ -698,5 +700,5 @@ function setUpWooCommerceTrackingEvents() {
         }
     }
 
-    // document.body.addEventListener('added_to_wishlist', list_view_add_to_wishlist_event_kbeddiing);
+    // document.body.addEventListener('added_to_wishlist', list_view_add_to_wishlist_event_kbedding);
 }
