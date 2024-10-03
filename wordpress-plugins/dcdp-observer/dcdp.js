@@ -353,7 +353,6 @@ function setUpWooCommerceTrackingEvents() {
 
     // Add product to wishlist from a list
     var list_view_add_to_wishlist_event_kbedding = function(event) {
-        event.preventDefault();
         console.log(event);
         console.log("Tracking adding to wishlist event");
     
@@ -402,11 +401,6 @@ function setUpWooCommerceTrackingEvents() {
         console.log(data);
     
         LeoObserver.recordEventLike(data);
-
-        setTimeout(function() {
-            console.log("Redirecting after 1 second delay.");
-            window.location.href = event.target.getAttribute('href'); 
-        }, 1000);
     };
     
 
