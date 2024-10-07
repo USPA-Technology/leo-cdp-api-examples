@@ -512,6 +512,7 @@ function setUpWooCommerceTrackingEvents() {
 
     // Update cart items on cart screen (KBedding only)
     var update_cart_event_kbedding = function(event) {
+        event.preventDefault();
         console.log(event);
         console.log("Tracking updating cart event");
 
@@ -536,6 +537,11 @@ function setUpWooCommerceTrackingEvents() {
         console.log(items);
     
         LeoObserver.recordEventUpdateCart(items);
+
+        setTimeout(function() {
+            console.log("Submitting form after 1 second delay.");
+            event.target.closest('form').submit();
+        }, 1000);   
     };
     
     // Remove a product from cart screen KBedding
