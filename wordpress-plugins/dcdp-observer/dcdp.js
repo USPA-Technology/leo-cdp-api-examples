@@ -505,9 +505,9 @@ function setUpWooCommerceTrackingEvents() {
         LeoObserver.recordEventRemoveLike(data);
 
         setTimeout(function() {
-            console.log("Redirecting after 1.5 second delay.");
+            console.log("Redirecting after 1.2 second delay.");
             window.location.href = event.target.getAttribute('href'); 
-        }, 1500);
+        }, 1200);
     };
 
     // Update cart items on cart screen (KBedding only)
