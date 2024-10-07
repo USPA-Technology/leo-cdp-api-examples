@@ -300,13 +300,20 @@ function setUpWooCommerceTrackingEvents() {
         let selectedRadioValues = [];
     
         if (table) {
-            const variationLabels = table.querySelectorAll('label[class="radio-btn-variation"]')
+            const variationLabels = table.querySelectorAll('label[class="radio-btn-variation"]');
+            const colorAtributeInputs = table.querySelectorAll('input[name="attribute_mau-sac"]');
             
             variationLabels.forEach(function(label) {
                 const radio = label.querySelector('input[type="radio"]');
 
                 if (radio.checked) {
                     selectedRadioValues.push(label.textContent);
+                }
+            });
+
+            colorAtributeInputs.forEach(function(radio) {
+                if (radio.checked) {
+                    selectedRadioValues.push(radio.value);
                 }
             });
         }
@@ -350,9 +357,9 @@ function setUpWooCommerceTrackingEvents() {
         LeoObserver.recordEventAddToCart(data);
 
         setTimeout(function() {
-            console.log("Submitting form after 1 second delay.");
+            console.log("Submitting form after 1,3 second delay.");
             event.target.closest('form').submit();
-        }, 1000);   
+        }, 1300);   
     };
 
     // Buy now from Kbedding product's details screen
