@@ -57,7 +57,7 @@ serviceitems = [{
    
     "expiredat" : '2025-01-01T00:00:01+07:00'
 }]
-tracking_event['serviceitems'] = serviceitems
+tracking_event['svitems'] = serviceitems
 
 # PRODUCTS
 shoppingItems = [
