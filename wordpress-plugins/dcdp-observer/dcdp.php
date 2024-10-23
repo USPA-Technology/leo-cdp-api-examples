@@ -29,6 +29,7 @@ function user_info_to_ga_enqueue_script() {
         if (is_user_logged_in()) {
             $current_user = wp_get_current_user();
             $user_data = array(
+                'user_login' =>  $current_user->user_login,
                 'first_name' => $current_user->user_firstname,
                 'last_name' => $current_user->user_lastname,
                 'email' => $current_user->user_email,
@@ -43,6 +44,7 @@ function user_info_to_ga_enqueue_script() {
         }
         else {
             $user_data = array(
+                'user_login' =>  '',
                 'first_name' => '',
                 'last_name' => '',
                 'email' =>'',

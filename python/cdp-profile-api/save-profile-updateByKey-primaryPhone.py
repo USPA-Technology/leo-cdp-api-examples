@@ -11,7 +11,9 @@ headers = {
     "tokenvalue": cdp_api_config('tokenvalue')
 }
 
-sampleExtAttributes = {"facebook-friend": 10, "facebook-short-bio": "#Dataism #LEOCDP #InGodWeTrust"}
+# booking  ext fields
+sampleExtAttributes = {"hasBooking": 10, "lastBookingDate": "2024-10-15"}
+
 sampleSocialMediaProfiles = {"zalo": "123456789", "facebook": "123456789", "linkedin": "123456789","twitter": "123456789","github": "123456789"}
 sampleIncomeHistory = {"2022-2023": 2000000, "2023-2024": 3000000}
 
@@ -46,7 +48,9 @@ profile = {
     "saleAgencies": "Agency A; Agency B; Agency C",  # the list of sales sources
     "saleAgents": "Mr.Thomas; Ms.Anna",  # the list of sales persons
 
+    # json.dumps() function will convert a subset of Python objects into a json string
     "extAttributes": json.dumps(sampleExtAttributes),
+    
     "incomeHistory": json.dumps(sampleIncomeHistory),
     "socialMediaProfiles": json.dumps(sampleSocialMediaProfiles),
     "totalLoyaltyScore": 100,
