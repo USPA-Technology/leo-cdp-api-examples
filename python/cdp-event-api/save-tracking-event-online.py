@@ -15,7 +15,7 @@ headers = {
 
 print(headers)
 
-test_metric = "purchase"
+test_metric = "order-checkout"
 
 
 # get current datetime in format %Y-%m-%dT%H:%M:%S.%fZ
@@ -23,9 +23,10 @@ formatted_datetime = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 eventdata = {"itemId": "2019010113333", "idType": "SKU",
              "quantity": 2, "ghi chú": "khuyến mãi 20% <b> rất hot </b>"}
+
 tracking_event = {
     # the target update profile's email
-    'eventtime': '2024-09-28T16:57:25+07:00',
+    'eventtime': '2024-10-28T16:57:25+07:00',
     'targetUpdatePhone': "0903122280",  # phone
     'tpname': "Everon Kinh Duong Vuong",  # TOUCHPOINT_NAME
     'tpurl': "https://everonvn.com.vn/everon/3662/bo-everon-epm-24060",  # TOUCHPOINT_URL
@@ -48,7 +49,7 @@ tracking_event = {
 }
 
 
-if test_metric == 'purchase':
+if test_metric == 'purchase' or test_metric == 'order-checkout':
     shoppingCartItems = [{
         "name": "Bộ Everon ESC 23002 – Everon 379",
         "itemid": "2750",
