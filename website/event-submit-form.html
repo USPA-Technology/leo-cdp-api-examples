@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="https://event.everon.com/" />
+
+
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="csrf-token" content="ZjKCbGLthgy7cthYVXXC6Y7pPlVYyUOSyKtMrPM1">
+    <title>:: Everon ::</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta property="og:title" content=":: Everon ::">
+    <meta property="og:description" content="">
+    <meta property="og:image" itemprop="thumbnailUrl" content="" />
+    <meta property="og:image:secure_url" itemprop="thumbnailUrl" content="" />
+    <meta property="fb:app_id" content="966242223397117">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://event.everon.com/tim-vang-100">
+    <meta property="og:site_name" content="everon.com">
+    <meta name="by" content="//everon.com">
+    <link rel="icon" type="image/png" sizes="16x16" href="/resources/images/common/favicon-16x16.png">
+    <!-- css -->
+    <link
+        href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&subset=vietnamese"
+        rel="stylesheet">
+    <script type="text/javascript" src="//apis.google.com/js/api:client.js"></script>
+    <link rel="stylesheet" href="/resources/css/modal.css?v=100">
+    <link rel="stylesheet" href="/resources/css/nanoscroller.css?v=100">
+    <link rel="stylesheet" href="/resources_vi/css/global.css?v=100">
+    <link rel="stylesheet" href="/resources_vi/css/event/everon.mb.css?v=">
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- bootstrap-datetimepicker -->
+    <link href="/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+        type="text/css" />
+    <!-- Select2 -->
+    <link href="/vendors/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <script>
+    </script>
+</head>
+
+<body>
+    <header class="header" style="display: none">
+        <img src="/resources_vi/img/everon/logo.png">
+    </header>
+    <section class="main everon">
+        <form id="formJoin" action="" method="post" enctype="multipart/form-data">
+            <div class="banner">
+                <img src="/resources_vi/img/everon/640x350.jpg">
+            </div>
+            <div class="info">
+                <div class="row row-column-mobile">
+                    <div class="col-left full">
+                        <p><span class="title">Vui lòng điền đầy đủ thông tin bên dưới</span></p>
+                    </div>
+                </div>
+                <div class="row row-column-mobile">
+                    <div class="col-left full">
+                        <p><span>1</span> Họ và tên<em></em><span class="color-red" style="display: nones">*</span></p>
+                        <div>
+                            <input type="text" value="" name="fullname" id="fullname" class="form-control"
+                                placeholder="Họ và tên" maxlength="150" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-column-mobile">
+                    <div class="col-left full">
+                        <p><span>2</span> Ngày sinh<em></em><span class="color-red" style="display: nones">*</span>
+                        </p>
+                        <div style="position: relative">
+                            <input name="birth_date" id="birth_date" type="text" value=""
+                                class="form-control datetimepicker" placeholder="yyyy-mm-dd">
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-column-mobile">
+
+                    <div class="col-left full">
+                        <p><span>3</span> Số điện thoại<em></em><span class="color-red" style="display: nones">*</span>
+                        </p>
+                        <div>
+                            <input type="tel" value="" name="phone" id="phone" class="form-control"
+                                placeholder="Số điện thoại" maxlength="10" />
+                        </div>
+                        <p style="margin-bottom: 0px;margin-top: 3px;"><em>Vui lòng nhập số điện thoại có 10 chữ số bắt
+                                đầu bằng số 0.</em></p>
+                    </div>
+                </div>
+                <div class="row row-column-mobile">
+                    <div class="col-left full">
+                        <p><span>4</span> Email<em></em><span class="color-red" style="display: nones">*</span></p>
+                        <div>
+                            <input type="email" value="" name="email" id="email" class="form-control"
+                                placeholder="Email" maxlength="150" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-column-mobile">
+                    <div class="col-left full">
+                        <p><span>5</span> Bạn mua ở cửa hàng Everon nào<em></em><span class="color-red"
+                                style="display: nones">*</span></p>
+                        <div>
+                            <input type="text" value="" name="store_buy" id="store_buy" class="form-control"
+                                placeholder="Everon Times city" maxlength="200" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-column-mobile">
+                    <div class="col-left full">
+                        <p><span>6</span> Địa chỉ nhận thưởng<em></em><span class="color-red"
+                                style="display: nones">*</span></p>
+                        <div style="margin-bottom: 10px">
+                            <select name="province" id="province" class="form-control">
+                                <option value="">Chọn tỉnh / thành phố</option>
+                                <option value="79">Hồ Chí Minh</option>
+                                <option value="01">Hà Nội</option>
+                                <option value="89">An Giang</option>
+                                <option value="77">Bà Rịa - Vũng Tàu</option>
+                                <option value="24">Bắc Giang</option>
+                                <option value="06">Bắc Kạn</option>
+                                <option value="95">Bạc Liêu</option>
+                                <option value="27">Bắc Ninh</option>
+                                <option value="83">Bến Tre</option>
+                                <option value="52">Bình Định</option>
+                                <option value="74">Bình Dương</option>
+                                <option value="70">Bình Phước</option>
+                                <option value="60">Bình Thuận</option>
+                                <option value="96">Cà Mau</option>
+                                <option value="92">Cần Thơ</option>
+                                <option value="04">Cao Bằng</option>
+                                <option value="48">Đà Nẵng</option>
+                                <option value="66">Đắk Lắk</option>
+                                <option value="67">Đắk Nông</option>
+                                <option value="11">Điện Biên</option>
+                                <option value="75">Đồng Nai</option>
+                                <option value="87">Đồng Tháp</option>
+                                <option value="64">Gia Lai</option>
+                                <option value="02">Hà Giang</option>
+                                <option value="35">Hà Nam</option>
+                                <option value="42">Hà Tĩnh</option>
+                                <option value="30">Hải Dương</option>
+                                <option value="31">Hải Phòng</option>
+                                <option value="93">Hậu Giang</option>
+                                <option value="17">Hoà Bình</option>
+                                <option value="33">Hưng Yên</option>
+                                <option value="56">Khánh Hòa</option>
+                                <option value="91">Kiên Giang</option>
+                                <option value="62">Kon Tum</option>
+                                <option value="12">Lai Châu</option>
+                                <option value="68">Lâm Đồng</option>
+                                <option value="20">Lạng Sơn</option>
+                                <option value="10">Lào Cai</option>
+                                <option value="80">Long An</option>
+                                <option value="36">Nam Định</option>
+                                <option value="40">Nghệ An</option>
+                                <option value="37">Ninh Bình</option>
+                                <option value="58">Ninh Thuận</option>
+                                <option value="25">Phú Thọ</option>
+                                <option value="54">Phú Yên</option>
+                                <option value="44">Quảng Bình</option>
+                                <option value="49">Quảng Nam</option>
+                                <option value="51">Quảng Ngãi</option>
+                                <option value="22">Quảng Ninh</option>
+                                <option value="45">Quảng Trị</option>
+                                <option value="94">Sóc Trăng</option>
+                                <option value="14">Sơn La</option>
+                                <option value="72">Tây Ninh</option>
+                                <option value="34">Thái Bình</option>
+                                <option value="19">Thái Nguyên</option>
+                                <option value="38">Thanh Hóa</option>
+                                <option value="46">Thừa Thiên Huế</option>
+                                <option value="82">Tiền Giang</option>
+                                <option value="84">Trà Vinh</option>
+                                <option value="08">Tuyên Quang</option>
+                                <option value="86">Vĩnh Long</option>
+                                <option value="26">Vĩnh Phúc</option>
+                                <option value="15">Yên Bái</option>
+
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 10px">
+                            <select name="district" id="district" class="form-control">
+                                <option value="">Chọn quận / huyện</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 10px">
+                            <select name="ward" id="ward" class="form-control">
+                                <option value="">Chọn phường / xã</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input name="address" id="address" type="text" value="" class="form-control"
+                                placeholder="Nhập địa chỉ nhận thưởng" maxlength="250">
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-column-mobile">
+                    <div class="col-left full">
+                        <p><span>7</span> Bạn biết đến chương trình qua đâu<em></em><span class="color-red"
+                                style="display: nones">*</span></p>
+                        <div>
+                            <select name="channel" id="channel" class="form-control">
+                                <option value=""> Chọn</option>
+                                <option value="Facebook/ Instagram của Everon"> Facebook/ Instagram của Everon</option>
+                                <option value="Màn hình thang máy"> Màn hình thang máy</option>
+                                <option value="Tin nhắn Everon"> Tin nhắn Everon</option>
+                                <option value="Thông báo từ tài khoản Zalo Everon"> Thông báo từ tài khoản Zalo Everon
+                                </option>
+                                <option value="Email"> Email</option>
+                                <option value="Trưng bày cửa hàng"> Trưng bày cửa hàng</option>
+                                <option value="Bạn bè giới thiệu"> Bạn bè giới thiệu</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-column-mobile">
+                    <div class="col-left full">
+                        <p><span>8</span> Mã dự thưởng<em></em><span class="color-red" style="display: nones">*</span>
+                        </p>
+                        <div>
+                            <input type="text" value="" name="bonus_code" id="bonus_code" class="form-control"
+                                placeholder="Nhập mã bảo hành điện tử trên tem mác sản phẩm" maxlength="20" />
+                        </div>
+                        <p style="margin-bottom: 0px;margin-top: 3px; display: none"><em class="color-red">Vui lòng kiểm
+                                tra lại mã dự thưởng, mỗi điện thoại giới hạn tham gia tổng tối đa 5 mã dự thưởng.</em>
+                        </p>
+                    </div>
+                </div>
+                <div class="row row-column">
+                    <div class="col-auto">
+                        <div class="col-auto">
+                            <p><em style="padding-left: 0px;"><input id="agree1" name="agree1" type="checkbox"
+                                        value="1" /> <label for="agree1">Tôi đã hiểu và đồng ý với </label> <a
+                                        href="https://everon.com/chinh-sach-bao-mat" target="_blank">Chính sách thu thập
+                                        thông tin cá nhân</a> khi tham gia chương trình khuyến mãi này.</em></p>
+                            <p><em style="padding-left: 0px;"><input id="agree2" name="agree2" type="checkbox"
+                                        value="1" /> <label for="agree2">Tôi đã đọc và đồng ý với </label> <a
+                                        href="https://everon.com/the-le-chuong-trinh-khuyen-mai-quet-ma-san-vang"
+                                        target="_blank">Thể lệ của chương trình</a></em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process">
+                    <button type="button" onclick="test_send_otp();">THAM GIA</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <footer class="footer">
+        <span class="left">
+            <img class="visa" src="/resources_vi/img/everon/logo-01.png">
+        </span>
+        <span class="right">
+            <a style="line-height: 32px" href="tel:18001215">Hotline: <span>18001215 (miễn phí)</span></a>
+        </span>
+    </footer>
+    <div id="showPopupOtp" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Thông báo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="info">
+                        <div class="row">
+                            <p style="padding-left: 0px;margin-bottom: 6px;"><em class="p_message"></em></p>
+                        </div>
+                        <div class="row row-column-mobile">
+                            <div class="col-left full">
+                                <input type="text" value="" name="input_otp" id="input_otp" class="inputtext"
+                                    placeholder="Nhập mã xác nhận" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p style="padding-left: 0px;margin-bottom: 6px;"><em><b
+                                        class="color-red p_2_message"></b></em></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="receive();" class="btn btn-success action waves-effect">Xác
+                        nhận</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div id="showPopupWarning" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Thông báo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="info">
+                        <div class="row">
+                            <p style="padding-left: 0px;margin-bottom: 6px;"><em class="em_message"></em></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div id="ajaxloading"></div>
+    <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/vendors/moment/min/moment.min.js"></script>
+    <script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-datetimepicker -->
+    <script src="/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
+        type="text/javascript"></script>
+    <!-- Select2 -->
+    <script src="/vendors/select2/dist/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="/resources/js/common.js"></script>
+    <script type="text/javascript" src="/resources_vi/js/event/everon-tim-vang.mb.js?v=20241119171028"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery(".info .row .item input[type='radio']").click(function () {
+                jQuery(".info .row .item").removeClass("item-active");
+                jQuery(this).parent().addClass("item-active");
+            });
+        });
+
+        $('.datetimepicker').datetimepicker({
+            useCurrent: true,
+            format: 'YYYY-MM-DD'
+        });
+
+        $('#province').select2();
+        $('#district').select2();
+        $('#ward').select2();
+        $('#channel').select2();
+
+
+        function test_send_otp() {
+            console.log('TEST OK ')
+        }
+    </script>
+
+    <script>
+        
+        // (1) CDP_EVENT_OBSERVER: load JavaScript code for [Marketing Event]
+        (function () {
+            // Observer ID
+            window.leoObserverId = "3ox7Nrp4z64flR6RwCR1BY";
+            var srcTouchpointName = 'Marketing Event';
+
+            // CDN of JS
+            window.leoObserverLogDomain = "obs.example.com";
+            window.leoObserverCdnDomain = "leocdp.example.com/public";
+
+            // Data Touchpoint Metadata 
+            window.srcTouchpointName = encodeURIComponent(srcTouchpointName);
+            window.srcTouchpointUrl = encodeURIComponent(location.href);
+
+            // the main proxy CDP JS
+            var leoproxyJsPath = '/js/leo-observer/leo.proxy.min.js';
+            var src = location.protocol + '//' + window.leoObserverCdnDomain + leoproxyJsPath;
+            var jsNode = document.createElement('script');
+            jsNode.async = true; jsNode.defer = true; jsNode.src = src;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jsNode, s);
+        })();
+
+        var parseDataUTM = window.parseDataUTM || function () {
+            if (location.search.indexOf('utm_') > 0) {
+                var search = location.search.substring(1);
+                var json = decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"');
+                return JSON.parse('{"' + json + '"}');
+            }
+        }
+
+        // (2) CDP EVENT OBSERVER: set-up all event tracking functions
+        var LeoObserver = {};
+
+        LeoObserver.recordEventPageView = function (eventData) {
+            eventData = eventData ? eventData : {};
+            LeoObserverProxy.recordViewEvent("page-view", eventData);
+
+            // attach click handler into the primary button of form
+            $('#formJoin div.process button').click(handleMarketingEventForm);
+        }
+
+        LeoObserver.recordEventSubmitContact = function (eventData) {
+            eventData = eventData ? eventData : {};
+            LeoObserverProxy.recordActionEvent("submit-contact", eventData);
+        }
+
+        // (3) CDP EVENT OBSERVER is ready
+        function leoObserverProxyReady(session) {
+            // auto tracking when CDP JS is ready
+            LeoObserver.recordEventPageView(parseDataUTM());
+        }
+
+        function handleMarketingEventForm(e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Initialize the JSON schema with default values
+            var formData = {
+                mediaChannels: '',
+                phone: '',
+                email: '',
+                
+                firstName: '',
+                dateOfBirth: '',
+
+                livingProvince: '',
+                livingDistrict: '',
+                livingWard: '',
+                permanentLocation: '',
+
+                bonus_code: $('#bonus_code').val() // code to join event 
+            };
+
+            // Map form fields to schema keys
+            const mappings = {
+                fullname: "firstName",
+                birth_date: "dateOfBirth",
+                phone: "phone",
+                email: "email",
+                province: "livingProvince",
+                district: "livingDistrict",
+                ward: "livingWard",
+                address: "permanentLocation",
+                channel: "mediaChannels"
+            };
+
+            Object.keys(mappings).forEach((fieldId) => {
+                const field = document.getElementById(fieldId);
+                if (field && field.value.trim()) {
+                    const schemaKey = mappings[fieldId];
+                    const keys = schemaKey.split(".");
+                    let obj = formData;
+                    keys.slice(0, -1).forEach((key) => {
+                        if (!obj[key]) obj[key] = {};
+                        obj = obj[key];
+                    });
+                    obj[keys[keys.length - 1]] = field.value.trim();
+                }
+            });
+            
+            LeoObserverProxy.updateProfileBySession(formData);
+            
+            setTimeout(function(){
+                LeoObserver.recordEventSubmitContact(formData);
+            },1200)
+            
+            // Output the resulting JSON
+            console.log(JSON.stringify(formData, null, 2));
+
+            // call the action of button
+            test_send_otp()
+        }
+    </script>
+
+
+
+
+</body>
+
+</html>
