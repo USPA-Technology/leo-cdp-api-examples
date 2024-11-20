@@ -348,12 +348,11 @@
                 firstName: '',
                 dateOfBirth: '',
 
-                livingProvince: '',
                 livingDistrict: '',
                 livingWard: '',
                 livingLocation: '',
 
-                bonusCode: $('#bonus_code').val() // code to join event 
+                livingProvince: $('#select2-province-container').text()
             };
 
             // Map form fields to schema keys
@@ -361,12 +360,7 @@
                 fullname: "firstName",
                 birth_date: "dateOfBirth",
                 phone: "phone",
-                email: "email",
-                province: "livingProvince",
-                district: "livingDistrict",
-                ward: "livingWard",
-                address: "livingLocation",
-                channel: "mediaChannels"
+                email: "email"
             };
 
             // transform the web form into profileData
@@ -391,7 +385,7 @@
             console.log(JSON.stringify(profileData, null, 2));
 
             // call the action of button
-            send_otp();
+            gift1124_send_otp();
         }
     </script>
     <!-- END: JavaScript code for  gift-1124 -->
