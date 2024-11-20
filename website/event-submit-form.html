@@ -185,13 +185,55 @@
                             </select>
                         </div>
                         <div style="margin-bottom: 10px">
-                            <select name="district" id="district" class="form-control">
+
+                            <select name="district" id="district" class="form-control"
+                                tabindex="-1" aria-hidden="true">
                                 <option value="">Chọn quận / huyện</option>
+                                <option value="760">Quận 1</option>;
+                                <option value="771">Quận 10</option>;
+                                <option value="772">Quận 11</option>;
+                                <option value="761">Quận 12</option>;
+                                <option value="769">Quận 2</option>;
+                                <option value="770">Quận 3</option>;
+                                <option value="773">Quận 4</option>;
+                                <option value="774">Quận 5</option>;
+                                <option value="775">Quận 6</option>;
+                                <option value="778">Quận 7</option>;
+                                <option value="776">Quận 8</option>;
+                                <option value="763">Quận 9</option>;
+                                <option value="785">Huyện Bình Chánh</option>;
+                                <option value="777">Quận Bình Tân</option>;
+                                <option value="765">Quận Bình Thạnh</option>;
+                                <option value="787">Huyện Cần Giờ</option>;
+                                <option value="783">Huyện Củ Chi</option>;
+                                <option value="764">Quận Gò Vấp</option>;
+                                <option value="784">Huyện Hóc Môn</option>;
+                                <option value="786">Huyện Nhà Bè</option>;
+                                <option value="768">Quận Phú Nhuận</option>;
+                                <option value="766">Quận Tân Bình</option>;
+                                <option value="767">Quận Tân Phú</option>;
+                                <option value="762">Quận Thủ Đức</option>;
                             </select>
+
                         </div>
                         <div style="margin-bottom: 10px">
-                            <select name="ward" id="ward" class="form-control">
+                            <select name="ward" id="ward" class="form-control " tabindex="-1"
+                                aria-hidden="true">
                                 <option value="">Chọn phường / xã</option>
+                                <option value="27370">Phường 01</option>;
+                                <option value="27367">Phường 02</option>;
+                                <option value="27379">Phường 03</option>;
+                                <option value="27373">Phường 04</option>;
+                                <option value="27361">Phường 05</option>;
+                                <option value="27355">Phường 06</option>;
+                                <option value="27382">Phường 07</option>;
+                                <option value="27376">Phường 08</option>;
+                                <option value="27352">Phường 09</option>;
+                                <option value="27385">Phường 10</option>;
+                                <option value="27364">Phường 11</option>;
+                                <option value="27358">Phường 12</option>;
+                                <option value="27349">Phường 13</option>;
+                                <option value="27346">Phường 14</option>;
                             </select>
                         </div>
                         <div>
@@ -359,7 +401,7 @@
     </script>
 
     <script>
-        
+
         // (1) CDP_EVENT_OBSERVER: load JavaScript code for [Marketing Event]
         (function () {
             // Observer ID
@@ -391,44 +433,32 @@
             }
         }
 
-        // (2) CDP EVENT OBSERVER: set-up all event tracking functions
-        var LeoObserver = {};
-
-        LeoObserver.recordEventPageView = function (eventData) {
-            eventData = eventData ? eventData : {};
+        // CDP EVENT OBSERVER is ready
+        function leoObserverProxyReady(session) {
+            // auto tracking when CDP JS is ready
+            var eventData = parseDataUTM();
             LeoObserverProxy.recordViewEvent("page-view", eventData);
 
             // attach click handler into the primary button of form
             $('#formJoin div.process button').click(handleMarketingEventForm);
         }
 
-        LeoObserver.recordEventSubmitContact = function (eventData) {
-            eventData = eventData ? eventData : {};
-            LeoObserverProxy.recordActionEvent("submit-contact", eventData);
-        }
-
-        // (3) CDP EVENT OBSERVER is ready
-        function leoObserverProxyReady(session) {
-            // auto tracking when CDP JS is ready
-            LeoObserver.recordEventPageView(parseDataUTM());
-        }
-
         function handleMarketingEventForm(e) {
-            e.preventDefault(); // Prevent form submission
+            e.preventDefault(); // Prevent default action
 
             // Initialize the JSON schema with default values
-            var formData = {
+            var profileData = {
                 mediaChannels: '',
                 phone: '',
                 email: '',
-                
+
                 firstName: '',
                 dateOfBirth: '',
 
                 livingProvince: '',
                 livingDistrict: '',
                 livingWard: '',
-                permanentLocation: '',
+                livingLocation: '',
 
                 bonus_code: $('#bonus_code').val() // code to join event 
             };
@@ -442,7 +472,7 @@
                 province: "livingProvince",
                 district: "livingDistrict",
                 ward: "livingWard",
-                address: "permanentLocation",
+                address: "livingLocation",
                 channel: "mediaChannels"
             };
 
@@ -451,7 +481,7 @@
                 if (field && field.value.trim()) {
                     const schemaKey = mappings[fieldId];
                     const keys = schemaKey.split(".");
-                    let obj = formData;
+                    let obj = profileData;
                     keys.slice(0, -1).forEach((key) => {
                         if (!obj[key]) obj[key] = {};
                         obj = obj[key];
@@ -459,15 +489,11 @@
                     obj[keys[keys.length - 1]] = field.value.trim();
                 }
             });
-            
-            LeoObserverProxy.updateProfileBySession(formData);
-            
-            setTimeout(function(){
-                LeoObserver.recordEventSubmitContact(formData);
-            },1200)
-            
+
+            LeoObserverProxy.updateProfileBySession(profileData);
+
             // Output the resulting JSON
-            console.log(JSON.stringify(formData, null, 2));
+            console.log(JSON.stringify(profileData, null, 2));
 
             // call the action of button
             test_send_otp()
