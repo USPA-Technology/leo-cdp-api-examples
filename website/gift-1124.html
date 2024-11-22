@@ -330,7 +330,7 @@
         function leoObserverProxyReady(session) {
             // auto tracking when CDP JS is ready
             var eventData = parseDataUTM();
-            LeoObserverProxy.recordViewEvent("page-view", eventData);
+            // LeoObserverProxy.recordViewEvent("page-view", eventData);
 
             // attach click handler into the primary button of form
             $('#formJoin div.process button').click(handleMarketingEventForm);
