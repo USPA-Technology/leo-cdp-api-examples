@@ -275,7 +275,8 @@
             <input type="number" id="age" name="age" required /><br><br>
 
             <label for="location">Địa chỉ:</label>
-            <input type="text" id="location" name="location" required /><br><br>
+            <input type="text" id="location" name="location" required />
+            <br><br>
 
             <label for="gender">Giới tính:</label>
             <select id="gender" name="gender" required>
@@ -283,7 +284,30 @@
                 <option value="male">Nam</option>
                 <option value="female">Nữ</option>
                 <option value="other">Khác</option>
-            </select><br><br>
+            </select>
+            <br><br>
+            
+            <!-- Thành phố -->
+        <label for="city">Thành phố</label>
+        <input type="text" id="city" value="Thành phố Hồ Chí Minh" readonly style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        <br><br>
+
+        <!-- Quận -->
+        <label for="district">Quận</label>
+        <select id="district" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+            <option value="">--- Chọn Quận ---</option>
+            <!-- Add more options dynamically if needed -->
+        </select>
+        <br><br>
+
+        <!-- Phường -->
+        <label for="ward">Phường</label>
+        <select id="ward" style="width: 100%; padding: 10px;">
+            <option value="">--- Chọn Phường ---</option>
+            <!-- Add more options dynamically if needed -->
+        </select>
+            
+            <br><br>
         </form>
     </div>
 </body>
