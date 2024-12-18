@@ -21,6 +21,9 @@
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
+    <!--lodash.js -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
 </head>
 
 <body>
@@ -115,6 +118,13 @@
             };
             LeoObserverProxy.recordActionEvent("ask-question", eventData);
         }
+        // (2.8) function to track Action Event "submit-contact"
+        LeoObserver.recordEventSubmitContact = function (eventData) {
+            eventData = eventData ? eventData : {
+            };
+            LeoObserverProxy.recordActionEvent("submit-contact", eventData);
+        }
+
         // (2.8) function to track Conversion Event "Purchase"
         LeoObserver.recordEventPurchase = function (eventData, shoppingCartItems, transactionId, transactionValue, currencyCode) {
             // need 5 params
@@ -131,6 +141,7 @@
     <!-- Game -->
     <script>
 
+        var phone = '', firstName = '';
         var currentDeg = 0;
         var prevDeg = 0;
         var randDeg = 0;
@@ -140,16 +151,15 @@
         const gifts = [
             "Yamaha Exciter 150GP 2019",
             "Chúc bạn may mắn lần sau!",
-            "50.000 VND tặng vào VTC Pay",
+            "50.000 VND voucher PNJ",
             "Xiaomi Redmi S2 64GB",
-            "100.000 VND tặng vào VTC Pay",
-            "500.000 VND tặng vào VTC Pay",
-            "10.000 VND tặng vào VTC Pay",
+            "100.000 VND voucher PNJ ",
+            "500.000 VND voucher PNJ",
+            "10.000 VND voucher PNJ",
         ];
 
 
         function onGameHtmlReady() {
-
             console.log("game loaded");
             // Game loaded
             LeoObserver.recordEventGameLoaded(parseDataUTM());
@@ -165,8 +175,11 @@
             }, 2000)
         }
 
-        function trackGetGift(selectedGift) {
-            console.log('tracking trackGetGift ' + selectedGift)
+        function trackGetGift(event) {
+
+            console.log('tracking trackGetGift event ' + event)
+
+            LeoObserver.recordEventSubmitContact(event)
         }
 
         function setupUserLogin() {
@@ -174,33 +187,83 @@
 
                 // Handle login form submission
                 Swal.fire({
-                    title: 'Login',
-                    html: $('#login-popup').html(),
-                    confirmButtonText: 'Submit',
+                    title: 'Đăng nhập',
+                    html: processTemplate('tplLoginPopup'),
+                    confirmButtonText: 'OK',
                     focusConfirm: false,
                     preConfirm: () => {
                         var form = $('#swal2-html-container');
-                        const name = form.find('input[name="name"]').val().trim();
-                        const mobile =  form.find('input[name="mobile"]').val().trim();
+                        firstName = form.find('input[name="name"]').val().trim();
+                        phone = form.find('input[name="mobile"]').val().trim();
                         const errorMessage = "Vui lòng kiểm tra lại thông tin của bạn.";
 
                         // Validate inputs
-                        if (!name || !mobile || !/^[0-9]{10,15}$/.test(mobile)) {
+                        if (!firstName || !phone || !/^[0-9]{10,15}$/.test(phone)) {
                             Swal.showValidationMessage(errorMessage);
                             return false;
                         }
 
                         // Return valid data
-                        return { name, mobile };
+                        return { firstName, phone };
                     },
                 }).then((result) => {
                     if (result.isConfirmed) {
                         console.log('User Data:', result.value);
+
+                        var profileData = {
+                            phone: phone,
+                            firstName: firstName
+                        };
+                        LeoObserver.recordEventUserLogin(profileData)
                     }
                 });
             });
+        }
 
+        function showVoucherAwarded(currentDeg) {
+            var gift = getGift(currentDeg % 360);
+            var display = "block"
+            if (gift == null) {
+                gift = "Chúc bạn may mắn lần sau!";
+                display = 'none'
+            }
+            var model = { 'gift': gift, 'display': display }
+            console.log('showVoucherAwarded model ', model)
 
+            Swal.fire({
+                title: 'Kết quả',
+                html: processTemplate('tplGetGiftPopup', model),
+                confirmButtonText: 'OK',
+                focusConfirm: false,
+                preConfirm: () => {
+
+                    var gender = $('#gender').val().trim();
+                    var livingCity = $('#livingCity').val().trim();
+                    var livingDistrict = $('#livingDistrict').val().trim();
+
+                    const errorMessage = "Vui lòng kiểm tra lại thông tin của bạn.";
+
+                    // Validate inputs
+                    if (livingCity === '' || livingDistrict === '') {
+                        Swal.showValidationMessage(errorMessage);
+                        return false;
+                    }
+
+                    var profileData = {
+                        phone: phone,
+                        firstName: firstName,
+                        livingDistrict: livingDistrict,
+                        livingCity: livingCity,
+                        gift: gift // code to join event 
+                    };
+                    return profileData;
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log('User Data:', result.value);
+                    trackGetGift(result.value);
+                }
+            });
         }
 
         // Function to get gift
@@ -210,7 +273,7 @@
             if ((val >= 0 && val <= 10) || (val >= 321 && val <= 370)) {
                 selectedGift = gifts[0];
             } else if (val >= 11 && val <= 61) {
-                selectedGift = "Chúc bạn may mắn lần sau"; // Example of using variable
+                selectedGift = null; // Example of using variable
             } else if (val >= 62 && val <= 113) {
                 selectedGift = gifts[2];
             } else if (val >= 114 && val <= 164) {
@@ -224,8 +287,6 @@
             } else {
                 selectedGift = gifts[0];
             }
-
-            trackGetGift(selectedGift);
             return selectedGift;
         }
 
@@ -245,71 +306,94 @@
                 }
                 );
                 setTimeout(() => {
-                    Swal.fire(getGift(currentDeg % 360), "Phần thưởng", "success");
+                    showVoucherAwarded(currentDeg)
                 }, transDuration * 1000 + 500);
             });
         }
 
         $(document).ready(setupGame);
+
+
+        function processTemplate(selectorId, dataModel) {
+          
+            // Retrieve the raw template content
+            const templateContent = $('#'+selectorId).html().trim();
+
+            // Compile the template using Handlebars.js
+            const compiledTemplate = _.template(templateContent);
+
+            // Generate the final HTML with the data model
+            return dataModel != null ? compiledTemplate(dataModel) : compiledTemplate({});
+        }
+
+
     </script>
 
-
     <!-- Hidden Login Form -->
-    <div style="display: none;" id="login-popup">
-
+    <script id="tplLoginPopup" type="text/x-handlebars-template">
         <form id="login-form">
             <label for="name">Tên:</label>
-            <input type="text"name="name" required placeholder="Nhập tên của bạn" /><br><br>
+            <input type="text" name="name" required placeholder="Nhập tên của bạn" /><br><br>
 
             <label for="mobile">Số điện thoại:</label>
             <input type="tel" name="mobile" required placeholder="Nhập số điện thoại" /><br><br>
         </form>
-
-    </div>
+    </script>
 
     <!-- Hidden get-gift Form -->
-    <div style="display: none;" id="get-gift-popup">
-      
-        <form id="get-gift--form">
-            <label for="age">Tuổi:</label>
-            <input type="number" id="age" name="age" required /><br><br>
 
-            <label for="location">Địa chỉ:</label>
-            <input type="text" id="location" name="location" required />
-            <br><br>
+    <script id="tplGetGiftPopup" type="text/x-handlebars-template" >
 
-            <label for="gender">Giới tính:</label>
-            <select id="gender" name="gender" required>
-                <option value="">Select</option>
-                <option value="male">Nam</option>
-                <option value="female">Nữ</option>
-                <option value="other">Khác</option>
-            </select>
-            <br><br>
+        <h3 style="padding: 10px; background-color: bisque;"> <%= gift %> </h3>
+
+        <div style="display: <%= display %> ">
+            <h4 style="padding: 5px;">  Điền thông tin sau để nhận thưởng </h4>
+        
+            <form id="get-gift--form" >
             
-            <!-- Thành phố -->
-        <label for="city">Thành phố</label>
-        <input type="text" id="city" value="Thành phố Hồ Chí Minh" readonly style="width: 100%; padding: 10px; margin-bottom: 10px;">
-        <br><br>
 
-        <!-- Quận -->
-        <label for="district">Quận</label>
-        <select id="district" style="width: 100%; padding: 10px; margin-bottom: 10px;">
-            <option value="">--- Chọn Quận ---</option>
-            <!-- Add more options dynamically if needed -->
-        </select>
-        <br><br>
+                <label for="gender">Giới tính:</label>
+                <select name="gender" id="gender" required>
+                    <option value="">Chọn</option>
+                    <option value="male">Nam</option>
+                    <option value="female">Nữ</option>
+                    <option value="other">Khác</option>
+                </select>
+                <br><br>
 
-        <!-- Phường -->
-        <label for="ward">Phường</label>
-        <select id="ward" style="width: 100%; padding: 10px;">
-            <option value="">--- Chọn Phường ---</option>
-            <!-- Add more options dynamically if needed -->
-        </select>
-            
-            <br><br>
-        </form>
-    </div>
+                <!-- Thành phố -->
+                <label for="city">Thành phố</label>
+                <select  id="livingCity" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                    <option value="">--- Chọn Thành phố ---</option>
+                    <option value="hcm"> TP.HCM </option>
+                    
+                    <!-- Add more options dynamically if needed -->
+                </select>
+                <br><br>
+
+                <!-- Quận -->
+                <label for="district">Quận</label>
+                <select id="livingDistrict" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                    <option value="">--- Chọn Quận ---</option>
+                    <option value="1"> Quận 1 </option>
+                    <option value="2"> Quận 2 </option>
+                    <!-- Add more options dynamically if needed -->
+                </select>
+                <br><br>
+
+                <!-- Phường -->
+                <label for="ward">Phường</label>
+                <select id="ward" style="width: 100%; padding: 10px;">
+                    <option value="">--- Chọn Phường ---</option>
+                    <option value="1"> Phường 1 </option>
+                    <option value="2"> Phường 2 </option>
+                    <!-- Add more options dynamically if needed -->
+                </select>
+
+                <br><br>
+            </form>
+        </div>
+    </script>
 </body>
 
 </html>
