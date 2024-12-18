@@ -11,15 +11,6 @@ namespace ProfileApiExample
     {
         static async Task Main(string[] args)
         {
-            // Load the configuration from appsettings.json
-            var config = LoadConfiguration();
-
-            // Read tokenKey and tokenValue from config
-            var tokenKey = config["ApiSettings:tokenKey"];
-            var tokenValue = config["ApiSettings:tokenValue"];
-
-            var url = "https://leocdp.example.com/api/profile/save";
-
             var profile = new
             {
                 journeyMapIds = "",
@@ -34,8 +25,21 @@ namespace ProfileApiExample
                 updateByKey = "primaryPhone"
             };
 
-            var response = await SendDictDataToApi(url, profile, tokenKey, tokenValue);
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
+
+            var url = "https://leocdp.example.com/api/profile/save";
+
+            // Load the configuration from appsettings.json
+            var config = LoadConfiguration();
+
+            // Read tokenKey and tokenValue from config
+            var tokenKey = config["ApiSettings:tokenKey"];
+            var tokenValue = config["ApiSettings:tokenValue"];
+            if (tokenKey != null && tokenValue != null)
+            {
+                var response = await SendDictDataToApi(url, profile, tokenKey, tokenValue);
+                Console.WriteLine(await response.Content.ReadAsStringAsync());
+            }
+
         }
 
         static async Task<HttpResponseMessage> SendDictDataToApi(string url, object dictData, string tokenKey, string tokenValue)
@@ -45,7 +49,7 @@ namespace ProfileApiExample
                 var json = JsonSerializer.Serialize(dictData);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                 // Set User-Agent header
+                // Set User-Agent header
                 client.DefaultRequestHeaders.UserAgent.ParseAdd("CDPClient/1.0 (Windows NT 10.0; .NET 8.0; CDPAPI/1.0)");
 
                 // Add headers to client (except Content-Type)
