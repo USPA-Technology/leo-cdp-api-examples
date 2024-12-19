@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    background-image: url('https://asunaxran.github.io/vongquaymayman/imgs/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  
+  #app {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 100px;
+  }
+  
+  .frame {
+    width: 320px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .box-square {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+  }
+  
+  .box-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  #wheel {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://asunaxran.github.io/vongquaymayman/imgs/bg_vongquay.png');
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #wheel-check {
+    display: inline-block;
+    width: 90%;
+    height: auto;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.17, 0.67, 0.18, 0.9);
+  }
+  
+  #play-game-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+  }
+  
+  #play-game-btn:hover {
+    filter: brightness(110%);
+  }
+  
+  #turn-img {
+    display: inline-block;
+    width: 100%;
+    max-width: 80px;
+    height: auto;
+  }
+  
+  @media (min-width: 576px) {
+    .frame {
+      width: 400px;
+    }
+    #turn-img {
+      max-width: 100px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .frame {
+      width: 460px;
+    }
+    #turn-img {
+      max-width: 132px;
+    }
+  }
