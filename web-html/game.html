@@ -24,13 +24,15 @@
     <!--lodash.js -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
+    <!--lscache.js -->
+    <script src="https://cdn.jsdelivr.net/npm/lscache@1.3.2/lscache.min.js"></script>
+
 </head>
 
 <body>
 
     <div id="app">
         <div class="frame">
-           
             <div class="box-square">
                 <div class="box-content">
                     <div id="wheel">
@@ -142,6 +144,8 @@
     <script>
 
         var phone = '', firstName = '';
+        
+
         var currentDeg = 0;
         var prevDeg = 0;
         var randDeg = 0;
@@ -176,17 +180,20 @@
         }
 
         function trackGetGift(event) {
-
             console.log('tracking trackGetGift event ' + event)
-
             LeoObserver.recordEventSubmitContact(event)
+        }
+
+        function loadSession(){
+            firstName = lscache.get('firstName') || '';
+            phone = lscache.get('phone') || '';
         }
 
         function setupUserLogin() {
             doLogin()
         }
 
-        function doLogin(){
+        function doLogin() {
             if (isReadyToPlay()) {
                 return;
             }
@@ -216,11 +223,15 @@
                 if (result.isConfirmed) {
                     console.log('User Data:', result.value);
 
+                    // cache
+                    lscache.set('firstName', firstName, 5);
+                    lscache.set('phone', phone, 5);
+
                     var profileData = {
                         phone: phone,
                         firstName: firstName
                     };
-                    LeoObserver.recordEventUserLogin(profileData)
+                    LeoObserver.recordEventUserLogin(profileData);
                 }
             });
         }
@@ -231,7 +242,7 @@
                     icon: "error",
                     title: "Lỗi",
                     text: "Vui lòng đăng nhập!",
-                  });
+                });
                 return;
             }
 
@@ -257,13 +268,17 @@
                 return;
             }
 
+            // get gift
             var gift = getGift(currentDeg % 360);
-            var display = "block"
             if (gift == null) {
-                gift = "Chúc bạn may mắn lần sau!";
-                display = 'none'
+                Swal.fire({
+                    title: "Kết quả",
+                    text: "Chúc bạn may mắn lần sau!",
+                    icon: "success"
+                });
+                return;
             }
-            var model = { 'gift': gift, 'display': display, 'name': firstName }
+            var model = { 'gift': gift, 'name': firstName }
             console.log('showVoucherAwarded model ', model)
 
             Swal.fire({
@@ -327,7 +342,7 @@
         }
 
         function setupGame() {
-
+            loadSession();
             setupUserLogin();
 
             $("#turn-btn").click(function (e) {
@@ -350,11 +365,9 @@
             // Generate the final HTML with the data model
             return dataModel != null ? compiledTemplate(dataModel) : compiledTemplate({});
         }
-
-
     </script>
 
-    <!-- Hidden Login Form -->
+    <!--  Login Form -->
     <script id="tplLoginPopup" type="text/x-handlebars-template">
         <form id="login-form">
             <label for="name">Tên:</label>
@@ -365,17 +378,15 @@
         </form>
     </script>
 
-    <!-- Hidden get-gift Form -->
-
+    <!--  get-gift Form -->
     <script id="tplGetGiftPopup" type="text/x-handlebars-template">
 
         <h3 style="padding: 10px; background-color: bisque;"> <%= gift %> </h3>
 
-        <div style="display: <%= display %> ">
+        <div style="width: 100%;">
             <h4 style="padding: 15px;"> Chúc mừng <%= name %>, bạn vui lòng điền thêm thông tin để nhận thưởng </h4>
         
             <form id="get-gift--form" >
-            
 
                 <label for="gender">Giới tính:</label>
                 <select name="gender" id="gender" style="width: 100%; padding: 10px; margin-bottom: 10px;">
@@ -402,11 +413,14 @@
                     <option value="">--- Chọn Quận ---</option>
                     <option value="1"> Quận 1 </option>
                     <option value="2"> Quận 2 </option>
+                    <option value="2"> Quận 3 </option>
+                    <option value="2"> Quận 4 </option>
+                    <option value="2"> Quận 5 </option>
+                    <option value="2"> Quận 6 </option>
                     <!-- Add more options dynamically if needed -->
                 </select>
                 <br><br>
 
-                
 
                 <br><br>
             </form>
