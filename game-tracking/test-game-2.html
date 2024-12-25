@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-    <title>Vòng quay may mắn</title>
+    <title>Game 2- Vòng quay may mắn</title>
 
     <!-- Game CSS -->
     <link rel="stylesheet" href="https://asunaxran.github.io/vongquaymayman/css/style.css">
@@ -64,95 +64,29 @@
         // (1) CDP_EVENT_OBSERVER: load JavaScript code for [Game: Vòng quay may mắn]
         (function () {
             // Observer ID
-            window.leoObserverId = "4KaMq3UZcLbx7HMoK5fgYL";
-            // CDN of JS
-            window.leoObserverLogDomain = "datahub4dcdp.bigdatavietnam.org";
-            window.leoObserverCdnDomain = "cdn.jsdelivr.net/gh/USPA-Technology/leo-cdp-static-files@v0.8.9.33";
+            window.cdpObserverId = "4KaMq3UZcLbx7HMoK5fgYL";
 
+            // CDN of JS
+            window.cdpObserverBaseUrl = "https://datahub4dcdp.bigdatavietnam.org";
+           
             // Data Touchpoint Metadata 
-            window.srcTouchpointName = encodeURIComponent(document.title);
+            window.srcTouchpointName = encodeURIComponent(document.title) ;
             window.srcTouchpointUrl = encodeURIComponent(location.href);
-            // the main proxy CDP JS
-            var leoproxyJsPath = '/js/leo-observer/leo.proxy.min.js';
-            var src = location.protocol + '//' + window.leoObserverCdnDomain + leoproxyJsPath;
+
+            window.onCdpJsReady = function(){
+                console.log("CDP JS is Ready");
+                CdpObserver.trackPageView();
+            }
+           
+            var cdpObserverJs = "https://example.com/game-tracking/cdp.observer.js";
             var jsNode = document.createElement('script');
             jsNode.async = true;
             jsNode.defer = true;
-            jsNode.src = src;
+            jsNode.src = cdpObserverJs;
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(jsNode, s);
         }
         )();
-        var parseDataUTM = window.parseDataUTM || function () {
-            if (location.search.indexOf('utm_') > 0) {
-                var search = location.search.substring(1);
-                var json = decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"');
-                return JSON.parse('{"' + json + '"}');
-            }
-        }
-        // (2) CDP EVENT OBSERVER: set-up all event tracking functions
-        var LeoObserver = {
-        };
-        // (2.1) function to track View Event "PageView"
-        LeoObserver.recordEventPageView = function (eventData) {
-            eventData = eventData ? eventData : {
-            };
-            LeoObserverProxy.recordViewEvent("page-view", eventData);
-        }
-        // (2.2) function to track Action Event "ClickDetails"
-        LeoObserver.recordEventClickDetails = function (eventData) {
-            eventData = eventData ? eventData : {
-            };
-            LeoObserverProxy.recordActionEvent("click-details", eventData);
-        }
-        // (2.3) function to track Action Event "SubmitContact"
-        LeoObserver.recordEventSubmitContact = function (eventData) {
-            eventData = eventData ? eventData : {
-            };
-            LeoObserverProxy.recordActionEvent("submit-contact", eventData);
-        }
-        // (2.4) function to track View Event "GameLoaded"
-        LeoObserver.recordEventGameLoaded = function (eventData) {
-            eventData = eventData ? eventData : {
-            };
-            LeoObserverProxy.recordViewEvent("game-loaded", eventData);
-        }
-        // (2.5) function to track Action Event "RegisterAccount"
-        LeoObserver.recordEventRegisterAccount = function (eventData) {
-            eventData = eventData ? eventData : {
-            };
-            LeoObserverProxy.recordActionEvent("register-account", eventData);
-        }
-        // (2.6) function to track Action Event "UserLogin"
-        LeoObserver.recordEventUserLogin = function (eventData) {
-            eventData = eventData ? eventData : {
-            };
-            LeoObserverProxy.recordActionEvent("user-login", eventData);
-        }
-        // (2.7) function to track Action Event "AskQuestion"
-        LeoObserver.recordEventAskQuestion = function (eventData) {
-            eventData = eventData ? eventData : {
-            };
-            LeoObserverProxy.recordActionEvent("ask-question", eventData);
-        }
-        // (2.8) function to track Action Event "submit-contact"
-        LeoObserver.recordEventSubmitContact = function (eventData) {
-            eventData = eventData ? eventData : {
-            };
-            LeoObserverProxy.recordActionEvent("submit-contact", eventData);
-        }
-
-        // (2.8) function to track Conversion Event "Purchase"
-        LeoObserver.recordEventPurchase = function (eventData, shoppingCartItems, transactionId, transactionValue, currencyCode) {
-            // need 5 params
-            eventData = typeof eventData === "object" ? eventData : {
-            };
-            shoppingCartItems = typeof shoppingCartItems === "object" ? shoppingCartItems : [];
-            transactionId = typeof transactionId === "string" ? transactionId : "";
-            transactionValue = typeof transactionValue === "number" ? transactionValue : 0;
-            currencyCode = typeof currencyCode === "string" ? currencyCode : "USD";
-            LeoObserverProxy.recordConversionEvent("purchase", eventData, transactionId, shoppingCartItems, transactionValue, currencyCode);
-        }
     </script>
 
     <!-- Game -->
@@ -179,13 +113,13 @@
         function onGameHtmlReady() {
             console.log("game loaded");
             // Game loaded
-            LeoObserver.recordEventGameLoaded(parseDataUTM());
+            CdpObserver.recordEventGameLoaded(parseDataUTM());
         }
 
         // CDP EVENT OBSERVER is ready
         function leoObserverProxyReady(session) {
             // auto tracking page-view when CDP JS is ready
-            LeoObserver.recordEventPageView(parseDataUTM());
+            CdpObserver.recordEventPageView(parseDataUTM());
             // simulate game loaded
             setTimeout(function () {
                 $("#wheel-check").ready(onGameHtmlReady);
@@ -194,7 +128,7 @@
 
         function trackGetGift(event) {
             console.log('tracking trackGetGift event ' + event)
-            LeoObserver.recordEventSubmitContact(event)
+            CdpObserver.recordEventSubmitContact(event)
         }
 
         function loadSession(){
@@ -244,7 +178,7 @@
                         phone: phone,
                         firstName: firstName
                     };
-                    LeoObserver.recordEventUserLogin(profileData);
+                    CdpObserver.recordEventUserLogin(profileData);
                 }
             });
         }
@@ -331,7 +265,7 @@
                     console.log('User Data:', result.value);
                     trackGetGift(result.value);
                 }
-            });
+            });trợ
         }
 
         // Function to get gift

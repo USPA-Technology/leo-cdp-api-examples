@@ -2,3 +2,4 @@ python-decouple
 python-dotenv
 requests
 urllib3
+boto3

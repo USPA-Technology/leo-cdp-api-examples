@@ -1,3 +1,6 @@
+# all PNJ test will be ignored 
+pnj-*
+
 # python env 
 
 myenv
