@@ -2,7 +2,6 @@
 
 // Configuration for Tracking Server
 
-
 const DEFAULT_OBSERVER_ENDPOINT = "https://datahub.example.com/event-game/put";
 
 // configs of CDP
@@ -138,8 +137,7 @@ const CdpObserver = (function () {
       const response = await fetch(CDP_CONFIG.endpoint, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
       });
