@@ -2,7 +2,8 @@
 
 // Configuration for Tracking Server
 
-const DEFAULT_OBSERVER_ENDPOINT = location.protocol + "/" + location.hostname + "/event-game/put";
+const DEFAULT_OBSERVER_ENDPOINT =
+  location.protocol + "/" + location.hostname + "/event-game/put";
 
 // configs of CDP
 const CDP_CONFIG = {
@@ -22,17 +23,22 @@ const CdpObserver = (function () {
   // visitor and session
   let sessionId = null;
   let visitorId = null;
+  let fingerprintId = null;
 
   /**
    * Initialize the Analytics
    * @param {Object} config - Custom configuration
    */
   function init(config = {}) {
-    sessionId = getSessionId();
-    visitorId = getVisitorId();
+    
 
-    var fgCallback = function (fingerprintId) {
-      // init for first-time loads
+    var fgCallback = function (fgId) {
+      // load all keys
+      sessionId = getSessionId();
+      visitorId = getVisitorId();
+      fingerprintId = fgId;
+      
+      // for first-time loads
       var queueProcessor = function () {
         var len = CDP_TRACKING_QUEUE.length;
         while (len > 0) {
@@ -46,11 +52,19 @@ const CdpObserver = (function () {
       };
       setInterval(queueProcessor, 799);
 
-      console.log("CdpObserver Initialized:", {
+      var ids = {
         sessionId,
         visitorId,
         fingerprintId,
-      });
+      }
+
+      console.log("CdpObserver Initialized:", ids);
+
+      // ----------------- CDP JS is ready ------------------------
+      if (typeof window.onCdpJsReady === "function") {
+        console.log("--- CdpJsReady ---");
+        window.onCdpJsReady(ids);
+      }
     };
 
     // call Fingerprint then do the jobs
@@ -128,7 +142,7 @@ const CdpObserver = (function () {
         metric,
         eventdata,
         visid: visitorId,
-        fgp: generateFingerprint(),
+        fgp: fingerprintId,
         ctxsk: sessionId,
       },
     };
@@ -136,8 +150,8 @@ const CdpObserver = (function () {
     try {
       const response = await fetch(CDP_CONFIG.endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify(payload)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -178,15 +192,7 @@ const CdpObserver = (function () {
     };
   }
 
-  /**
-   * Generate a basic fingerprint
-   * @returns {String} - Fingerprint string
-   */
-  function generateFingerprint() {
-    return btoa(
-      `${navigator.userAgent}-${window.screen.width}x${window.screen.height}-${sessionId}`
-    );
-  }
+
 
   function mergeObjects(obj1, obj2) {
     return Object.assign({}, obj1, obj2);
@@ -208,15 +214,39 @@ const CdpObserver = (function () {
    * Track Page View
    */
   function trackPageView() {
-    trackEvent("page-view", getBaseEventModel());
+    trackEvent("page_view", getBaseEventModel());
   }
 
   function trackGameLoaded() {
-    trackEvent("game-loaded", getBaseEventModel());
+    trackEvent("game_loaded", getBaseEventModel());
+  }
+
+  function trackPhoneSubmit(profile) {
+    trackEvent("phone_submit", mergeObjects(getBaseEventModel(), profile));
+  }
+
+  function trackOtpSubmit(profile) {
+    trackEvent("otp_submit", mergeObjects(getBaseEventModel(), profile));
+  }
+
+  function trackGameStart(profile) {
+    trackEvent("game_start", mergeObjects(getBaseEventModel(), profile));
+  }
+
+  function trackGameComplete(profile) {
+    trackEvent("game_complete",mergeObjects(getBaseEventModel(), profile));
+  }
+
+  function trackUserRegister(profile) {
+    trackEvent("user_register", mergeObjects(getBaseEventModel(), profile));
   }
 
   function trackUserLogin(profile) {
-    trackEvent("user-login", mergeObjects(getBaseEventModel(), profile) );
+    trackEvent("user_login", mergeObjects(getBaseEventModel(), profile));
+  }
+
+  function trackClaimReward(profile) {
+    trackEvent("claim_reward", mergeObjects(getBaseEventModel(), profile));
   }
 
   return {
@@ -224,7 +254,13 @@ const CdpObserver = (function () {
     trackEvent,
     trackPageView,
     trackGameLoaded,
-    trackUserLogin
+    trackPhoneSubmit,
+    trackOtpSubmit,
+    trackGameStart,
+    trackGameComplete,
+    trackUserRegister,
+    trackUserLogin,
+    trackClaimReward
   };
 })();
 
@@ -627,7 +663,6 @@ const CdpObserver = (function () {
 
 // ------------------- fgp2.js ---------------------------------------------- //
 !(function (e, t, a) {
-  "use strict";
   "undefined" != typeof window && "function" == typeof define && define.amd
     ? define(a)
     : "undefined" != typeof module && module.exports
@@ -2397,9 +2432,5 @@ const CdpObserver = (function () {
   );
 });
 
-// ----------------- CDP JS is ready ------------------------
-if (typeof window.onCdpJsReady === "function") {
-  console.log("--- CdpJsReady ---");
-  CdpObserver.init();
-  window.onCdpJsReady();
-}
+// only call this method when JS is loaded -------------------------------------------------------------------------
+CdpObserver.init();
