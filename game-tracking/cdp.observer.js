@@ -2,11 +2,11 @@
 
 // Configuration for Tracking Server
 
-const DEFAULT_OBSERVER_ENDPOINT = "https://datahub.example.com/event-game/put";
+const DEFAULT_OBSERVER_ENDPOINT = location.protocol + "/" + location.hostname + "/event-game/put";
 
 // configs of CDP
 const CDP_CONFIG = {
-  endpoint: window.CdpObserverEndpoint || DEFAULT_OBSERVER_ENDPOINT,
+  endpoint: window.cdpObserverEndpoint || DEFAULT_OBSERVER_ENDPOINT,
   cdpObserverId: window.cdpObserverId || "default_observer",
 };
 
@@ -136,9 +136,7 @@ const CdpObserver = (function () {
     try {
       const response = await fetch(CDP_CONFIG.endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json"},
         body: JSON.stringify(payload)
       });
 
@@ -190,20 +188,43 @@ const CdpObserver = (function () {
     );
   }
 
+  function mergeObjects(obj1, obj2) {
+    return Object.assign({}, obj1, obj2);
+  }
+
+  function getBaseEventModel() {
+    return {
+      phone: "",
+      first_name: "",
+      living_district: "",
+      living_city: "",
+      marital_status: "single",
+      personal_interests: [],
+      gift_code: "",
+    };
+  }
+
   /**
    * Track Page View
    */
   function trackPageView() {
-    trackEvent("page-view", {
-      page: window.location.pathname,
-      title: document.title,
-    });
+    trackEvent("page-view", getBaseEventModel());
+  }
+
+  function trackGameLoaded() {
+    trackEvent("game-loaded", getBaseEventModel());
+  }
+
+  function trackUserLogin(profile) {
+    trackEvent("user-login", mergeObjects(getBaseEventModel(), profile) );
   }
 
   return {
     init,
     trackEvent,
     trackPageView,
+    trackGameLoaded,
+    trackUserLogin
   };
 })();
 

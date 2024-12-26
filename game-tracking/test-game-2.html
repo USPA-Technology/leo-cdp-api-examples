@@ -63,21 +63,16 @@
     <script>
         // (1) CDP_EVENT_OBSERVER: load JavaScript code for [Game: Vòng quay may mắn]
         (function () {
-            // Observer ID
+            // Event Observer ID
             window.cdpObserverId = "4KaMq3UZcLbx7HMoK5fgYL";
 
-            // CDN of JS
-            window.cdpObserverBaseUrl = "https://datahub4dcdp.bigdatavietnam.org";
+            // Event Observer Endpoint API
+            window.cdpObserverEndpoint = "https://leobot.leocdp.com/event-game/put";
            
             // Data Touchpoint Metadata 
             window.srcTouchpointName = encodeURIComponent(document.title) ;
             window.srcTouchpointUrl = encodeURIComponent(location.href);
 
-            window.onCdpJsReady = function(){
-                console.log("CDP JS is Ready");
-                CdpObserver.trackPageView();
-            }
-           
             var cdpObserverJs = "https://example.com/game-tracking/cdp.observer.js";
             var jsNode = document.createElement('script');
             jsNode.async = true;
@@ -113,17 +108,18 @@
         function onGameHtmlReady() {
             console.log("game loaded");
             // Game loaded
-            CdpObserver.recordEventGameLoaded(parseDataUTM());
+            CdpObserver.trackGameLoaded();
         }
 
         // CDP EVENT OBSERVER is ready
-        function leoObserverProxyReady(session) {
-            // auto tracking page-view when CDP JS is ready
-            CdpObserver.recordEventPageView(parseDataUTM());
-            // simulate game loaded
-            setTimeout(function () {
-                $("#wheel-check").ready(onGameHtmlReady);
-            }, 2000)
+        window.onCdpJsReady = function(){
+            console.log("CDP JS is Ready");
+            CdpObserver.trackPageView();
+
+             // simulate game loaded
+             setTimeout(function () {
+                 $("#wheel-check").ready(onGameHtmlReady);
+             }, 2000)
         }
 
         function trackGetGift(event) {
@@ -176,9 +172,9 @@
 
                     var profileData = {
                         phone: phone,
-                        firstName: firstName
+                        first_name: firstName
                     };
-                    CdpObserver.recordEventUserLogin(profileData);
+                    CdpObserver.trackUserLogin(profileData);
                 }
             });
         }
@@ -252,11 +248,11 @@
 
                     var profileData = {
                         phone: phone,
-                        firstName: firstName,
-                        livingDistrict: livingDistrict,
-                        livingCity: livingCity,
-                        personalInterests: JSON.stringify(personalInterests),
-                        gift: gift // code to join event 
+                        first_name: firstName,
+                        living_district: livingDistrict,
+                        living_city: livingCity,
+                        personal_interests: personalInterests,
+                        gift_code: gift // code to join event 
                     };
                     return profileData;
                 },
@@ -265,7 +261,7 @@
                     console.log('User Data:', result.value);
                     trackGetGift(result.value);
                 }
-            });trợ
+            });
         }
 
         // Function to get gift
